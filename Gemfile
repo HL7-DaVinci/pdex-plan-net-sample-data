@@ -1,1 +1,2 @@
 gem 'pry'
+gem 'rspec'
