@@ -1,5 +1,9 @@
+require_relative 'utils/formatting'
+
 module PDEX
   class NPPESPractitioner
+    include Formatting
+
     attr_reader :raw_data
 
     def initialize(raw_data)
@@ -33,11 +37,6 @@ module PDEX
       fax_number_1 = format_phone_number(@raw_data['Provider Business Mailing Address Fax Number'])
       fax_number_2 = format_phone_number(@raw_data['Provider Business Practice Location Address Fax Number'])
       [fax_number_1, fax_number_2].uniq
-    end
-
-    def format_phone_number(number)
-      return '5555555555' if number.blank?
-      return number.gsub(/[^\d]/, '')
     end
 
     def address

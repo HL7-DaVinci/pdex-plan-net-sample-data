@@ -28,7 +28,7 @@ RSpec.describe PDEX::NPPESPractitioner do
   end
 
   describe '#name' do
-    it 'returns a hash of name fields' do
+    it 'returns the name' do
       name = practitioner.name
       name_fields = [:first, :middle, :last, :suffix, :prefix, :credential]
       name_fields.each { |field| expect(name).to respond_to field }
