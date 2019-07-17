@@ -2,6 +2,11 @@ require 'fhir_models'
 require_relative 'utils/states'
 require_relative 'utils/nucc_codes'
 
+# TODO:
+# - communication - is this really needed?
+# - geolocation extension
+# - birthDate - is this really needed?
+
 module PDEX
   class PractitionerFactory
     attr_reader :practitioner
@@ -22,7 +27,6 @@ module PDEX
           address: address,
           gender: gender,
           qualification: qualifications
-          # TODO: communication
         }
       )
     end

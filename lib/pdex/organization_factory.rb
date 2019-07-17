@@ -2,6 +2,11 @@ require 'fhir_models'
 require_relative 'utils/states'
 require_relative 'utils/nucc_codes'
 
+# TODO:
+# - identifier.period - is this really needed?
+# - geolocation extension
+# - partOf
+# - endpoint
 module PDEX
   class OrganizationFactory
     attr_reader :organization
@@ -22,8 +27,6 @@ module PDEX
           telecom: telecom,
           address: address,
           contact: contact,
-          # qualification: qualifications
-          # TODO: communication
         }
       )
     end
