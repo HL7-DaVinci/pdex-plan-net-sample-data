@@ -8,7 +8,13 @@ RSpec.describe PDEX::OrganizationFactory do
       {
         npi: '1740283779',
         name: 'NAME',
-        phone: '1234567890',
+        phone_numbers: [
+          '1234567890',
+          '2345678901'
+        ],
+        fax_numbers: [
+          '0987654321'
+        ],
         address: address,
         contact_first_name: 'FNAME',
         contact_last_name: 'LNAME'

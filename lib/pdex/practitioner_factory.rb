@@ -1,4 +1,6 @@
 require 'fhir_models'
+require_relative 'address'
+require_relative 'telecom'
 require_relative 'utils/states'
 require_relative 'utils/nucc_codes'
 
@@ -9,10 +11,13 @@ require_relative 'utils/nucc_codes'
 
 module PDEX
   class PractitionerFactory
-    attr_reader :practitioner
+    include Address
+    include Telecom
+
+    attr_reader :source_data
 
     def initialize(nppes_practitioner)
-      @practitioner = nppes_practitioner
+      @source_data = nppes_practitioner
     end
 
     def build
@@ -34,7 +39,7 @@ module PDEX
     private
 
     def id
-      "vhdir-practitioner-#{practitioner.npi}"
+      "vhdir-practitioner-#{source_data.npi}"
     end
 
     def meta
@@ -59,7 +64,7 @@ module PDEX
           text: 'NPI'
         },
         system: 'http://hl7.org/fhir/sid/us-npi',
-        value: practitioner.npi,
+        value: source_data.npi,
         assigner: {
           display: 'CMS'
         }
@@ -67,10 +72,10 @@ module PDEX
     end
 
     def name
-      given_names = [practitioner.name.first, practitioner.name.middle].reject(&:blank?)
-      family_name = practitioner.name.last
-      prefix = practitioner.name.prefix
-      suffix = [practitioner.name.suffix, practitioner.name.credential].reject(&:blank?)
+      given_names = [source_data.name.first, source_data.name.middle].reject(&:blank?)
+      family_name = source_data.name.last
+      prefix = source_data.name.prefix
+      suffix = [source_data.name.suffix, source_data.name.credential].reject(&:blank?)
       {
         use: 'official',
         family: family_name,
@@ -81,47 +86,15 @@ module PDEX
       end
     end
 
-    def telecom
-      phone_entries = practitioner.phone_numbers.map { |phone| telecom_entry('phone', phone) }
-      fax_entries = practitioner.fax_numbers.map { |fax| telecom_entry('fax', fax) }
-      phone_entries + fax_entries
-    end
-
-    def telecom_entry(type, number)
-      {
-        system: type,
-        value: number,
-        use: 'work'
-      }
-    end
-
-    def address
-      lines = practitioner.address.lines
-      city = practitioner.address.city
-      state = practitioner.address.state
-      zip = practitioner.address.zip
-      text = [lines, "#{city}, #{state} #{zip}"].flatten.join(', ')
-      {
-        use: 'work',
-        type: 'both',
-        text: text,
-        line: lines,
-        city: city,
-        state: state,
-        postalCode: zip,
-        country: 'USA'
-      }
-    end
-
     def gender
       {
         'F' => 'female',
         'M' => 'male',
-      }[practitioner.gender]
+      }[source_data.gender]
     end
 
     def qualifications
-      practitioner.qualifications.map do |qualification_data|
+      source_data.qualifications.map do |qualification_data|
         qualification(qualification_data)
       end
     end

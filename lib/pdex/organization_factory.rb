@@ -1,4 +1,6 @@
 require 'fhir_models'
+require_relative 'address'
+require_relative 'telecom'
 require_relative 'utils/states'
 require_relative 'utils/nucc_codes'
 
@@ -9,10 +11,13 @@ require_relative 'utils/nucc_codes'
 # - endpoint
 module PDEX
   class OrganizationFactory
-    attr_reader :organization
+    include Address
+    include Telecom
+
+    attr_reader :source_data
 
     def initialize(nppes_organization)
-      @organization = nppes_organization
+      @source_data = nppes_organization
     end
 
     def build
@@ -34,7 +39,7 @@ module PDEX
     private
 
     def id
-      "vhdir-organization-#{organization.npi}"
+      "vhdir-organization-#{source_data.npi}"
     end
 
     def meta
@@ -58,7 +63,7 @@ module PDEX
           text: 'NPI'
         },
         system: 'http://hl7.org/fhir/sid/us-npi',
-        value: organization.npi,
+        value: source_data.npi,
         assigner: {
           display: 'Centers for Medicare and Medicaid Services'
         }
@@ -81,34 +86,7 @@ module PDEX
     end
 
     def name
-      organization.name
-    end
-
-    def telecom
-      [
-        {
-          system: 'phone',
-          value: organization.phone
-        }
-      ]
-    end
-
-    def address
-      lines = organization.address.lines
-      city = organization.address.city
-      state = organization.address.state
-      zip = organization.address.zip
-      text = [lines, "#{city}, #{state} #{zip}"].flatten.join(', ')
-      {
-        use: 'work',
-        type: 'both',
-        text: text,
-        line: lines,
-        city: city,
-        state: state,
-        postalCode: zip,
-        country: 'USA'
-      }
+      source_data.name
     end
 
     def contact
@@ -124,9 +102,9 @@ module PDEX
         },
         name: {
           use: 'official',
-          text: "#{organization.contact_first_name} #{organization.contact_last_name}",
-          family: organization.contact_last_name,
-          given: [organization.contact_first_name]
+          text: "#{source_data.contact_first_name} #{source_data.contact_last_name}",
+          family: source_data.contact_last_name,
+          given: [source_data.contact_first_name]
         },
         telecom: [
           telecom.first.merge(

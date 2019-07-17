@@ -18,8 +18,16 @@ module PDEX
       @raw_data['Provider Organization Name (Legal Business Name)']
     end
 
-    def phone
-      format_phone_number(@raw_data['Provider Business Mailing Address Telephone Number'])
+    def phone_numbers
+      phone_number_1 = format_phone_number(@raw_data['Provider Business Mailing Address Telephone Number'])
+      phone_number_2 = format_phone_number(@raw_data['Provider Business Practice Location Address Telephone Number'])
+      [phone_number_1, phone_number_2].uniq
+    end
+
+    def fax_numbers
+      fax_number_1 = format_phone_number(@raw_data['Provider Business Mailing Address Fax Number'])
+      fax_number_2 = format_phone_number(@raw_data['Provider Business Practice Location Address Fax Number'])
+      [fax_number_1, fax_number_2].uniq
     end
 
     def address

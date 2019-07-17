@@ -33,9 +33,15 @@ RSpec.describe PDEX::NPPESOrganization do
     end
   end
 
-  describe '#phone' do
-    it 'returns the phone number' do
-      expect(organization.phone).to eq('5089926553')
+  describe '#phone_numbers' do
+    it 'returns an array of phone numbers' do
+      expect(organization.phone_numbers).to eq(['5089926553'])
+    end
+  end
+
+  describe '#fax_numbers' do
+    it 'returns an array of fax numbers' do
+      expect(organization.fax_numbers).to eq(['5089972498', '5089848420'])
     end
   end
 
