@@ -19,7 +19,8 @@ Validated Healthcare Directory IG.
         VS
   - [ ] `position`
   - [ ] `endpoint`
-- [ ] OrganizationAffiliation
+- [x] OrganizationAffiliation
+  - [ ] `endpoint`
 - [ ] PractitionerRole
 - [ ] Network
 - [ ] InsurancePlan

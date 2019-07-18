@@ -1,11 +1,13 @@
 require 'fhir_models'
 require_relative 'address'
 require_relative 'telecom'
+require_relative 'utils/formatting'
 
 module PDEX
   class LocationFactory
     include Address
     include Telecom
+    include Formatting
 
     attr_reader :source_data
 
@@ -94,7 +96,7 @@ module PDEX
     def identifier
       {
         use: 'secondary',
-        system: "https://#{source_data.name.gsub(/[^\w\s]/, '').gsub(/[\W]/, '-').downcase}.com",
+        system: "https://#{format_for_url(source_data.name)}.com",
         value: 'main campus',
         assigner: {
           reference: "Organization/#{organization_id}",

@@ -18,8 +18,6 @@ RSpec.describe PDEX::OrganizationFactory do
         address: address,
         contact_first_name: 'FNAME',
         contact_last_name: 'LNAME'
-        # gender: 'F',
-        # qualifications: qualifications
       }
     )
   end

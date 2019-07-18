@@ -4,6 +4,7 @@ require 'active_support/core_ext/object'
 module PDEX
   PRACTITIONER_PROFILE_URL = 'http://hl7.org/fhir/uv/vhdir/StructureDefinition/vhdir-practitioner'
   ORGANIZATION_PROFILE_URL = 'http://hl7.org/fhir/uv/vhdir/StructureDefinition/vhdir-organization'
+  ORGANIZATION_AFFILIATION_PROFILE_URL = 'http://hl7.org/fhir/uv/vhdir/StructureDefinition/vhdir-organizationaffiliation'
   LOCATION_PROFILE_URL = 'http://hl7.org/fhir/uv/vhdir/StructureDefinition/vhdir-location'
 
   ACCESSIBILITY_EXTENSION_URL = 'http://hl7.org/fhir/uv/vhdir/StructureDefinition/accessibility'
