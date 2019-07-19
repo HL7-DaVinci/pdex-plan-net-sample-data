@@ -1,0 +1,2 @@
+hpid,partof_id,partof_display,name,alias,phone,address,city,state,zip,prov_type_code,prov_type_display,prov_type_text,,coverage,is_addin
+HPID010000,9990120000,Acme Insurance Co of Massachusetts,Acme of Massechusetts Preferred Provider Network,Acme MA PPO,6075555555,120 St James Ave,Boston,MA,2101,ppo,PPO,Preferred Provider Organization (PPO),,MA,FALSE

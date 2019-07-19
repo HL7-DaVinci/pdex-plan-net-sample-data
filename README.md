@@ -27,7 +27,10 @@ Validated Healthcare Directory IG.
   - [ ] `healthcareService` - hcs code from nucc
   - [ ] `endpoint`
   - [ ] figure out what's going on with network PractitionerRoles in the python impl.
-- [ ] Network
+- [x] Network (this is an Organization profile, so it has the same issues)
+  - [ ] `identifier.period` - is this really needed? hardcoded in python impl.
+  - [ ] `partOf`
+  - [ ] `endpoint`
 - [ ] InsurancePlan
 - [ ] HealthcareService
 - [ ] Endpoint

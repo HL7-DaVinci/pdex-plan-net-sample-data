@@ -2,6 +2,7 @@ require 'active_support'
 require 'active_support/core_ext/object'
 
 module PDEX
+  NETWORK_PROFILE_URL = 'http://hl7.org/fhir/uv/vhdir/StructureDefinition/vhdir-network'
   PRACTITIONER_PROFILE_URL = 'http://hl7.org/fhir/uv/vhdir/StructureDefinition/vhdir-practitioner'
   PRACTITIONER_ROLE_PROFILE_URL = 'http://hl7.org/fhir/uv/vhdir/StructureDefinition/vhdir-practitionerrole'
   ORGANIZATION_PROFILE_URL = 'http://hl7.org/fhir/uv/vhdir/StructureDefinition/vhdir-organization'

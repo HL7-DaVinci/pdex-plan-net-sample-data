@@ -14,10 +14,12 @@ module PDEX
     include Address
     include Telecom
 
-    attr_reader :source_data
+    attr_reader :source_data, :resource_type, :profile
 
     def initialize(nppes_organization)
       @source_data = nppes_organization
+      @resource_type = 'organization'
+      @profile = ORGANIZATION_PROFILE_URL
     end
 
     def build
@@ -39,12 +41,12 @@ module PDEX
     private
 
     def id
-      "vhdir-organization-#{source_data.npi}"
+      "vhdir-#{resource_type}-#{source_data.npi}"
     end
 
     def meta
       {
-        profile: [ORGANIZATION_PROFILE_URL]
+        profile: [profile]
       }
     end
 
