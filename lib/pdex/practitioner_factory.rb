@@ -1,5 +1,6 @@
 require 'fhir_models'
 require_relative 'address'
+require_relative 'fhir_elements'
 require_relative 'telecom'
 require_relative 'utils/states'
 require_relative 'utils/nucc_codes'
@@ -12,6 +13,7 @@ require_relative 'utils/nucc_codes'
 module PDEX
   class PractitionerFactory
     include Address
+    include FHIRElements
     include Telecom
 
     attr_reader :source_data
@@ -103,7 +105,6 @@ module PDEX
       state_display = States.display_name(data.state)
       licensor = States.licensor(data.state)
       licensor_system = States.licensor_system(data.state)
-      qualification_display = NUCCCodes.display(data.taxonomy_code)
       {
         extension: [
           {
@@ -151,17 +152,7 @@ module PDEX
             }
           }
         ],
-        code: {
-          coding: [
-            {
-              system: 'http://nucc.org/provider-taxonomy',
-              code: data.taxonomy_code,
-              display: qualification_display,
-              userSelected: true
-            }
-          ],
-          text: qualification_display
-        },
+        code: nucc_codeable_concept(data),
         issuer: {
           display: licensor
         }

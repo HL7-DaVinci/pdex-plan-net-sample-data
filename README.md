@@ -21,10 +21,16 @@ Validated Healthcare Directory IG.
   - [ ] `endpoint`
 - [x] OrganizationAffiliation
   - [ ] `endpoint`
-- [ ] PractitionerRole
+- [x] PractitionerRole
+  - [ ] `period` && `identifier.period`- is this really needed? hardcoded in python impl.
+  - [ ] snomed codes for `code` and `specialty`
+  - [ ] `healthcareService` - hcs code from nucc
+  - [ ] `endpoint`
+  - [ ] figure out what's going on with network PractitionerRoles in the python impl.
 - [ ] Network
 - [ ] InsurancePlan
 - [ ] HealthcareService
 - [ ] Endpoint
 - [ ] Extension - Geolocation
-- [ ] A script to put it all together and generate the resources
+  - [ ] get real lat/long
+- [ ] A script to put it all together and actually generate the resources
