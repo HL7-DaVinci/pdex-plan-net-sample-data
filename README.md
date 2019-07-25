@@ -31,7 +31,8 @@ Validated Healthcare Directory IG.
   - [ ] `identifier.period` - is this really needed? hardcoded in python impl.
   - [ ] `partOf`
   - [ ] `endpoint`
-- [ ] InsurancePlan
+- [x] InsurancePlan
+  - [ ] How to represent an unlimited benefit?
 - [ ] HealthcareService
 - [ ] Endpoint
 - [ ] Extension - Geolocation
