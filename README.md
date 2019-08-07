@@ -33,7 +33,8 @@ Validated Healthcare Directory IG.
   - [ ] `endpoint`
 - [x] InsurancePlan
   - [ ] How to represent an unlimited benefit?
-- [ ] HealthcareService
+- [x] HealthcareService
+  - [ ] `endpoint`
 - [ ] Endpoint
 - [ ] Extension - Geolocation
   - [ ] get real lat/long
