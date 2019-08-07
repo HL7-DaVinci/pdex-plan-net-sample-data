@@ -2,6 +2,7 @@ require 'active_support'
 require 'active_support/core_ext/object'
 
 module PDEX
+  ENDPOINT_PROFILE_URL = 'http://hl7.org/fhir/uv/vhdir/StructureDefinition/vhdir-endpoint'
   HEALTHCARE_SERVICE_PROFILE_URL = 'http://hl7.org/fhir/uv/vhdir/StructureDefinition/vhdir-healthcareservice'
   INSURANCE_PLAN_PROFILE_URL = 'http://hl7.org/fhir/uv/vhdir/StructureDefinition/vhdir-insuranceplan'
   NETWORK_PROFILE_URL = 'http://hl7.org/fhir/uv/vhdir/StructureDefinition/vhdir-network'

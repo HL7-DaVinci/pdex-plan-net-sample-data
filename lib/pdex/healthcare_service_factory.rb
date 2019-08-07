@@ -5,7 +5,6 @@ require_relative 'utils/nucc_codes'
 module PDEX
   class HealthcareServiceFactory
     include Formatting
-    # include Address
     include Telecom
 
     attr_reader :source_data, :service_type, :profile

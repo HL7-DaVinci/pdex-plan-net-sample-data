@@ -1,6 +1,4 @@
-# require_relative '../../lib/pdex'
 require_relative '../../lib/pdex/healthcare_service_factory'
-# require_relative '../../lib/pdex/utils/nucc_codes'
 
 RSpec.describe PDEX::HealthcareServiceFactory do
   let(:organization) do
@@ -15,30 +13,17 @@ RSpec.describe PDEX::HealthcareServiceFactory do
         fax_numbers: [
           '0987654321'
         ],
-        # address: address,
         contact_first_name: 'FNAME',
         contact_last_name: 'LNAME'
       }
     )
   end
 
-  # let(:address) do
-  #   OpenStruct.new(
-  #     {
-  #       lines: ['1000 ASYLUM AVE', 'STE 4309'],
-  #       city: 'HARTFORD',
-  #       state: 'CT',
-  #       zip: '061051770'
-  #     }
-  #   )
-  # end
-
   let(:factory) { described_class.new(organization, type) }
   let(:resource) { factory.build }
   let(:type) { 'administration' }
   let(:telecom) { resource.telecom.first }
   let(:identifier) { resource.identifier.first }
-  # let(:contact) { resource.contact.first }
 
   describe '.initialize' do
     it 'creates an HealthcareServiceFactory instance' do

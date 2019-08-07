@@ -35,7 +35,14 @@ Validated Healthcare Directory IG.
   - [ ] How to represent an unlimited benefit?
 - [x] HealthcareService
   - [ ] `endpoint`
-- [ ] Endpoint
+- [x] Endpoint
+  - [x] for Organizations
+  - [ ] for Locations
+  - [ ] for OrganizationAffiliations
+  - [ ] for PractitionerRoles
+  - [ ] for Networks
+  - [ ] for HealthcareServices
+  - [ ] `period` - is this really needed? hardcoded in python impl.
 - [ ] Extension - Geolocation
   - [ ] get real lat/long
 - [ ] A script to put it all together and actually generate the resources
