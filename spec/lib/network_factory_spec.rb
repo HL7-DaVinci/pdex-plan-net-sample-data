@@ -9,7 +9,9 @@ RSpec.describe PDEX::NetworkFactory do
       name: 'NAME',
       phone_numbers: ['1234567890'],
       fax_numbers: [],
-      address: address
+      address: address,
+      part_of_id: 'PART_OF_ID',
+      part_of_name: 'PART_OF'
     )
   end
 
@@ -95,6 +97,12 @@ RSpec.describe PDEX::NetworkFactory do
       expect(contact.purpose.coding.first.code).to eq('ADMIN')
       expect(contact.telecom.first.extension).to be_present
       expect(contact.address).to be_present
+    end
+
+    it 'includes a part of reference' do
+      expect(resource.partOf).to be_present
+      expect(resource.partOf.reference).to eq('Organization/vhdir-organization-PART_OF_ID')
+      expect(resource.partOf.display).to eq('PART_OF')
     end
   end
 end

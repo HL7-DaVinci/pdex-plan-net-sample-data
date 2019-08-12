@@ -8,6 +8,12 @@ module PDEX
       @profile = NETWORK_PROFILE_URL
     end
 
+    private
+
+    def build_params
+      super.merge(partOf: part_of)
+    end
+
     def identifier
       {
         use: 'official',
@@ -43,6 +49,13 @@ module PDEX
           text: source_data.type[:text]
         }
       ]
+    end
+
+    def part_of
+      {
+        reference: "Organization/vhdir-organization-#{source_data.part_of_id}",
+        display: source_data.part_of_name
+      }
     end
   end
 end

@@ -26,21 +26,14 @@ RSpec.describe PDEX::OrganizationAffiliationFactory do
     OpenStruct.new(
       {
         id: 'vhdir-organization-54321',
-        name: 'NETWORK'
+        name: 'NETWORK',
+        part_of_id: '12345',
+        part_of_name: 'MANAGING ORG'
       }
     )
   end
 
-  let(:managing_org) do
-    OpenStruct.new(
-      {
-        id: 'vhdir-organization-12345',
-        name: 'MANAGING ORG'
-      }
-    )
-  end
-
-  let(:factory) { described_class.new(organization, network: network, managing_org: managing_org) }
+  let(:factory) { described_class.new(organization, network: network) }
   let(:resource) { factory.build }
   let(:identifier) { resource.identifier.first }
 

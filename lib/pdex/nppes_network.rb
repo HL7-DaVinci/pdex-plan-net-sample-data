@@ -53,5 +53,13 @@ module PDEX
     def contact_last_name
       Faker::Name.last_name
     end
+
+    def part_of_id
+      raw_data['partof_id']
+    end
+
+    def part_of_name
+      raw_data['partof_display']
+    end
   end
 end

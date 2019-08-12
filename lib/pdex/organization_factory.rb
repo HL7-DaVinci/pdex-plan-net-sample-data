@@ -23,22 +23,24 @@ module PDEX
     end
 
     def build
-      FHIR::Organization.new(
-        {
-          id: id,
-          meta: meta,
-          identifier: identifier,
-          active: true,
-          type: type,
-          name: name,
-          telecom: telecom,
-          address: address,
-          contact: contact,
-        }
-      )
+      FHIR::Organization.new(build_params)
     end
 
     private
+
+    def build_params
+      {
+        id: id,
+        meta: meta,
+        identifier: identifier,
+        active: true,
+        type: type,
+        name: name,
+        telecom: telecom,
+        address: address,
+        contact: contact,
+      }
+    end
 
     def id
       "vhdir-#{resource_type}-#{source_data.npi}"

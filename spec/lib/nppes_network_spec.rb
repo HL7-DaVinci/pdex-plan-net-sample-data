@@ -77,4 +77,16 @@ RSpec.describe PDEX::NPPESNetwork do
       expect(network.contact_last_name).to be_present
     end
   end
+
+  describe '#part_of_id' do
+    it 'returns the name' do
+      expect(network.part_of_id).to eq('9990120000')
+    end
+  end
+
+  describe '#part_of_name' do
+    it 'returns the name' do
+      expect(network.part_of_name).to eq('Acme Insurance Co of Massachusetts')
+    end
+  end
 end

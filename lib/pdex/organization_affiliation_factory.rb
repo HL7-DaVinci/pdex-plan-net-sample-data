@@ -11,12 +11,11 @@ module PDEX
     include Telecom
     include Formatting
 
-    attr_reader :source_data, :network, :managing_org
+    attr_reader :source_data, :network
 
-    def initialize(nppes_organization, network:, managing_org:)
+    def initialize(nppes_organization, network:)
       @source_data = nppes_organization
       @network = network
-      @managing_org = managing_org
     end
 
     def build
@@ -58,17 +57,21 @@ module PDEX
           ],
           text: 'Network Provider ID'
         },
-        system: "https://#{format_for_url(managing_org.id)}.com",
+        system: "https://#{format_for_url(part_of_id)}.com",
         value: SecureRandom.hex(7),
         assigner: {
-          display: managing_org.name
+          display: network.part_of_name
         }
       }
     end
 
+    def part_of_id
+      "vhdir-organization-#{network.part_of_id}"
+    end
+
     def organization
       {
-        reference: "Organization/#{network.id}",
+        reference: "Organization/vhdir-organization-#{network.npi}",
         display: network.name
       }
     end

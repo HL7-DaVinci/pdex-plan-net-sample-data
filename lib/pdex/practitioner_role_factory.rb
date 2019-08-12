@@ -74,7 +74,7 @@ module PDEX
 
     def organization
       {
-        reference: "Practitioner/vhdir-practitioner-#{organization_data.npi}",
+        reference: "Practitioner/vhdir-organization-#{organization_data.npi}",
         display: organization_data.name
       }
     end

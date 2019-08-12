@@ -92,42 +92,16 @@ RSpec.describe PDEX::NPPESPlan do
       expect(plan.network_name).to eq('Acme of Massechusetts Preferred Provider Network')
     end
   end
-  # describe '#phone_numbers' do
-  #   it 'returns an array of phone numbers' do
-  #     expect(plan.phone_numbers).to eq(['6075555555'])
-  #   end
-  # end
 
-  # describe '#fax_numbers' do
-  #   it 'returns an empty array' do
-  #     expect(plan.fax_numbers).to eq([])
-  #   end
-  # end
+  describe '#part_of_id' do
+    it 'returns the name' do
+      expect(plan.part_of_id).to eq('9990210000')
+    end
+  end
 
-  # describe '#address' do
-  #   it 'returns the address' do
-  #     expected_address = OpenStruct.new(
-  #       {
-  #         lines: ['120 St James Ave'],
-  #         city: 'Boston',
-  #         state: 'MA',
-  #         zip: '02101'
-  #       }
-  #     )
-
-  #     expect(plan.address).to eq(expected_address)
-  #   end
-  # end
-
-  # describe '#contact_first_name' do
-  #   it 'returns a name' do
-  #     expect(plan.contact_first_name).to be_present
-  #   end
-  # end
-
-  # describe '#contact_last_name' do
-  #   it 'returns a name' do
-  #     expect(plan.contact_last_name).to be_present
-  #   end
-  # end
+  describe '#part_of_name' do
+    it 'returns the name' do
+      expect(plan.part_of_name).to eq('Acme Insurance Co')
+    end
+  end
 end
