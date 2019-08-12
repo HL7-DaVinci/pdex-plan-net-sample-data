@@ -43,5 +43,13 @@ module PDEX
         }
       )
     end
+
+    def contact_first_name
+      raw_data['Authorized Official First Name']
+    end
+
+    def contact_last_name
+      raw_data['Authorized Official Last Name']
+    end
   end
 end

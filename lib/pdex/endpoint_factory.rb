@@ -8,7 +8,7 @@ module PDEX
 
     def initialize(source_data, source_type)
       @source_data = source_data
-      @source_type = source_type
+      @source_type = source_type.downcase
       @profile = ENDPOINT_PROFILE_URL
     end
 

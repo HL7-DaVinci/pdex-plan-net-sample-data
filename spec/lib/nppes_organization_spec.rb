@@ -33,6 +33,18 @@ RSpec.describe PDEX::NPPESOrganization do
     end
   end
 
+  describe '#contact_first_name' do
+    it 'returns the name' do
+      expect(organization.contact_first_name).to eq('CHERYL')
+    end
+  end
+
+  describe '#contact_last_name' do
+    it 'returns the name' do
+      expect(organization.contact_last_name).to eq('BARTLETT')
+    end
+  end
+
   describe '#phone_numbers' do
     it 'returns an array of phone numbers' do
       expect(organization.phone_numbers).to eq(['5089926553'])

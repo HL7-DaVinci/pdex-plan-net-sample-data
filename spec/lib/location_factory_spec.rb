@@ -16,8 +16,6 @@ RSpec.describe PDEX::LocationFactory do
           '0987654321'
         ],
         address: address,
-        gender: 'F',
-        qualifications: qualifications
       }
     )
   end
