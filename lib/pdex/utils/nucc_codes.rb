@@ -19,11 +19,12 @@ module PDEX
     def self.specialty_codes(specialty_type)
       return [specialty_type] if specialty_type == 'miscellaneous'
 
+      binding.pry if SERVICE_CODES[specialty_type].blank?
       SERVICE_CODES[specialty_type].flat_map do |code|
         if code.length != 3
           code
         else
-          CODES.select { |key, _v| key.start_with? code }
+          CODES.select { |key, _v| key.to_s.start_with? code }
             .keys
         end
       end

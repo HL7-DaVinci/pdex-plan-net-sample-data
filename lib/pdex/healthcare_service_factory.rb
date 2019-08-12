@@ -40,7 +40,7 @@ module PDEX
     private
 
     def id
-      "#{service_type}-healthcareservice-#{source_data.npi}"
+      "#{format_for_url(service_type)}-healthcareservice-#{source_data.npi}"
     end
 
     def meta
