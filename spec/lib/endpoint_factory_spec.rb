@@ -5,6 +5,7 @@ RSpec.describe PDEX::EndpointFactory do
   let(:resource) { factory.build }
   let(:contact) { resource.contact.first }
   let(:identifier) { resource.identifier.first }
+  let(:use_case) { resource.extension.find { |extension| extension.url == PDEX::ENDPOINT_USE_CASE_EXTENSION_URL } }
 
   # These are overridden in the #build tests
   let(:source_data) { {} }
@@ -52,22 +53,6 @@ RSpec.describe PDEX::EndpointFactory do
       it 'includes an address' do
         expect(resource.address).to be_present
       end
-      # it 'includes an identifier' do
-      #   expect(identifier.type.coding.first.code).to eq('PRN')
-      #   expect(identifier.value).to eq("#{organization.npi}-#{type}")
-      # end
-
-      # it 'includes providedBy' do
-      #   expect(resource.providedBy).to be_present
-      # end
-
-      # it 'includes a type' do
-      #   expect(resource.type).to be_present
-      # end
-
-      # it 'includes a location reference' do
-      #   expect(resource.location).to be_present
-      # end
 
       it 'includes a name' do
         expect(resource.name).to eq("#{source_data.name} Direct Address")
@@ -83,15 +68,9 @@ RSpec.describe PDEX::EndpointFactory do
         expect(contact.value).to eq('1234567890')
       end
 
-      # it 'includes a comment' do
-      #   expect(resource.comment).to be_present
-      #   expect(resource.comment).to eq 'Specialties include: Registered Nurse/Administrator, Specialist/Technologist, Health Information/Registered Record Administrator, Pathology/Clinical Laboratory Director, Non-physician'
-      # end
-
-      # it 'includes specalties' do
-      #   expect(resource.specialty).to be_present
-      #   expect(resource.specialty.length).to eq(3)
-      # end
+      it 'includes a use case' do
+        expect(use_case).to be_present
+      end
     end
   end
 end

@@ -25,6 +25,9 @@ module PDEX
           payloadType: payload_type,
           payloadMimeType: payload_mime_type,
           address: address,
+          extension: [
+            use_case_extension
+          ]
         }
       )
     end
@@ -90,6 +93,30 @@ module PDEX
     def address
       name_slug = format_for_url(source_data.name)
       "mailto:#{name_slug}@direct.#{name_slug}.org"
+    end
+
+    def use_case_extension
+      {
+        url: ENDPOINT_USE_CASE_EXTENSION_URL,
+        extension: [
+          {
+            url: 'type',
+            valueCodeableConcept: {
+              coding: [
+                {
+                  system: ENDPOINT_USE_CASE_SYSTEM_URL,
+                  code: 'treatment',
+                  display: 'treatment'
+                }
+              ]
+            }
+          },
+          {
+            url: 'standard',
+            valueUri: 'http://wiki.directproject.org/File:2011-03-09_PDF_-_XDR_and_XDM_for_Direct_Messaging_Specification_FINAL.pdf'
+          }
+        ]
+      }
     end
   end
 end

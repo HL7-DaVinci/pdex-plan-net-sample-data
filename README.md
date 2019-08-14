@@ -38,7 +38,7 @@ Validated Healthcare Directory IG.
   - [ ] ContactPoint availableTime
   - [ ] `endpoint`
 - [x] Endpoint
-  - [ ] TODO: use case extension
+  - [x] use case extension
   - [x] for Organizations
   - [ ] for Locations
   - [ ] for OrganizationAffiliations
