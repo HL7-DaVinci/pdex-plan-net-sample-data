@@ -129,5 +129,9 @@ RSpec.describe PDEX::PractitionerFactory do
       expect(resource.qualification.first.code.coding.first.display).to eq(qualification_display)
       expect(resource.qualification.first.code.coding.first.code).to eq(qualifications.first.taxonomy_code)
     end
+
+    it 'includes communication' do
+      expect(resource.communication).to be_present
+    end
   end
 end

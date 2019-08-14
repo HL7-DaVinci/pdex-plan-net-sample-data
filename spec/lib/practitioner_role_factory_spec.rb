@@ -115,34 +115,5 @@ RSpec.describe PDEX::PractitionerRoleFactory do
       expect(phone_numbers).to eq(['1234567890', '2345678901'])
       expect(fax_numbers).to eq(['0987654321'])
     end
-
-    # it 'includes an address' do
-    #   expected_address = {
-    #     use: 'work',
-    #     type: 'both',
-    #     text: "#{address.lines.first}, #{address.lines.last}, #{address.city}, #{address.state} #{address.zip}",
-    #     line: [address.lines.first, address.lines.last],
-    #     city: address.city,
-    #     state: address.state,
-    #     postalCode: address.zip,
-    #     country: 'USA'
-    #   }
-
-    #   expected_address.each do |key, value|
-    #     expect(resource.address.first.send(key)).to eq(value)
-    #   end
-    # end
-
-    # it 'includes a gender' do
-    #   expect(resource.gender).to eq('female')
-    # end
-
-    # it 'includes qualifications' do
-    #   expect(resource.qualification.length).to eq(nppes_practitioner.qualifications.length)
-    #   qualification_display = PDEX::NUCCCodes.display(nppes_practitioner.qualifications.first.taxonomy_code)
-    #   expect(resource.qualification.first.code.text).to eq(qualification_display)
-    #   expect(resource.qualification.first.code.coding.first.display).to eq(qualification_display)
-    #   expect(resource.qualification.first.code.coding.first.code).to eq(qualifications.first.taxonomy_code)
-    # end
   end
 end

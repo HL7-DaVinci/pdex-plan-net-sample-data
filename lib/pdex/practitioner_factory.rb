@@ -33,7 +33,8 @@ module PDEX
           telecom: telecom,
           address: address,
           gender: gender,
-          qualification: qualifications
+          qualification: qualifications,
+          communication: communication
         }
       )
     end
@@ -156,6 +157,61 @@ module PDEX
         issuer: {
           display: licensor
         }
+      }
+    end
+
+    def communication
+      english = {
+        coding: [
+          {
+            system: 'urn:ietf:bcp:47',
+            code: 'en',
+            display: 'English'
+          }
+        ],
+        text: 'English'
+      }
+      [
+        english,
+        second_language((source_data.name.first + source_data.name.last).length % 10)
+      ].compact
+    end
+
+    def second_language(n)
+      language = [
+        {
+          code: 'ht',
+          display: 'Haitian Creole'
+        },
+        {
+          code: 'zh',
+          display: 'Chinese'
+        },
+        {
+          code: 'es',
+          display: 'Spanish'
+        },
+        {
+          code: 'pt',
+          display: 'Portuguese'
+        },
+        {
+          code: 'vi',
+          display: 'Vietnamese'
+        }
+      ][n]
+
+      return if language.blank?
+
+      {
+        coding: [
+          {
+            system: 'urn:ietf:bcp:47',
+            code: language[:code],
+            display: language[:display]
+          }
+        ],
+        text: language[:display]
       }
     end
   end

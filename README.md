@@ -8,8 +8,8 @@ Validated Healthcare Directory IG.
   - [ ] `partOf`
   - [ ] `endpoint`
 - [x] Practitioner
-  - [ ] `communication` - is this really needed? python impl. randomly chooses
-        English or English and Spanish
+  - [x] `communication`
+  - [ ] `communication` proficiency extension
   - [ ] `birthDate` - is this really needed? hardcoded in python impl.
 - [x] Location
   - [ ] `network` extension in `newpatients` extension
