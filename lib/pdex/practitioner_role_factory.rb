@@ -38,7 +38,7 @@ module PDEX
     private
 
     def id
-      "vhdir-practitionerrole-#{source_data.npi}"
+      "plannet-practitionerrole-#{source_data.npi}"
     end
 
     def meta
@@ -67,14 +67,14 @@ module PDEX
 
     def practitioner
       {
-        reference: "Practitioner/vhdir-practitioner-#{source_data.npi}",
+        reference: "Practitioner/plannet-practitioner-#{source_data.npi}",
         display: "#{source_data.name.first} #{source_data.name.last}"
       }
     end
 
     def organization
       {
-        reference: "Practitioner/vhdir-organization-#{organization_data.npi}",
+        reference: "Practitioner/plannet-organization-#{organization_data.npi}",
         display: organization_data.name
       }
     end
@@ -90,7 +90,7 @@ module PDEX
     def location
       [
         {
-          reference: "Location/vhdir-location-#{organization_data.npi}",
+          reference: "Location/plannet-location-#{organization_data.npi}",
           display: organization_data.name
         }
       ]

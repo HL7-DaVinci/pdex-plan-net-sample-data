@@ -92,7 +92,7 @@ RSpec.describe PDEX::LocationFactory do
     it 'includes an identifier' do
       identifier = resource.identifier.first
       expect(identifier.system).to eq('https://name-healthcare-inc.com')
-      expect(identifier.assigner.reference).to eq("Organization/vhdir-organization-#{nppes_data.npi}")
+      expect(identifier.assigner.reference).to eq("Organization/plannet-organization-#{nppes_data.npi}")
     end
 
     it 'includes a name' do

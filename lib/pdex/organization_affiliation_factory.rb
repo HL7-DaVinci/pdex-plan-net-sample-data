@@ -35,7 +35,7 @@ module PDEX
     private
 
     def id
-      "vhdir-organizationaffiliation-#{source_data.npi}"
+      "plannet-organizationaffiliation-#{source_data.npi}"
     end
 
     def meta
@@ -66,19 +66,19 @@ module PDEX
     end
 
     def part_of_id
-      "vhdir-organization-#{network.part_of_id}"
+      "plannet-organization-#{network.part_of_id}"
     end
 
     def organization
       {
-        reference: "Organization/vhdir-organization-#{network.npi}",
+        reference: "Organization/plannet-organization-#{network.npi}",
         display: network.name
       }
     end
 
     def participatingOrganization
       {
-        reference: "Organization/vhdir-organization-#{source_data.npi}",
+        reference: "Organization/plannet-organization-#{source_data.npi}",
         display: source_data.name
       }
     end

@@ -69,7 +69,7 @@ module PDEX
         system: identifier_system,
         value: "#{source_data.npi}-#{service_type}",
         assigner: {
-          reference: "Organization/vhdir-organization-#{source_data.npi}",
+          reference: "Organization/plannet-organization-#{source_data.npi}",
           display: source_data.name
         }
       }
@@ -77,7 +77,7 @@ module PDEX
 
     def provided_by
       {
-        reference: "Organization/vhdir-organization-#{source_data.npi}",
+        reference: "Organization/plannet-organization-#{source_data.npi}",
         display: source_data.name
       }
     end
@@ -104,7 +104,7 @@ module PDEX
     def location
       [
         {
-          reference: "Location/vhdir-location-#{source_data.npi}",
+          reference: "Location/plannet-location-#{source_data.npi}",
           display: source_data.name
         }
       ]

@@ -25,7 +25,7 @@ RSpec.describe PDEX::OrganizationAffiliationFactory do
   let(:network) do
     OpenStruct.new(
       {
-        id: 'vhdir-organization-54321',
+        id: 'plannet-organization-54321',
         name: 'NETWORK',
         part_of_id: '12345',
         part_of_name: 'MANAGING ORG'

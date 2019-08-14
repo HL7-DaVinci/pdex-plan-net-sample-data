@@ -75,7 +75,7 @@ RSpec.describe PDEX::EndpointFactory do
 
       it 'includes a managing organization reference' do
         expect(resource.managingOrganization.display).to eq(source_data.name)
-        expect(resource.managingOrganization.reference).to eq("Organization/vhdir-organization-#{source_data.npi}")
+        expect(resource.managingOrganization.reference).to eq("Organization/plannet-organization-#{source_data.npi}")
       end
 
       it 'includes contact information' do

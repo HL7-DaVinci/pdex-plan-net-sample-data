@@ -41,11 +41,11 @@ module PDEX
     private
 
     def id
-      "vhdir-location-#{source_data.npi}"
+      "plannet-location-#{source_data.npi}"
     end
 
     def organization_id
-      "vhdir-organization-#{source_data.npi}"
+      "plannet-organization-#{source_data.npi}"
     end
 
     def meta

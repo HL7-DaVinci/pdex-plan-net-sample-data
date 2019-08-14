@@ -41,7 +41,7 @@ module PDEX
     private
 
     def id
-      "vhdir-practitioner-#{source_data.npi}"
+      "plannet-practitioner-#{source_data.npi}"
     end
 
     def meta
@@ -108,7 +108,7 @@ module PDEX
       {
         extension: [
           {
-            url: 'http://hl7.org/fhir/uv/vhdir/StructureDefinition/practitioner-qualification',
+            url: PRACTITIONER_QUALIFICATION_EXTENSION_URL,
             extension: [
               {
                 url: 'status',

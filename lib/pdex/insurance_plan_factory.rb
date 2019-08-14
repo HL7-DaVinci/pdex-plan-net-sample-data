@@ -34,7 +34,7 @@ module PDEX
     private
 
     def id
-      "vhdir-#{resource_type}-#{source_data.id}"
+      "plannet-#{resource_type}-#{source_data.id}"
     end
 
     def meta
@@ -62,7 +62,7 @@ module PDEX
         {
           coding: [
             {
-              system: 'http://hl7.org/fhir/uv/vhdir/CodeSystem/payercharacteristics',
+              system: PAYER_CHARACTERISTICS_CODE_SYSTEM_URL,
               code: source_data.type,
               display: source_data.type_display
             }
@@ -89,21 +89,21 @@ module PDEX
 
     def owned_by
       {
-        reference: "vhdir-organization-#{source_data.owner_id}",
+        reference: "plannet-organization-#{source_data.owner_id}",
         display: source_data.owner_name
       }
     end
 
     def administered_by
       {
-        reference: "vhdir-organization-#{source_data.administrator_id}",
+        reference: "plannet-organization-#{source_data.administrator_id}",
         display: source_data.administrator_name
       }
     end
 
     def coverage_area
       {
-        reference: "vhdir-location-#{format_for_url(source_data.coverage)}",
+        reference: "plannet-location-#{format_for_url(source_data.coverage)}",
         display: source_data.coverage
       }
     end
@@ -123,7 +123,7 @@ module PDEX
             },
             network: [
               {
-                reference: "Organization/vhdir-organization-#{source_data.network_id}",
+                reference: "Organization/plannet-organization-#{source_data.network_id}",
                 display: source_data.network_name
               }
             ],
@@ -133,7 +133,7 @@ module PDEX
                   coding: [
                     {
                       code: 'prev',
-                      system: 'http://hl7.org/fhir/uv/vhdir/CodeSystem/payercharacteristics',
+                      system: PAYER_CHARACTERISTICS_CODE_SYSTEM_URL,
                       display: 'Preventive Care/Screening/Immunization',
                     }
                   ],
@@ -150,7 +150,7 @@ module PDEX
                       coding: [
                         {
                           code: 'visitsperyr',
-                          system: 'http://hl7.org/fhir/uv/vhdir/CodeSystem/payercharacteristics',
+                          system: PAYER_CHARACTERISTICS_CODE_SYSTEM_URL,
                           display: 'Visits per year'
                         }
                       ],
@@ -164,7 +164,7 @@ module PDEX
                   coding: [
                     {
                       code: 'pcpov',
-                      system: 'http://hl7.org/fhir/uv/vhdir/CodeSystem/payercharacteristics',
+                      system: PAYER_CHARACTERISTICS_CODE_SYSTEM_URL,
                       display: 'Primary care visit to treat an injury or illness'
                     }
                   ]

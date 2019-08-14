@@ -34,7 +34,7 @@ RSpec.describe PDEX::InsurancePlanFactory do
     end
 
     it 'includes an id' do
-      expect(resource.id).to eq("vhdir-insuranceplan-#{plan.id}")
+      expect(resource.id).to eq("plannet-insuranceplan-#{plan.id}")
     end
 
     it 'includes a meta field' do
@@ -59,17 +59,17 @@ RSpec.describe PDEX::InsurancePlanFactory do
     end
 
     it 'includes an owner reference' do
-      expect(resource.ownedBy.reference).to eq("vhdir-organization-#{plan.owner_id}")
+      expect(resource.ownedBy.reference).to eq("plannet-organization-#{plan.owner_id}")
       expect(resource.ownedBy.display).to eq(plan.owner_name)
     end
 
     it 'includes an administrator reference' do
-      expect(resource.administeredBy.reference).to eq("vhdir-organization-#{plan.administrator_id}")
+      expect(resource.administeredBy.reference).to eq("plannet-organization-#{plan.administrator_id}")
       expect(resource.administeredBy.display).to eq(plan.administrator_name)
     end
 
     it 'includes a coverage area reference' do
-      expect(resource.coverageArea.first.reference).to eq("vhdir-location-coverage-area")
+      expect(resource.coverageArea.first.reference).to eq("plannet-location-coverage-area")
       expect(resource.coverageArea.first.display).to eq(plan.coverage)
     end
 

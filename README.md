@@ -5,7 +5,6 @@ Validated Healthcare Directory IG.
 
 ## Progress
 - [x] Organization
-  - [ ] `identifier.period` - is this really needed? hardcoded in python impl.
   - [ ] `partOf`
   - [ ] `endpoint`
 - [x] Practitioner
@@ -21,6 +20,8 @@ Validated Healthcare Directory IG.
   - [ ] `endpoint`
 - [x] OrganizationAffiliation
   - [ ] `endpoint`
+  - [ ] `location`
+  - [ ] `healthcareService`
 - [x] PractitionerRole
   - [ ] `period` && `identifier.period`- is this really needed? hardcoded in python impl.
   - [ ] snomed codes for `code` and `specialty`
@@ -28,14 +29,16 @@ Validated Healthcare Directory IG.
   - [ ] `endpoint`
   - [ ] figure out what's going on with network PractitionerRoles in the python impl.
 - [x] Network (this is an Organization profile, so it has the same issues)
-  - [ ] `identifier.period` - is this really needed? hardcoded in python impl.
-  - [ ] `partOf`
+  - [x] `partOf`
   - [ ] `endpoint`
 - [x] InsurancePlan
   - [ ] How to represent an unlimited benefit?
 - [x] HealthcareService
+  - [ ] TODO: new patients extension
+  - [ ] ContactPoint availableTime
   - [ ] `endpoint`
 - [x] Endpoint
+  - [ ] TODO: use case extension
   - [x] for Organizations
   - [ ] for Locations
   - [ ] for OrganizationAffiliations

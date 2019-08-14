@@ -43,7 +43,7 @@ module PDEX
     end
 
     def id
-      "vhdir-#{resource_type}-#{source_data.npi}"
+      "plannet-#{resource_type}-#{source_data.npi}"
     end
 
     def meta
@@ -116,7 +116,7 @@ module PDEX
               use: 'work',
               extension: [
                 {
-                  url: 'http://hl7.org/fhir/uv/vhdir/StructureDefinition/contactpoint-availabletime',
+                  url: CONTACT_POINT_AVAILABLE_TIME_EXTENSION_URL,
                   extension:
                     ['mon', 'tue', 'wed', 'thu', 'fri']
                     .map { |day| { url: 'daysOfWeek', valueCode: day } }

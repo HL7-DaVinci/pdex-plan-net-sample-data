@@ -50,7 +50,7 @@ RSpec.describe PDEX::NetworkFactory do
     end
 
     it 'includes an id' do
-      expect(resource.id).to eq("vhdir-network-#{network.npi}")
+      expect(resource.id).to eq("plannet-network-#{network.npi}")
     end
 
     it 'includes a meta field' do
@@ -101,7 +101,7 @@ RSpec.describe PDEX::NetworkFactory do
 
     it 'includes a part of reference' do
       expect(resource.partOf).to be_present
-      expect(resource.partOf.reference).to eq('Organization/vhdir-organization-PART_OF_ID')
+      expect(resource.partOf.reference).to eq('Organization/plannet-organization-PART_OF_ID')
       expect(resource.partOf.display).to eq('PART_OF')
     end
   end
