@@ -34,7 +34,7 @@ Validated Healthcare Directory IG.
 - [x] InsurancePlan
   - [ ] How to represent an unlimited benefit?
 - [x] HealthcareService
-  - [ ] TODO: new patients extension
+  - [x] new patients extension
   - [ ] ContactPoint availableTime
   - [ ] `endpoint`
 - [x] Endpoint

@@ -22,7 +22,7 @@ module PDEX
           meta: meta,
           extension: [
             accessibility_extension,
-            new_patients_extensions,
+            new_patients_extension,
             new_patient_profile_extension
           ],
           identifier: identifier,
@@ -70,17 +70,13 @@ module PDEX
       }
     end
 
-    def new_patients_extensions
+    def new_patients_extension
       {
         url: NEW_PATIENTS_EXTENSION_URL,
         extension: [
           {
             url: 'acceptingPatients',
-            valueBoolean: true
-          },
-          {
-            url: 'network',
-            valueReference: '' # TODO
+            valueBoolean: name.length.odd?
           }
         ]
       }

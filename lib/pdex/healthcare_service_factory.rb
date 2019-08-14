@@ -32,7 +32,10 @@ module PDEX
           referralMethod: referral_method,
           appointmentRequired: true,
           telecom: telecom,
-          availableTime: available_time
+          availableTime: available_time,
+          extension: [
+            new_patients_extension
+          ]
         }
       )
     end
@@ -180,6 +183,18 @@ module PDEX
           text: display
         }
       end
+    end
+
+    def new_patients_extension
+      {
+        url: NEW_PATIENTS_EXTENSION_URL,
+        extension: [
+          {
+            url: 'acceptingPatients',
+            valueBoolean: name.length.odd?
+          }
+        ]
+      }
     end
   end
 end

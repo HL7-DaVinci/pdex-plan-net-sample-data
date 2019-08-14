@@ -24,6 +24,7 @@ RSpec.describe PDEX::HealthcareServiceFactory do
   let(:type) { 'administration' }
   let(:telecom) { resource.telecom.first }
   let(:identifier) { resource.identifier.first }
+  let(:new_patients_extension) { resource.extension.find { |extension| extension.url == PDEX::NEW_PATIENTS_EXTENSION_URL } }
 
   describe '.initialize' do
     it 'creates an HealthcareServiceFactory instance' do
@@ -78,6 +79,10 @@ RSpec.describe PDEX::HealthcareServiceFactory do
     it 'includes specalties' do
       expect(resource.specialty).to be_present
       expect(resource.specialty.length).to eq(3)
+    end
+
+    it 'includes a new patients extension' do
+      expect(new_patients_extension).to be_present
     end
   end
 end
