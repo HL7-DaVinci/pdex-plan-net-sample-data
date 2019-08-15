@@ -169,7 +169,8 @@ module PDEX
             display: 'English'
           }
         ],
-        text: 'English'
+        text: 'English',
+        extension: proficiency_extension(true)
       }
       [
         english,
@@ -211,7 +212,54 @@ module PDEX
             display: language[:display]
           }
         ],
-        text: language[:display]
+        text: language[:display],
+        extension: [proficiency_extension]
+      }
+    end
+
+    PROFICIENCIES = [
+      {
+        code: '06',
+        display: 'Memorized proficiency'
+      },
+      {
+        code: '10',
+        display: 'Elementary proficiency'
+      },
+      {
+        code: '20',
+        display: 'Limited working proficiency'
+      },
+      {
+        code: '30',
+        display: 'General professional proficiency'
+      },
+      {
+        code: '40',
+        display: 'Advanced professional proficiency'
+      },
+      {
+        code: '50',
+        display: 'Functional native proficiency'
+      }
+    ]
+
+    def proficiency_extension(fluent = false)
+      proficiency =
+        if fluent
+          PROFICIENCIES.last
+        else
+          PROFICIENCIES[address[:text].length % PROFICIENCIES.length]
+        end
+
+      {
+        url: PDEX::COMMUNICATION_PROFICIENCY_EXTENSION_URL,
+        valueCodeableConcept: {
+          coding: [
+            proficiency.merge({ system: PDEX::COMMUNICATION_PROFICIENCY_SYSTEM_URL})
+          ],
+          text: proficiency[:display]
+        }
       }
     end
   end

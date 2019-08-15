@@ -9,7 +9,7 @@ Validated Healthcare Directory IG.
   - [ ] `endpoint`
 - [x] Practitioner
   - [x] `communication`
-  - [ ] `communication` proficiency extension
+  - [x] `communication` proficiency extension
   - [ ] `birthDate` - is this really needed? hardcoded in python impl.
 - [x] Location
   - [ ] `network` extension in `newpatients` extension

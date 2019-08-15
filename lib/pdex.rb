@@ -13,6 +13,7 @@ module PDEX
   LOCATION_PROFILE_URL = 'http://hl7.org/fhir/us/davinci-pdex-plan-net/StructureDefinition/plannet-location'
 
   ACCESSIBILITY_EXTENSION_URL = 'http://hl7.org/fhir/uv/vhdir/StructureDefinition/accessibility'
+  COMMUNICATION_PROFICIENCY_EXTENSION_URL = 'http://hl7.org/fhir/uv/vhdir/StructureDefinition/communication-proficiency'
   CONTACT_POINT_AVAILABLE_TIME_EXTENSION_URL = 'http://hl7.org/fhir/us/davinci-pdex-plan-net/StructureDefinition/contactpoint-availabletime'
   ENDPOINT_USE_CASE_EXTENSION_URL = 'http://hl7.org/fhir/uv/vhdir/StructureDefinition/endpoint-usecase'
   NEW_PATIENTS_EXTENSION_URL = 'http://hl7.org/fhir/uv/vhdir/StructureDefinition/newpatients'
@@ -20,6 +21,7 @@ module PDEX
   PRACTITIONER_QUALIFICATION_EXTENSION_URL = 'http://hl7.org/fhir/uv/vhdir/StructureDefinition/practitioner-qualification'
 
   ACCESSIBILITY_CODE_SYSTEM_URL = 'http://hl7.org/fhir/us/davinci-pdex-plan-net/CodeSystem/accessibility'
+  COMMUNICATION_PROFICIENCY_SYSTEM_URL = 'http://hl7.org/fhir/uv/vhdir/CodeSystem/languageproficiency'
   ENDPOINT_USE_CASE_SYSTEM_URL = 'http://hl7.org/fhir/uv/vhdir/CodeSystem/usecase'
   PAYER_CHARACTERISTICS_CODE_SYSTEM_URL = 'http://hl7.org/fhir/uv/vhdir/CodeSystem/payercharacteristics'
 end

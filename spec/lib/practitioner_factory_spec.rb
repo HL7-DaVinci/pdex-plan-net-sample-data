@@ -132,6 +132,12 @@ RSpec.describe PDEX::PractitionerFactory do
 
     it 'includes communication' do
       expect(resource.communication).to be_present
+      proficiency_extensions_present = resource.communication.all? do |communication|
+        communication.extension.any? do |extension|
+          extension.url == PDEX::COMMUNICATION_PROFICIENCY_EXTENSION_URL
+        end
+      end
+      expect(proficiency_extensions_present).to eq(true)
     end
   end
 end
