@@ -74,7 +74,7 @@ module PDEX
 
     def organization
       {
-        reference: "Practitioner/plannet-organization-#{organization_data.npi}",
+        reference: "Organization/plannet-organization-#{organization_data.npi}",
         display: organization_data.name
       }
     end
