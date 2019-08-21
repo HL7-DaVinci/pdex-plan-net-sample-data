@@ -5,7 +5,7 @@ Da Vinci Plan Network IG.
 
 ## Generating resources
 
-Run the followingcommands to generate the sample resources:
+Run the following commands to generate the sample resources:
 ```
 bundle install
 ruby generate.rb
