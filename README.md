@@ -43,4 +43,4 @@ Validated Healthcare Directory IG.
   - [ ] `period` - is this really needed? hardcoded in python impl.
 - [ ] Extension - Geolocation
   - [ ] get real lat/long
-- [ ] A script to put it all together and actually generate the resources
+- [x] A script to put it all together and actually generate the resources

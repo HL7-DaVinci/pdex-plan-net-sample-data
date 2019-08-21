@@ -48,7 +48,7 @@ module PDEX
     def meta
       {
         profile: [PRACTITIONER_PROFILE_URL],
-        versionId: 1
+        versionId: '1'
       }
     end
 
