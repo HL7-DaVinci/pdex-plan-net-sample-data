@@ -11,7 +11,10 @@ module PDEX
     private
 
     def build_params
-      super.merge(partOf: part_of)
+      super.tap do |params|
+        params.merge!(partOf: part_of)
+        params.delete(:telecom)
+      end
     end
 
     def identifier

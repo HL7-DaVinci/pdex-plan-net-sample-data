@@ -99,13 +99,15 @@ module PDEX
     def qualifications
       source_data.qualifications.map do |qualification_data|
         qualification(qualification_data)
-      end
+      end.compact
     end
 
     def qualification(data)
       state_display = States.display_name(data.state)
-      licensor = States.licensor(data.state)
+      licensor = States.licensor(data.state.to_sym)
       licensor_system = States.licensor_system(data.state)
+      return nil if licensor.blank?
+
       {
         extension: [
           {
@@ -140,6 +142,13 @@ module PDEX
           {
             use: 'official',
             type: {
+              coding: [
+                {
+                  code: 'MD',
+                  system: 'http://terminology.hl7.org/CodeSystem/v2-0203',
+                  display: 'Medical License Number'
+                }
+              ],
               text: 'Medical License Number'
             },
             system: licensor_system,

@@ -95,7 +95,7 @@ module PDEX
           coding: [
             {
               system: "#{identifier_system}/service-types",
-              code: service_type,
+              code: format_for_url(service_type),
               display: service_type_display
             }
           ],
