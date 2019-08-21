@@ -1,7 +1,15 @@
 # NPPES to FHIR
 
 This project uses NPPES data to create FHIR resources based on the proposed
-Validated Healthcare Directory IG.
+Da Vinci Plan Network IG.
+
+## Generating resources
+
+Run the followingcommands to generate the sample resources:
+```
+bundle install
+ruby generate.rb
+```
 
 ## Progress
 - [x] Organization
