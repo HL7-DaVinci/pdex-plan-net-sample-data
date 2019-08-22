@@ -1,8 +1,10 @@
 require_relative 'utils/formatting'
+require_relative 'utils/fakes'
 
 module PDEX
   class NPPESPractitioner
     include Formatting
+    include Fakes
 
     attr_reader :raw_data
 
@@ -11,15 +13,15 @@ module PDEX
     end
 
     def npi
-      raw_data['NPI']
+      @npi ||= fake_npi(raw_data['NPI'])
     end
 
     def name
       OpenStruct.new(
         {
-          first: raw_data['Provider First Name'].capitalize,
-          middle: raw_data['Provider Middle Name'].capitalize,
-          last: raw_data['Provider Last Name (Legal Name)'].capitalize,
+          first: first_name,
+          middle: middle_name,
+          last: last_name,
           prefix: raw_data['Provider Name Prefix Text'].capitalize,
           suffix: raw_data['Provider Name Suffix Text'].capitalize,
           credential: raw_data['Provider Credential Text']
@@ -27,16 +29,24 @@ module PDEX
       )
     end
 
+    def first_name
+      @first_name ||= fake_gendered_name(gender)
+    end
+
+    def middle_name
+      @middle_name ||= rand < 0.5 ? fake_gendered_name(gender) : ''
+    end
+
+    def last_name
+      @last_name ||= fake_family_name
+    end
+
     def phone_numbers
-      phone_number_1 = format_phone_number(raw_data['Provider Business Mailing Address Telephone Number'])
-      phone_number_2 = format_phone_number(raw_data['Provider Business Practice Location Address Telephone Number'])
-      [phone_number_1, phone_number_2].uniq
+      @phone_numbers ||= [fake_phone_number]
     end
 
     def fax_numbers
-      fax_number_1 = format_phone_number(raw_data['Provider Business Mailing Address Fax Number'])
-      fax_number_2 = format_phone_number(raw_data['Provider Business Practice Location Address Fax Number'])
-      [fax_number_1, fax_number_2].uniq
+      @fax_numbers ||= [fake_phone_number]
     end
 
     def address

@@ -23,7 +23,7 @@ RSpec.describe PDEX::NPPESOrganization do
 
   describe '#npi' do
     it 'returns the npi' do
-      expect(organization.npi).to eq('1982607537')
+      expect(organization.npi).to eq('1232607537')
     end
   end
 
@@ -35,25 +35,25 @@ RSpec.describe PDEX::NPPESOrganization do
 
   describe '#contact_first_name' do
     it 'returns the name' do
-      expect(organization.contact_first_name).to eq('CHERYL')
+      expect(organization.contact_first_name).to be_present
     end
   end
 
   describe '#contact_last_name' do
     it 'returns the name' do
-      expect(organization.contact_last_name).to eq('BARTLETT')
+      expect(organization.contact_last_name).to be_present
     end
   end
 
   describe '#phone_numbers' do
     it 'returns an array of phone numbers' do
-      expect(organization.phone_numbers).to eq(['5089926553'])
+      expect(organization.phone_numbers).to be_present
     end
   end
 
   describe '#fax_numbers' do
     it 'returns an array of fax numbers' do
-      expect(organization.fax_numbers).to eq(['5089972498', '5089848420'])
+      expect(organization.fax_numbers).to be_present
     end
   end
 

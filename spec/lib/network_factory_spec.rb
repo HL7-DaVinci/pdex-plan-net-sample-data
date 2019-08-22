@@ -34,7 +34,6 @@ RSpec.describe PDEX::NetworkFactory do
 
   let(:factory) { described_class.new(network) }
   let(:resource) { factory.build }
-  let(:telecom) { resource.telecom.first }
   let(:identifier) { resource.identifier.first }
   let(:contact) { resource.contact.first }
 
@@ -68,11 +67,6 @@ RSpec.describe PDEX::NetworkFactory do
 
     it 'includes a name' do
       expect(resource.name).to eq(network.name)
-    end
-
-    it 'includes a phone number' do
-      expect(telecom.system).to eq('phone')
-      expect(telecom.value).to eq('1234567890')
     end
 
     it 'includes an address' do

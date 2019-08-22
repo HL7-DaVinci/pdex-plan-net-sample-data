@@ -53,7 +53,7 @@ RSpec.describe PDEX::NPPESPlan do
 
   describe '#owner_id' do
     it 'returns the owner_id' do
-      expect(plan.owner_id).to eq('9990120000')
+      expect(plan.owner_id).to eq('1230120000')
     end
   end
 
@@ -65,7 +65,7 @@ RSpec.describe PDEX::NPPESPlan do
 
   describe '#administrator_id' do
     it 'returns the administrator_id' do
-      expect(plan.administrator_id).to eq('9990120000')
+      expect(plan.administrator_id).to eq('1230120000')
     end
   end
 

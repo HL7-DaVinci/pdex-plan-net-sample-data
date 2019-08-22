@@ -41,13 +41,13 @@ RSpec.describe PDEX::NPPESNetwork do
 
   describe '#phone_numbers' do
     it 'returns an array of phone numbers' do
-      expect(network.phone_numbers).to eq(['6075555555'])
+      expect(network.phone_numbers).to be_present
     end
   end
 
   describe '#fax_numbers' do
     it 'returns an empty array' do
-      expect(network.fax_numbers).to eq([])
+      expect(network.fax_numbers).to be_present
     end
   end
 
@@ -80,7 +80,7 @@ RSpec.describe PDEX::NPPESNetwork do
 
   describe '#part_of_id' do
     it 'returns the name' do
-      expect(network.part_of_id).to eq('9990120000')
+      expect(network.part_of_id).to eq('1230120000')
     end
   end
 

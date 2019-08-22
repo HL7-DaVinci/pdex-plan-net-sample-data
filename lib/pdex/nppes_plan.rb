@@ -1,9 +1,8 @@
-# require_relative 'utils/formatting'
+require_relative 'utils/fakes'
 
 module PDEX
   class NPPESPlan
-    # include Formatting
-
+    include Fakes
     PLAN_TYPE_DISPLAY = {
       cat: 'Catastrophic',
       bronze: 'Bronze',
@@ -42,7 +41,7 @@ module PDEX
     end
 
     def owner_id
-      raw_data['id']
+      fake_npi(raw_data['id'])
     end
 
     def owner_name
@@ -50,7 +49,7 @@ module PDEX
     end
 
     def administrator_id
-      raw_data['plan_manager_id']
+      fake_npi(raw_data['plan_manager_id'])
     end
 
     def administrator_name

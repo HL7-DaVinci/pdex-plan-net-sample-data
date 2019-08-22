@@ -1,8 +1,10 @@
 require_relative 'utils/formatting'
+require_relative 'utils/fakes'
 
 module PDEX
   class NPPESOrganization
     include Formatting
+    include Fakes
 
     attr_reader :raw_data
 
@@ -11,7 +13,7 @@ module PDEX
     end
 
     def npi
-      raw_data['NPI']
+      @npi ||= fake_npi(raw_data['NPI'])
     end
 
     def name
@@ -19,15 +21,11 @@ module PDEX
     end
 
     def phone_numbers
-      phone_number_1 = format_phone_number(raw_data['Provider Business Mailing Address Telephone Number'])
-      phone_number_2 = format_phone_number(raw_data['Provider Business Practice Location Address Telephone Number'])
-      [phone_number_1, phone_number_2].uniq
+      @phone_numbers ||= [fake_phone_number]
     end
 
     def fax_numbers
-      fax_number_1 = format_phone_number(raw_data['Provider Business Mailing Address Fax Number'])
-      fax_number_2 = format_phone_number(raw_data['Provider Business Practice Location Address Fax Number'])
-      [fax_number_1, fax_number_2].uniq
+      @fax_numbers ||= [fake_phone_number]
     end
 
     def address
@@ -45,11 +43,11 @@ module PDEX
     end
 
     def contact_first_name
-      raw_data['Authorized Official First Name']
+      @contact_first_name ||= fake_first_name
     end
 
     def contact_last_name
-      raw_data['Authorized Official Last Name']
+      @contact_last_name ||= fake_family_name
     end
   end
 end
