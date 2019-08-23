@@ -12,7 +12,7 @@ module PDEX
 
     def build_params
       super.tap do |params|
-        params.merge!(partOf: part_of)
+        params.merge!(partOf: part_of, address: address)
         params.delete(:telecom)
       end
     end

@@ -21,7 +21,7 @@ ruby generate.rb
   - [ ] `birthDate` - is this really needed? hardcoded in python impl.
 - [x] Location
   - [ ] `network` extension in `newpatients` extension
-  - [ ] `position`
+  - [x] `position`
   - [ ] `endpoint`
 - [x] OrganizationAffiliation
   - [ ] `endpoint`
@@ -49,6 +49,6 @@ ruby generate.rb
   - [ ] for Networks
   - [ ] for HealthcareServices
   - [ ] `period` - is this really needed? hardcoded in python impl.
-- [ ] Extension - Geolocation
-  - [ ] get real lat/long
+- [x] Extension - Geolocation
+  - [x] get real lat/long
 - [x] A script to put it all together and actually generate the resources

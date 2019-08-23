@@ -1,10 +1,13 @@
 require_relative 'utils/formatting'
 require_relative 'utils/fakes'
+require_relative 'utils/lat_long'
+require_relative 'utils/position'
 
 module PDEX
   class NPPESOrganization
     include Formatting
     include Fakes
+    include Position
 
     attr_reader :raw_data
 

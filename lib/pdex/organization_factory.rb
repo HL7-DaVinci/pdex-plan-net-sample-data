@@ -33,7 +33,7 @@ module PDEX
         type: type,
         name: name,
         telecom: telecom,
-        address: address,
+        address: address_with_geolocation,
       }
 
       return params if payer

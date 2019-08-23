@@ -71,4 +71,10 @@ RSpec.describe PDEX::NPPESOrganization do
       expect(organization.address).to eq(expected_address)
     end
   end
+
+  describe '#position' do
+    it 'returns the position' do
+      expect(organization.position).to be_present
+    end
+  end
 end

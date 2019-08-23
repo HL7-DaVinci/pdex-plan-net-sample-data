@@ -1,11 +1,13 @@
 require 'faker'
 require_relative 'utils/formatting'
 require_relative 'utils/fakes'
+require_relative 'utils/position'
 
 module PDEX
   class NPPESNetwork
     include Formatting
     include Fakes
+    include Position
 
     attr_reader :raw_data
 

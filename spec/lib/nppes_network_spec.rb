@@ -55,7 +55,7 @@ RSpec.describe PDEX::NPPESNetwork do
     it 'returns the address' do
       expected_address = OpenStruct.new(
         {
-          lines: ['120 St James Ave'],
+          lines: ['874 PURCHASE ST'],
           city: 'Boston',
           state: 'MA',
           zip: '02101'
@@ -87,6 +87,12 @@ RSpec.describe PDEX::NPPESNetwork do
   describe '#part_of_name' do
     it 'returns the name' do
       expect(network.part_of_name).to eq('Acme Insurance Co of Massachusetts')
+    end
+  end
+
+  describe '#position' do
+    it 'returns the position' do
+      expect(network.position).to be_present
     end
   end
 end

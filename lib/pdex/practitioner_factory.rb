@@ -31,7 +31,7 @@ module PDEX
           active: true,
           name: name,
           telecom: telecom,
-          address: address,
+          address: address_with_geolocation,
           gender: gender,
           qualification: qualifications,
           communication: communication

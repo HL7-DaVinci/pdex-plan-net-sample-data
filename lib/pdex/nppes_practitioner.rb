@@ -1,10 +1,12 @@
 require_relative 'utils/formatting'
 require_relative 'utils/fakes'
+require_relative 'utils/position'
 
 module PDEX
   class NPPESPractitioner
     include Formatting
     include Fakes
+    include Position
 
     attr_reader :raw_data
 

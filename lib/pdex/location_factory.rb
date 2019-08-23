@@ -31,6 +31,7 @@ module PDEX
           description: description,
           telecom: telecom,
           address: address,
+          position: position,
           managingOrganization: managing_organization,
           hoursOfOperation: hours_of_operation,
           availabilityExceptions: availability_exceptions
@@ -147,6 +148,10 @@ module PDEX
 
     def availability_exceptions
       'visiting hours from 6:00 am - 10:00 pm'
+    end
+
+    def position
+      source_data.position
     end
   end
 end

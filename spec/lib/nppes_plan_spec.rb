@@ -127,4 +127,10 @@ RSpec.describe PDEX::NPPESPlan do
       expect(plan.fax_numbers).to be_present
     end
   end
+
+  describe '#position' do
+    it 'returns the position' do
+      expect(plan.position).to be_present
+    end
+  end
 end

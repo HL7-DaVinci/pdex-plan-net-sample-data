@@ -17,5 +17,26 @@ module PDEX
         country: 'USA'
       }
     end
+
+    def address_with_geolocation
+      return address if source_data.position.blank?
+      address.merge(
+        extension: [
+          {
+            url: 'http://hl7.org/fhir/StructureDefinition/geolocation',
+            extension: [
+              {
+                url: 'latitude',
+                valueDecimal: source_data.position[:latitude]
+              },
+              {
+                url: 'longitude',
+                valueDecimal: source_data.position[:longitude]
+              },
+            ]
+          }
+        ]
+      )
+    end
   end
 end

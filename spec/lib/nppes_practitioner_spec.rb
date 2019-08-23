@@ -56,7 +56,7 @@ RSpec.describe PDEX::NPPESPractitioner do
     it 'returns an address' do
       expected_address = OpenStruct.new(
         {
-          lines: ['1000 ASYLUM AVE', 'STE 4309'],
+          lines: ['874 PURCHASE ST', 'STE 4309'],
           city: 'HARTFORD',
           state: 'CT',
           zip: '061051770'
@@ -92,6 +92,12 @@ RSpec.describe PDEX::NPPESPractitioner do
       ]
 
       expect(practitioner.qualifications).to eq(expected_qualifications)
+    end
+  end
+
+  describe '#position' do
+    it 'returns the position' do
+      expect(practitioner.position).to be_present
     end
   end
 end

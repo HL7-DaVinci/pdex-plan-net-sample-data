@@ -1,10 +1,12 @@
 require_relative 'utils/fakes'
 require_relative 'utils/formatting'
+require_relative 'utils/position'
 
 module PDEX
   class NPPESPlan
     include Fakes
     include Formatting
+    include Position
 
     PLAN_TYPE_DISPLAY = {
       cat: 'Catastrophic',
@@ -93,7 +95,7 @@ module PDEX
     end
 
     def address
-      OpenStruct.new(
+      @address ||= OpenStruct.new(
         {
           lines: [
             raw_data['address']

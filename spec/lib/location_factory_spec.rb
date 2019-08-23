@@ -16,6 +16,10 @@ RSpec.describe PDEX::LocationFactory do
           '0987654321'
         ],
         address: address,
+        position: {
+          latitude: -1,
+          longitude: 1
+        }
       }
     )
   end
@@ -23,7 +27,7 @@ RSpec.describe PDEX::LocationFactory do
   let(:address) do
     OpenStruct.new(
       {
-        lines: ['1000 ASYLUM AVE', 'STE 4309'],
+        lines: ['874 PURCHASE ST', 'STE 4309'],
         city: 'HARTFORD',
         state: 'CT',
         zip: '061051770'
