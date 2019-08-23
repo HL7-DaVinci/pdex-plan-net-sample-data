@@ -4,22 +4,18 @@ require_relative 'telecom'
 require_relative 'utils/states'
 require_relative 'utils/nucc_codes'
 
-# TODO:
-# - identifier.period - is this really needed?
-# - geolocation extension
-# - partOf
-# - endpoint
 module PDEX
   class OrganizationFactory
     include Address
     include Telecom
 
-    attr_reader :source_data, :resource_type, :profile
+    attr_reader :source_data, :resource_type, :profile, :payer
 
-    def initialize(nppes_organization)
+    def initialize(nppes_organization, payer: false)
       @source_data = nppes_organization
       @resource_type = 'organization'
       @profile = ORGANIZATION_PROFILE_URL
+      @payer = payer
     end
 
     def build
@@ -29,7 +25,7 @@ module PDEX
     private
 
     def build_params
-      {
+      params = {
         id: id,
         meta: meta,
         identifier: identifier,
@@ -38,8 +34,11 @@ module PDEX
         name: name,
         telecom: telecom,
         address: address,
-        contact: contact,
       }
+
+      return params if payer
+
+      params.merge(contact: contact)
     end
 
     def id

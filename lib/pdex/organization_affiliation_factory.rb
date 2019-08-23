@@ -71,7 +71,7 @@ module PDEX
 
     def organization
       {
-        reference: "Organization/plannet-organization-#{network.npi}",
+        reference: "Organization/plannet-network-#{network.npi}",
         display: network.name
       }
     end

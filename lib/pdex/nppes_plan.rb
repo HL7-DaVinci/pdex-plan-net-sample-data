@@ -1,8 +1,11 @@
 require_relative 'utils/fakes'
+require_relative 'utils/formatting'
 
 module PDEX
   class NPPESPlan
     include Fakes
+    include Formatting
+
     PLAN_TYPE_DISPLAY = {
       cat: 'Catastrophic',
       bronze: 'Bronze',
@@ -14,14 +17,19 @@ module PDEX
       highded: 'High deductible'
     }.freeze
 
-    attr_reader :raw_data
+    attr_reader :raw_data, :payer
 
-    def initialize(raw_data)
+    def initialize(raw_data, payer: false)
       @raw_data = raw_data.freeze
+      @payer = payer
+    end
+
+    def npi
+      id
     end
 
     def id
-      raw_data['plan_id']
+      payer ? fake_npi(raw_data['id']) : raw_data['plan_id']
     end
 
     def type
@@ -74,6 +82,27 @@ module PDEX
 
     def part_of_name
       raw_data['partof_display']
+    end
+
+    def phone_numbers
+      @phone_numbers ||= [fake_phone_number]
+    end
+
+    def fax_numbers
+      @fax_numbers ||= [fake_phone_number]
+    end
+
+    def address
+      OpenStruct.new(
+        {
+          lines: [
+            raw_data['address']
+          ].reject(&:blank?),
+          city: raw_data['city'],
+          state: raw_data['state'],
+          zip: format_zip(raw_data['zip'])
+        }
+      )
     end
   end
 end

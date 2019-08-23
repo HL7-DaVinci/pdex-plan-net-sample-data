@@ -25,6 +25,11 @@ RSpec.describe PDEX::NPPESPlan do
     it 'returns the plan id' do
       expect(plan.id).to eq('HPID240000')
     end
+
+    it 'returns an id for payers' do
+      payer_plan = described_class.new(raw_plan, payer: true)
+      expect(payer_plan.id).to eq('1230120000')
+    end
   end
 
   describe '#type' do
@@ -102,6 +107,24 @@ RSpec.describe PDEX::NPPESPlan do
   describe '#part_of_name' do
     it 'returns the name' do
       expect(plan.part_of_name).to eq('Acme Insurance Co')
+    end
+  end
+
+  describe '#address' do
+    it 'returns the address' do
+      expect(plan.address).to be_present
+    end
+  end
+
+  describe '#phone_numbers' do
+    it 'returns random phone numbers' do
+      expect(plan.phone_numbers).to be_present
+    end
+  end
+
+  describe '#fax_numbers' do
+    it 'returns random fax numbers' do
+      expect(plan.fax_numbers).to be_present
     end
   end
 end

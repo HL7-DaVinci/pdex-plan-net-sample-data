@@ -99,5 +99,10 @@ RSpec.describe PDEX::OrganizationFactory do
       expect(contact.telecom.first.extension).to be_present
       expect(contact.address).to be_present
     end
+
+    it "doesn't include contact information for payers" do
+      payer = described_class.new(organization, payer: true).build
+      expect(payer.contact).to be_blank
+    end
   end
 end

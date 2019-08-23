@@ -48,6 +48,13 @@ CSV.foreach(network_filenames, headers: true) do |row|
 end
 
 FileUtils.mkdir_p('output/Organization')
+CSV.foreach(managing_organization_filenames, headers: true) do |row|
+  next unless row['type'].downcase == 'ins'
+  nppes_data = PDEX::NPPESPlan.new(row, payer: true)
+  resource = PDEX::OrganizationFactory.new(nppes_data, payer: true).build
+  File.write("output/Organization/#{resource.id}.json", resource.to_json)
+end
+
 FileUtils.mkdir_p('output/OrganizationAffiliation')
 FileUtils.mkdir_p('output/Location')
 FileUtils.mkdir_p('output/Endpoint')
