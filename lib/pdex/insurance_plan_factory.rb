@@ -89,21 +89,21 @@ module PDEX
 
     def owned_by
       {
-        reference: "plannet-organization-#{source_data.owner_id}",
+        reference: "Organization/plannet-organization-#{source_data.owner_id}",
         display: source_data.owner_name
       }
     end
 
     def administered_by
       {
-        reference: "plannet-organization-#{source_data.administrator_id}",
+        reference: "Organization/plannet-organization-#{source_data.administrator_id}",
         display: source_data.administrator_name
       }
     end
 
     def coverage_area
       {
-        reference: "plannet-location-#{format_for_url(source_data.coverage)}",
+        reference: "Location/plannet-location-#{format_for_url(source_data.coverage)}",
         display: source_data.coverage
       }
     end
