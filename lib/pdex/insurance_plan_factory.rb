@@ -25,7 +25,6 @@ module PDEX
           alias: plan_alias,
           ownedBy: owned_by,
           administeredBy: administered_by,
-          coverageArea: coverage_area,
           coverage: coverage
         }
       )
@@ -98,13 +97,6 @@ module PDEX
       {
         reference: "Organization/plannet-organization-#{source_data.administrator_id}",
         display: source_data.administrator_name
-      }
-    end
-
-    def coverage_area
-      {
-        reference: "Location/plannet-location-#{format_for_url(source_data.coverage)}",
-        display: source_data.coverage
       }
     end
 
