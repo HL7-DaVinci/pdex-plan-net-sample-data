@@ -10,11 +10,12 @@ module PDEX
     include FHIRElements
     include Telecom
 
-    attr_reader :source_data, :organization_data
+    attr_reader :source_data, :organization_data, :network_data
 
-    def initialize(nppes_data, organization:)
+    def initialize(nppes_data, organization:, networks:)
       @source_data = nppes_data
       @organization_data = organization
+      @network_data = networks
     end
 
     def build
@@ -24,6 +25,7 @@ module PDEX
           meta: meta,
           identifier: identifier,
           active: true,
+          extension: extensions,
           practitioner: practitioner,
           organization: organization,
           code: code,
@@ -63,6 +65,18 @@ module PDEX
         system: "https://#{format_for_url(organization_data.name)}.com",
         value: SecureRandom.hex(7)
       }
+    end
+
+    def extensions
+      network_data.map do |network|
+        {
+          url: NETWORK_EXTENSION_URL,
+          valueReference: {
+            reference: "Organization/plannet-network-#{network.npi}",
+            display: network.name
+          }
+        }
+      end
     end
 
     def practitioner

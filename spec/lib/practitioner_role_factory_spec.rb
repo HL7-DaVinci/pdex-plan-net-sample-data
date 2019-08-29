@@ -35,6 +35,14 @@ RSpec.describe PDEX::PractitionerRoleFactory do
     )
   end
 
+  let(:network) do
+    OpenStruct.new(
+      {
+        npi: '0987654321',
+        name: 'NETWORK'
+      }
+    )
+  end
   let(:qualifications) do
     [
       OpenStruct.new(
@@ -47,7 +55,7 @@ RSpec.describe PDEX::PractitionerRoleFactory do
     ]
   end
 
-  let(:factory) { described_class.new(nppes_practitioner, organization: organization) }
+  let(:factory) { described_class.new(nppes_practitioner, organization: organization, networks: [network]) }
 
   let(:resource) { factory.build }
 
@@ -79,6 +87,10 @@ RSpec.describe PDEX::PractitionerRoleFactory do
 
     it 'includes a practitioner reference' do
       expect(resource.practitioner).to be_present
+    end
+
+    it 'includes a network extension' do
+      expect(resource.extension.first.url).to eq(PDEX::NETWORK_EXTENSION_URL)
     end
 
     it 'includes an organization reference' do

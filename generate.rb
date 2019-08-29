@@ -103,7 +103,8 @@ CSV.foreach(practitioner_filenames, headers: true) do |row|
   practitioner_state = 'MA' unless organization_data_by_state.keys.include? practitioner_state
   state_orgs = organization_data_by_state[practitioner_state]
   organization = state_orgs[nppes_data.npi.to_i % state_orgs.length]
-  resource = PDEX::PractitionerRoleFactory.new(nppes_data, organization: organization).build
+  networks = organization_networks[organization.npi]
+  resource = PDEX::PractitionerRoleFactory.new(nppes_data, organization: organization, networks: networks).build
   File.write("output/PractitionerRole/#{resource.id}.json", resource.to_json)
 end
 
