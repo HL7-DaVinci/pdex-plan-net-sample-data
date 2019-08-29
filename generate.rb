@@ -81,6 +81,10 @@ CSV.foreach(organization_filenames, headers: true) do |row|
   end
 end
 
+plan_data_by_state = plan_data.group_by { |plan| plan.address.state }
+network_data_by_state = network_data.group_by { |network| network.address.state }
+organization_data_by_state = organization_data.group_by { |org| org.address.state }
+
 FileUtils.mkdir_p('output/Practitioner')
 FileUtils.mkdir_p('output/PractitionerRole')
 CSV.foreach(practitioner_filenames, headers: true) do |row|
@@ -88,12 +92,11 @@ CSV.foreach(practitioner_filenames, headers: true) do |row|
   practitioners << resource = PDEX::PractitionerFactory.new(nppes_data).build
   File.write("output/Practitioner/#{resource.id}.json", resource.to_json)
 
-  zip_code = nppes_data.address.zip
-  organizations = organization_data.select do |organization|
-    organization.address.zip == zip_code
-  end
-  next if organizations.empty?
-  resource = PDEX::PractitionerRoleFactory.new(nppes_data, organization: organizations.sample).build
+  practitioner_state = nppes_data.address.state
+  practitioner_state = 'MA' unless organization_data_by_state.keys.include? practitioner_state
+  state_orgs = organization_data_by_state[practitioner_state]
+  organization = state_orgs[nppes_data.npi.to_i % state_orgs.length]
+  resource = PDEX::PractitionerRoleFactory.new(nppes_data, organization: organization).build
   File.write("output/PractitionerRole/#{resource.id}.json", resource.to_json)
 end
 

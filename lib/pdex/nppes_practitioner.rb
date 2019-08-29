@@ -70,7 +70,8 @@ module PDEX
     end
 
     def qualifications
-      (1..50).map { |index| qualification(index) }.compact
+      provided_qualifications = (1..50).map { |index| qualification(index) }.compact
+      provided_qualifications.blank? ? [default_qualification] : provided_qualifications
     end
 
     def qualification(index)
@@ -89,6 +90,14 @@ module PDEX
           taxonomy_code: raw_data["Healthcare Provider Taxonomy Code_#{index}"]
         }
       )
+    end
+
+    def default_qualification
+      @default_qualification ||= OpenStruct.new({
+        state: 'MA',
+        license_number: fake_license_number,
+        taxonomy_code: '207Q00000X'
+      })
     end
   end
 end

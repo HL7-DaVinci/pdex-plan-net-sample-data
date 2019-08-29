@@ -21,5 +21,9 @@ module PDEX
     def fake_phone_number
       Faker::PhoneNumber.phone_number
     end
+
+    def fake_license_number
+      Faker::Number.number(6)
+    end
   end
 end

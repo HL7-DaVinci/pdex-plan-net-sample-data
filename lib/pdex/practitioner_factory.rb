@@ -5,11 +5,6 @@ require_relative 'telecom'
 require_relative 'utils/states'
 require_relative 'utils/nucc_codes'
 
-# TODO:
-# - communication - is this really needed?
-# - geolocation extension
-# - birthDate - is this really needed?
-
 module PDEX
   class PractitionerFactory
     include Address
