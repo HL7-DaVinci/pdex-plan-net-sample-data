@@ -77,7 +77,7 @@ CSV.foreach(organization_filenames, headers: true) do |row|
   if state_networks.blank?
     state_networks = network_data_by_state['MA']
   end
-  organization_networks[nppes_data.npi] = state_networks.sample(nppes_data.name.length % state_networks.length)
+  organization_networks[nppes_data.npi] = state_networks.sample(nppes_data.name.length % state_networks.length + 1)
   organization_networks[nppes_data.npi].each do |network|
     resource = PDEX::OrganizationAffiliationFactory.new(nppes_data, network: network).build
     File.write("output/OrganizationAffiliation/#{resource.id}.json", resource.to_json)
