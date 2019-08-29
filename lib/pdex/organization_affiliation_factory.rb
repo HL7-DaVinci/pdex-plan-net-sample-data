@@ -35,7 +35,8 @@ module PDEX
     private
 
     def id
-      "plannet-organizationaffiliation-#{source_data.npi}"
+      base_id = "plannet-organizationaffiliation-#{source_data.npi}"
+      network ? "#{base_id}-#{network.npi}" : base_id
     end
 
     def meta
