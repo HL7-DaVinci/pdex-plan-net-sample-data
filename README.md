@@ -28,7 +28,7 @@ ruby generate.rb
   - [ ] `location`
   - [ ] `healthcareService`
 - [x] PractitionerRole
-  - [ ] `network` extension
+  - [x] `network` extension
   - [ ] `newpatients` extension
   - [ ] snomed codes for `code` and `specialty`
   - [ ] `healthcareService` - hcs code from nucc
