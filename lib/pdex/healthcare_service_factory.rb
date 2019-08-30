@@ -166,7 +166,7 @@ module PDEX
     end
 
     def comment
-      "Specialties include: #{NUCCCodes.specialties_display(service_type)}".strip
+      NUCCCodes.specialties_display(service_type).strip
     end
 
     def specialty

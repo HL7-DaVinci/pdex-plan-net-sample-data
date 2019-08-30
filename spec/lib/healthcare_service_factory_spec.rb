@@ -73,7 +73,7 @@ RSpec.describe PDEX::HealthcareServiceFactory do
 
     it 'includes a comment' do
       expect(resource.comment).to be_present
-      expect(resource.comment).to eq 'Specialties include: Registered Nurse/Administrator, Specialist/Technologist, Health Information/Registered Record Administrator, Pathology/Clinical Laboratory Director, Non-physician'
+      expect(resource.comment).to eq 'Registered Nurse/Administrator, Specialist/Technologist, Health Information/Registered Record Administrator, Pathology/Clinical Laboratory Director, Non-physician'
     end
 
     it 'includes specalties' do

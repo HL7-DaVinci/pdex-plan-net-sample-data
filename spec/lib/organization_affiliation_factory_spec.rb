@@ -33,7 +33,22 @@ RSpec.describe PDEX::OrganizationAffiliationFactory do
     )
   end
 
-  let(:factory) { described_class.new(organization, networks: networks, managing_org: managing_org) }
+  let(:services) do
+    [OpenStruct.new(
+      id: 'hcs-123',
+      type: [OpenStruct.new(text: 'SERVICE')]
+    )]
+  end
+
+  let(:factory) do
+    described_class.new(
+      organization,
+      networks: networks,
+      managing_org: managing_org,
+      services: services
+    )
+  end
+
   let(:resource) { factory.build }
   let(:identifier) { resource.identifier.first }
 
@@ -77,6 +92,10 @@ RSpec.describe PDEX::OrganizationAffiliationFactory do
 
     it 'includes network extensions' do
       expect(resource.extension.select { |extension| extension.url == PDEX::NETWORK_EXTENSION_URL  }).to be_present
+    end
+
+    it 'includes healthcareService references' do
+      expect(resource.healthcareService).to be_present
     end
   end
 end

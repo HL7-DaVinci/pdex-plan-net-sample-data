@@ -78,6 +78,13 @@ CSV.foreach(organization_filenames, headers: true) do |row|
   resource = PDEX::EndpointFactory.new(nppes_data, 'Organization').build
   File.write("output/Endpoint/#{resource.id}.json", resource.to_json)
 
+  organization_services = []
+  PDEX::NUCCConstants::SERVICE_LIST.each do |service|
+    resource = PDEX::HealthcareServiceFactory.new(nppes_data, service).build
+    organization_services << resource
+    File.write("output/HealthcareService/#{resource.id}.json", resource.to_json)
+  end
+
   state = nppes_data.address.state
   state_networks = network_data_by_state[state]
   if state_networks.blank?
@@ -92,14 +99,10 @@ CSV.foreach(organization_filenames, headers: true) do |row|
   resource = PDEX::OrganizationAffiliationFactory.new(
     nppes_data,
     networks: organization_networks[nppes_data.npi],
-    managing_org: managing_org
+    managing_org: managing_org,
+    services: organization_services
   ).build
   File.write("output/OrganizationAffiliation/#{resource.id}.json", resource.to_json)
-
-  PDEX::NUCCConstants::SERVICE_LIST.each do |service|
-    resource = PDEX::HealthcareServiceFactory.new(nppes_data, service).build
-    File.write("output/HealthcareService/#{resource.id}.json", resource.to_json)
-  end
 end
 
 organization_data_by_state = organization_data.group_by { |org| org.address.state }

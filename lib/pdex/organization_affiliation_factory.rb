@@ -2,6 +2,7 @@ require 'fhir_models'
 require 'securerandom'
 require_relative 'address'
 require_relative 'telecom'
+require_relative 'utils/formatting'
 require_relative 'utils/states'
 require_relative 'utils/nucc_codes'
 
@@ -11,12 +12,13 @@ module PDEX
     include Telecom
     include Formatting
 
-    attr_reader :source_data, :networks, :managing_org
+    attr_reader :source_data, :networks, :managing_org, :services
 
-    def initialize(nppes_organization, networks:, managing_org:)
+    def initialize(nppes_organization, networks:, managing_org:, services:)
       @source_data = nppes_organization
       @networks = networks
       @managing_org = managing_org
+      @services = services
     end
 
     def build
@@ -29,7 +31,8 @@ module PDEX
           extension: extensions,
           organization: organization,
           participatingOrganization: participatingOrganization,
-          code: code
+          code: code,
+          healthcareService: healthcareService
         }
       )
     end
@@ -112,6 +115,15 @@ module PDEX
           text: 'Hospital Provider Member'
         }
       ]
+    end
+
+    def healthcareService
+      services.map do |service|
+        {
+          reference: "HealthcareService/#{service.id}",
+          display: service.type.first.text
+        }
+      end
     end
   end
 end
