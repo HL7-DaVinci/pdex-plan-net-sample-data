@@ -4,36 +4,36 @@ require_relative '../../lib/pdex/organization_affiliation_factory'
 RSpec.describe PDEX::OrganizationAffiliationFactory do
   let(:organization) do
     OpenStruct.new(
-      {
-        npi: '1740283779',
-        name: 'NAME'
-      }
+      npi: '1740283779',
+      name: 'NAME'
     )
   end
 
   let(:address) do
     OpenStruct.new(
-      {
-        lines: ['1000 ASYLUM AVE', 'STE 4309'],
-        city: 'HARTFORD',
-        state: 'CT',
-        zip: '061051770'
-      }
+      lines: ['1000 ASYLUM AVE', 'STE 4309'],
+      city: 'HARTFORD',
+      state: 'CT',
+      zip: '061051770'
     )
   end
 
-  let(:network) do
+  let(:networks) do
+    [OpenStruct.new(
+       id: 'plannet-organization-54321',
+       name: 'NETWORK',
+       part_of_name: 'NETWORK'
+    )]
+  end
+
+  let(:managing_org) do
     OpenStruct.new(
-      {
-        id: 'plannet-organization-54321',
-        name: 'NETWORK',
-        part_of_id: '12345',
-        part_of_name: 'MANAGING ORG'
-      }
+      npi: '0987654321',
+      name: 'MANAGING ORg'
     )
   end
 
-  let(:factory) { described_class.new(organization, network: network) }
+  let(:factory) { described_class.new(organization, networks: networks, managing_org: managing_org) }
   let(:resource) { factory.build }
   let(:identifier) { resource.identifier.first }
 
@@ -73,6 +73,10 @@ RSpec.describe PDEX::OrganizationAffiliationFactory do
     it 'includes a code' do
       expect(resource.code).to be_present
       expect(resource.code.first.coding).to be_present
+    end
+
+    it 'includes network extensions' do
+      expect(resource.extension.select { |extension| extension.url == PDEX::NETWORK_EXTENSION_URL  }).to be_present
     end
   end
 end

@@ -11,11 +11,12 @@ module PDEX
     include Telecom
     include Formatting
 
-    attr_reader :source_data, :network
+    attr_reader :source_data, :networks, :managing_org
 
-    def initialize(nppes_organization, network:)
+    def initialize(nppes_organization, networks:, managing_org:)
       @source_data = nppes_organization
-      @network = network
+      @networks = networks
+      @managing_org = managing_org
     end
 
     def build
@@ -25,6 +26,7 @@ module PDEX
           meta: meta,
           identifier: identifier,
           active: true,
+          extension: extensions,
           organization: organization,
           participatingOrganization: participatingOrganization,
           code: code
@@ -35,8 +37,7 @@ module PDEX
     private
 
     def id
-      base_id = "plannet-organizationaffiliation-#{source_data.npi}"
-      network ? "#{base_id}-#{network.npi}" : base_id
+      "plannet-organizationaffiliation-#{source_data.npi}"
     end
 
     def meta
@@ -61,19 +62,33 @@ module PDEX
         system: "https://#{format_for_url(part_of_id)}.com",
         value: SecureRandom.hex(7),
         assigner: {
-          display: network.part_of_name
+          display: managing_org.name
         }
       }
     end
 
     def part_of_id
-      "plannet-organization-#{network.part_of_id}"
+      "plannet-organization-#{managing_org.part_of_id}"
+    end
+
+    def extensions
+      networks.map { |network| network_extension(network) }
+    end
+
+    def network_extension(network)
+      {
+        url: NETWORK_EXTENSION_URL,
+        valueReference: {
+          reference: "Organization/plannet-network-#{network.npi}",
+          display: network.name
+        }
+      }
     end
 
     def organization
       {
-        reference: "Organization/plannet-network-#{network.npi}",
-        display: network.name
+        reference: "Organization/plannet-organization-#{managing_org.npi}",
+        display: managing_org.name
       }
     end
 

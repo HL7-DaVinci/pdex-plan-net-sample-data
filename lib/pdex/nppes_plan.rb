@@ -19,11 +19,12 @@ module PDEX
       highded: 'High deductible'
     }.freeze
 
-    attr_reader :raw_data, :payer
+    attr_reader :raw_data, :payer, :managing_org
 
-    def initialize(raw_data, payer: false)
+    def initialize(raw_data, payer: false, managing_org: false)
       @raw_data = raw_data.freeze
       @payer = payer
+      @managing_org = managing_org
     end
 
     def npi
@@ -31,7 +32,7 @@ module PDEX
     end
 
     def id
-      payer ? fake_npi(raw_data['id']) : raw_data['plan_id']
+      payer || managing_org ? fake_npi(raw_data['id']) : raw_data['plan_id']
     end
 
     def type
@@ -43,7 +44,7 @@ module PDEX
     end
 
     def name
-      raw_data['plan_name']
+      managing_org ? raw_data['name'] : raw_data['plan_name']
     end
 
     def alias

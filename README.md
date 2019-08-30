@@ -26,7 +26,8 @@ ruby generate.rb
 - [x] OrganizationAffiliation
   - [ ] `endpoint`
   - [ ] `location`
-  - [ ] `healthcareService`
+  - [x] `healthcareService`
+  - [x] `network` extension
 - [x] PractitionerRole
   - [x] `network` extension
   - [ ] `newpatients` extension

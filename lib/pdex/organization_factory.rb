@@ -9,13 +9,14 @@ module PDEX
     include Address
     include Telecom
 
-    attr_reader :source_data, :resource_type, :profile, :payer
+    attr_reader :source_data, :resource_type, :profile, :payer, :managing_org
 
-    def initialize(nppes_organization, payer: false)
+    def initialize(nppes_organization, payer: false, managing_org: false)
       @source_data = nppes_organization
       @resource_type = 'organization'
       @profile = ORGANIZATION_PROFILE_URL
       @payer = payer
+      @managing_org = managing_org
     end
 
     def build
@@ -36,7 +37,7 @@ module PDEX
         address: address_with_geolocation,
       }
 
-      return params if payer
+      return params if payer || managing_org
 
       params.merge(contact: contact)
     end

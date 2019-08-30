@@ -27,17 +27,28 @@ plan_data = []
 organization_data = []
 practitioner_data = []
 network_data = []
+managing_org_data = []
 
 networks = []
 organizations = []
 practitioners = []
 
 FileUtils.mkdir_p('output/InsurancePlan')
+FileUtils.mkdir_p('output/Organization')
 CSV.foreach(managing_organization_filenames, headers: true) do |row|
-  next unless row['is_plan'].downcase == 'true' && row['type'].downcase == 'ins'
-  plan_data << nppes_data = PDEX::NPPESPlan.new(row)
-  resource = PDEX::InsurancePlanFactory.new(nppes_data).build
-  File.write("output/InsurancePlan/#{resource.id}.json", resource.to_json)
+  if row['is_plan'].downcase == 'true' && row['type'].downcase == 'ins'
+    plan_data << nppes_data = PDEX::NPPESPlan.new(row)
+    resource = PDEX::InsurancePlanFactory.new(nppes_data).build
+    File.write("output/InsurancePlan/#{resource.id}.json", resource.to_json)
+  elsif row['type'].downcase == 'prov' && row['is_plan'].downcase == 'false'
+    managing_org_data << nppes_data = PDEX::NPPESPlan.new(row, managing_org: true)
+    resource = PDEX::OrganizationFactory.new(nppes_data, managing_org: true).build
+    File.write("output/Organization/#{resource.id}.json", resource.to_json)
+  elsif row['type'].downcase == 'ins'
+    nppes_data = PDEX::NPPESPlan.new(row, payer: true)
+    resource = PDEX::OrganizationFactory.new(nppes_data, payer: true).build
+    File.write("output/Organization/#{resource.id}.json", resource.to_json)
+  end
 end
 
 FileUtils.mkdir_p('output/Network')
@@ -47,16 +58,10 @@ CSV.foreach(network_filenames, headers: true) do |row|
   File.write("output/Network/#{resource.id}.json", resource.to_json)
 end
 
-FileUtils.mkdir_p('output/Organization')
-CSV.foreach(managing_organization_filenames, headers: true) do |row|
-  next unless row['type'].downcase == 'ins'
-  nppes_data = PDEX::NPPESPlan.new(row, payer: true)
-  resource = PDEX::OrganizationFactory.new(nppes_data, payer: true).build
-  File.write("output/Organization/#{resource.id}.json", resource.to_json)
-end
-
 network_data_by_state = network_data.group_by { |network| network.address.state }
 organization_networks = {}
+organization_service_resources = Hash.new { |hash, key| hash[key] = [] }
+managing_org_data_by_state = managing_org_data.group_by { |org| org.address.state }
 
 FileUtils.mkdir_p('output/OrganizationAffiliation')
 FileUtils.mkdir_p('output/Location')
@@ -73,15 +78,23 @@ CSV.foreach(organization_filenames, headers: true) do |row|
   resource = PDEX::EndpointFactory.new(nppes_data, 'Organization').build
   File.write("output/Endpoint/#{resource.id}.json", resource.to_json)
 
-  state_networks = network_data_by_state[nppes_data.address.state]
+  state = nppes_data.address.state
+  state_networks = network_data_by_state[state]
   if state_networks.blank?
     state_networks = network_data_by_state['MA']
   end
   organization_networks[nppes_data.npi] = state_networks.sample(nppes_data.name.length % state_networks.length + 1)
-  organization_networks[nppes_data.npi].each do |network|
-    resource = PDEX::OrganizationAffiliationFactory.new(nppes_data, network: network).build
-    File.write("output/OrganizationAffiliation/#{resource.id}.json", resource.to_json)
+  managing_orgs = managing_org_data_by_state[state]
+  if managing_orgs.blank?
+    managing_orgs = managing_org_data_by_state['MA']
   end
+  managing_org = managing_orgs[nppes_data.name.length % managing_orgs.length]
+  resource = PDEX::OrganizationAffiliationFactory.new(
+    nppes_data,
+    networks: organization_networks[nppes_data.npi],
+    managing_org: managing_org
+  ).build
+  File.write("output/OrganizationAffiliation/#{resource.id}.json", resource.to_json)
 
   PDEX::NUCCConstants::SERVICE_LIST.each do |service|
     resource = PDEX::HealthcareServiceFactory.new(nppes_data, service).build
@@ -89,7 +102,6 @@ CSV.foreach(organization_filenames, headers: true) do |row|
   end
 end
 
-plan_data_by_state = plan_data.group_by { |plan| plan.address.state }
 organization_data_by_state = organization_data.group_by { |org| org.address.state }
 
 FileUtils.mkdir_p('output/Practitioner')
