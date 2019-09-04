@@ -28,9 +28,9 @@ module PDEX
           meta: meta,
           identifier: identifier,
           active: true,
-          extension: extensions,
           organization: organization,
           participatingOrganization: participatingOrganization,
+          network: network,
           code: code,
           healthcareService: healthcareService
         }
@@ -74,20 +74,6 @@ module PDEX
       "plannet-organization-#{managing_org.part_of_id}"
     end
 
-    def extensions
-      networks.map { |network| network_extension(network) }
-    end
-
-    def network_extension(network)
-      {
-        url: NETWORK_EXTENSION_URL,
-        valueReference: {
-          reference: "Organization/plannet-network-#{network.npi}",
-          display: network.name
-        }
-      }
-    end
-
     def organization
       {
         reference: "Organization/plannet-organization-#{managing_org.npi}",
@@ -100,6 +86,15 @@ module PDEX
         reference: "Organization/plannet-organization-#{source_data.npi}",
         display: source_data.name
       }
+    end
+
+    def network
+      networks.map do |network_data|
+        {
+          reference: "Organization/plannet-network-#{network_data.npi}",
+          display: network_data.name
+        }
+      end
     end
 
     def code

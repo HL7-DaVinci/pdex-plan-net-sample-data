@@ -90,8 +90,8 @@ RSpec.describe PDEX::OrganizationAffiliationFactory do
       expect(resource.code.first.coding).to be_present
     end
 
-    it 'includes network extensions' do
-      expect(resource.extension.select { |extension| extension.url == PDEX::NETWORK_EXTENSION_URL  }).to be_present
+    it 'includes networks' do
+      expect(resource.network).to be_present
     end
 
     it 'includes healthcareService references' do
