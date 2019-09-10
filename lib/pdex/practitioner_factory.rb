@@ -1,3 +1,4 @@
+require 'date'
 require 'fhir_models'
 require_relative 'address'
 require_relative 'fhir_elements'
@@ -97,6 +98,19 @@ module PDEX
       end.compact
     end
 
+    def format_date_time(date_time)
+      date_time.strftime('%Y-%m-%d')
+    end
+
+    def three_year_period
+      end_date = DateTime.now + rand() * (365 * 3)
+      start_date = DateTime.new(end_date.year - 3, end_date.month, end_date.day)
+      {
+        start: format_date_time(start_date),
+        end: format_date_time(end_date)
+      }
+    end
+
     def qualification(data)
       state_display = States.display_name(data.state)
       licensor = States.licensor(data.state.to_sym)
@@ -148,10 +162,7 @@ module PDEX
             },
             system: licensor_system,
             value: data.license_number,
-            period: {
-              start: '2018-06-19',
-              end: '2021-06-19'
-            },
+            period: three_year_period,
             assigner: {
               display: licensor
             }
