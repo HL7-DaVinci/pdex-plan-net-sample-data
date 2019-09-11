@@ -165,12 +165,12 @@ module PDEX
             },
             system: licensor_system,
             value: data.license_number,
-            period: three_year_period,
             assigner: {
               display: licensor
             }
           }
         ],
+        period: three_year_period,
         code: nucc_codeable_concept(data),
         issuer: {
           display: licensor
