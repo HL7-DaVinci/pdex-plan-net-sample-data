@@ -104,7 +104,10 @@ module PDEX
 
     def three_year_period
       end_date = DateTime.now + rand() * (365 * 3)
-      start_date = DateTime.new(end_date.year - 3, end_date.month, end_date.day)
+      start_month = end_date.month
+      start_day = start_month == 2 && end_date.day == 29 ? 28 : end_date.day
+      start_year = end_date.year - 3
+      start_date = DateTime.new(start_year, start_month, start_day)
       {
         start: format_date_time(start_date),
         end: format_date_time(end_date)
