@@ -1,6 +1,8 @@
 require 'active_support'
 require 'active_support/core_ext/object'
 
+require_relative 'pdex/nppes_data_loader'
+require_relative 'pdex/nppes_data_repo'
 require_relative 'pdex/nppes_network'
 require_relative 'pdex/nppes_organization'
 require_relative 'pdex/nppes_managing_org'
