@@ -3,7 +3,7 @@ require_relative 'utils/formatting'
 require_relative 'utils/position'
 
 module PDEX
-  class NPPESPlan
+  class NPPESManagingOrg
     include Fakes
     include Formatting
     include Position

@@ -4,7 +4,7 @@ require 'pry'
 require_relative 'lib/pdex'
 require_relative 'lib/pdex/nppes_network'
 require_relative 'lib/pdex/nppes_organization'
-require_relative 'lib/pdex/nppes_plan'
+require_relative 'lib/pdex/nppes_managing_org'
 require_relative 'lib/pdex/nppes_practitioner'
 
 nppes_dir = 'sample-nppes-data'
@@ -18,9 +18,9 @@ data = []
 
 CSV.foreach(managing_organization_filenames, headers: true) do |row|
   if row['is_plan'].downcase == 'true' && row['type'].downcase == 'ins'
-    data << PDEX::NPPESPlan.new(row)
+    data << PDEX::NPPESManagingOrg.new(row)
   elsif row['type'].downcase == 'ins'
-    data << PDEX::NPPESPlan.new(row, payer: true)
+    data << PDEX::NPPESManagingOrg.new(row, payer: true)
   end
 end
 

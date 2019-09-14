@@ -1,8 +1,8 @@
 require_relative '../../lib/pdex'
-require_relative '../../lib/pdex/nppes_plan'
+require_relative '../../lib/pdex/nppes_managing_org'
 require 'csv'
 
-RSpec.describe PDEX::NPPESPlan do
+RSpec.describe PDEX::NPPESManagingOrg do
   let(:raw_plans) do
     fixture_path = File.join(__dir__, '..', 'fixtures', 'plan.csv')
     [].tap do |plans|
@@ -16,7 +16,7 @@ RSpec.describe PDEX::NPPESPlan do
   let(:plan) { described_class.new(raw_plan) }
 
   describe '.initialize' do
-    it 'creates a NPPESPlan instance' do
+    it 'creates a NPPESManagingOrg instance' do
       expect(plan).to be_a(described_class)
     end
   end

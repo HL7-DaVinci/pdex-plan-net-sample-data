@@ -3,7 +3,7 @@ require 'pry'
 require_relative 'lib/pdex'
 require_relative 'lib/pdex/nppes_network'
 require_relative 'lib/pdex/nppes_organization'
-require_relative 'lib/pdex/nppes_plan'
+require_relative 'lib/pdex/nppes_managing_org'
 require_relative 'lib/pdex/nppes_practitioner'
 require_relative 'lib/pdex/utils/nucc_codes'
 require_relative 'lib/pdex/endpoint_factory'
@@ -37,15 +37,15 @@ FileUtils.mkdir_p('output/InsurancePlan')
 FileUtils.mkdir_p('output/Organization')
 CSV.foreach(managing_organization_filenames, headers: true) do |row|
   if row['is_plan'].downcase == 'true' && row['type'].downcase == 'ins'
-    plan_data << nppes_data = PDEX::NPPESPlan.new(row)
+    plan_data << nppes_data = PDEX::NPPESManagingOrg.new(row)
     resource = PDEX::InsurancePlanFactory.new(nppes_data).build
     File.write("output/InsurancePlan/#{resource.id}.json", resource.to_json)
   elsif row['type'].downcase == 'prov' && row['is_plan'].downcase == 'false'
-    managing_org_data << nppes_data = PDEX::NPPESPlan.new(row, managing_org: true)
+    managing_org_data << nppes_data = PDEX::NPPESManagingOrg.new(row, managing_org: true)
     resource = PDEX::OrganizationFactory.new(nppes_data, managing_org: true).build
     File.write("output/Organization/#{resource.id}.json", resource.to_json)
   elsif row['type'].downcase == 'ins'
-    nppes_data = PDEX::NPPESPlan.new(row, payer: true)
+    nppes_data = PDEX::NPPESManagingOrg.new(row, payer: true)
     resource = PDEX::OrganizationFactory.new(nppes_data, payer: true).build
     File.write("output/Organization/#{resource.id}.json", resource.to_json)
   end
