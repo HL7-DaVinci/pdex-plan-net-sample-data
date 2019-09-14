@@ -1,6 +1,21 @@
 require 'active_support'
 require 'active_support/core_ext/object'
 
+require_relative 'pdex/nppes_network'
+require_relative 'pdex/nppes_organization'
+require_relative 'pdex/nppes_managing_org'
+require_relative 'pdex/nppes_practitioner'
+require_relative 'pdex/endpoint_factory'
+require_relative 'pdex/healthcare_service_factory'
+require_relative 'pdex/insurance_plan_factory'
+require_relative 'pdex/location_factory'
+require_relative 'pdex/network_factory'
+require_relative 'pdex/organization_affiliation_factory'
+require_relative 'pdex/organization_factory'
+require_relative 'pdex/practitioner_factory'
+require_relative 'pdex/practitioner_role_factory'
+require_relative 'pdex/utils/nucc_codes'
+
 module PDEX
   ENDPOINT_PROFILE_URL = 'http://hl7.org/fhir/us/davinci-pdex-plan-net/StructureDefinition/plannet-Endpoint'
   HEALTHCARE_SERVICE_PROFILE_URL = 'http://hl7.org/fhir/us/davinci-pdex-plan-net/StructureDefinition/plannet-HealthcareService'
