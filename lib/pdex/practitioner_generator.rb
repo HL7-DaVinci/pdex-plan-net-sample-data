@@ -14,6 +14,8 @@ module PDEX
       [practitioner, practitioner_role]
     end
 
+    private
+
     def practitioner
       PDEX::PractitionerFactory.new(nppes_data).build
     end

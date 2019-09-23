@@ -32,6 +32,8 @@ module PDEX
         generate_practitioners
       end
 
+      private
+
       def create_output_directories
         RESOURCE_TYPES.each do |resource_type|
           FileUtils.mkdir_p("output/#{resource_type}")

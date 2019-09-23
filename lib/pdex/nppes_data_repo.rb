@@ -30,7 +30,6 @@ module PDEX
       end
 
       # Use MA data if state has no data
-
       DEFAULT_STATE = 'MA'
 
       def networks_by_state(state)

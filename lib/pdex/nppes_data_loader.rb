@@ -17,6 +17,8 @@ module PDEX
         load_practitioners
       end
 
+      private
+
       def load_managing_organizations
         CSV.foreach(MANAGING_ORG_FILENAMES, headers: true) do |row|
           if insurance_plan? row

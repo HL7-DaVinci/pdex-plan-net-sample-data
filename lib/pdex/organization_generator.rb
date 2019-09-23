@@ -16,6 +16,8 @@ module PDEX
       [organization, organization_affiliation].concat(organization_services)
     end
 
+    private
+
     def organization
       PDEX::OrganizationFactory.new(nppes_data).build
     end
