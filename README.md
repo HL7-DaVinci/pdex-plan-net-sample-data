@@ -1,4 +1,4 @@
-# NPPES to FHIR
+# Da Vinci Plan-Net Resources
 
 This project uses NPPES data to create FHIR resources based on the proposed
 Da Vinci Plan Network IG.
@@ -8,50 +8,20 @@ Da Vinci Plan Network IG.
 Run the following commands to generate the sample resources:
 ```
 bundle install
-ruby generate.rb
+bundle exec ruby generate.rb
 ```
 
-## Progress
-- [x] Organization
-  - [ ] `partOf`
-  - [ ] `endpoint`
-- [x] Practitioner
-  - [x] `communication`
-  - [x] `communication` proficiency extension
-  - [ ] `birthDate` - is this really needed? hardcoded in python impl.
-- [x] Location
-  - [ ] `network` extension in `newpatients` extension
-  - [x] `position`
-  - [ ] `endpoint`
-- [x] OrganizationAffiliation
-  - [ ] `endpoint`
-  - [ ] `location`
-  - [x] `healthcareService`
-  - [x] `network` extension
-- [x] PractitionerRole
-  - [x] `network` extension
-  - [ ] `newpatients` extension
-  - [ ] snomed codes for `code` and `specialty`
-  - [ ] `healthcareService` - hcs code from nucc
-  - [ ] `endpoint`
-- [x] Network (this is an Organization profile, so it has the same issues)
-  - [x] `partOf`
-  - [ ] `endpoint`
-- [x] InsurancePlan
-  - [ ] How to represent an unlimited benefit?
-- [x] HealthcareService
-  - [x] new patients extension
-  - [ ] ContactPoint availableTime
-  - [ ] `endpoint`
-- [x] Endpoint
-  - [x] use case extension
-  - [x] for Organizations
-  - [ ] for Locations
-  - [ ] for OrganizationAffiliations
-  - [ ] for PractitionerRoles
-  - [ ] for Networks
-  - [ ] for HealthcareServices
-  - [ ] `period` - is this really needed? hardcoded in python impl.
-- [x] Extension - Geolocation
-  - [x] get real lat/long
-- [x] A script to put it all together and actually generate the resources
+## Code Organization
+
+The code in this repo is largely organized in three layers:
+
+- `nppes_*.rb` - These classes parse NPPES data from .csv files and expose the
+  data through a public interface.
+- `*_factory.rb` - These classes use one of the NPPES data classes (and perhaps
+  some other data) to generate one of the Plan-Net FHIR resources.
+- `*_generator.rb` - These classes handle passing the required NPPES data to the
+  factories and writing the resulting FHIR resources to disk.
+  
+Additionally, `nppes_data_loader` and `nppes_data_repo` are responsible for
+loading the NPPES data into memory and making the data accessible to the
+factories and generators.
