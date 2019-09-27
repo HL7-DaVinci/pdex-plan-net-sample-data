@@ -7,12 +7,12 @@ require_relative 'lib/pdex/nppes_organization'
 require_relative 'lib/pdex/nppes_managing_org'
 require_relative 'lib/pdex/nppes_practitioner'
 
-nppes_dir = 'sample-nppes-data'
+data_dir = 'sample-data'
 
-managing_organization_filenames = File.join(nppes_dir, 'managing_orgs_data.csv')
-organization_filenames = File.join(nppes_dir, 'sample-nppes-organization-data.csv')
-practitioner_filenames = File.join(nppes_dir, 'sample-nppes-practitioner_20181204-data.csv')
-network_filenames = File.join(nppes_dir, 'sample-nppes-network_20181204-data.csv')
+managing_organization_filenames = File.join(data_dir, 'managing_orgs_data.csv')
+organization_filenames = File.join(data_dir, 'sample-nppes-organization-data.csv')
+practitioner_filenames = File.join(data_dir, 'sample-nppes-practitioner_20181204-data.csv')
+network_filenames = File.join(data_dir, 'sample-nppes-network_20181204-data.csv')
 
 data = []
 

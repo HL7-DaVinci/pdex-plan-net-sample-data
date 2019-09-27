@@ -3,7 +3,7 @@ require_relative 'nppes_data_repo'
 
 module PDEX
   class NPPESDataLoader
-    NPPES_DIR = File.join(__dir__, '..', '..', '/sample-nppes-data')
+    NPPES_DIR = File.join(__dir__, '..', '..', '/sample-data')
     MANAGING_ORG_FILENAMES = File.join(NPPES_DIR, 'managing_orgs_data.csv')
     ORGANIZATION_FILENAMES = File.join(NPPES_DIR, 'sample-nppes-organization-data.csv')
     PRACTITIONER_FILENAMES = File.join(NPPES_DIR, 'sample-nppes-practitioner_20181204-data.csv')
