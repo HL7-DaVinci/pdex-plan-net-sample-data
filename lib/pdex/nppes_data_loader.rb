@@ -3,11 +3,12 @@ require_relative 'nppes_data_repo'
 
 module PDEX
   class NPPESDataLoader
-    NPPES_DIR = File.join(__dir__, '..', '..', '/sample-data')
-    MANAGING_ORG_FILENAMES = File.join(NPPES_DIR, 'managing_orgs_data.csv')
-    ORGANIZATION_FILENAMES = File.join(NPPES_DIR, 'sample-nppes-organization-data.csv')
-    PRACTITIONER_FILENAMES = File.join(NPPES_DIR, 'sample-nppes-practitioner_20181204-data.csv')
-    NETWORK_FILENAMES = File.join(NPPES_DIR, 'sample-nppes-network_20181204-data.csv')
+    DATA_DIR = File.join(__dir__, '..', '..', '/sample-data')
+    MANAGING_ORG_FILENAMES = File.join(DATA_DIR, 'managing_orgs_data.csv')
+    ORGANIZATION_FILENAMES = File.join(DATA_DIR, 'sample-nppes-organization-data.csv')
+    PHARMACY_FILENAMES = File.join(DATA_DIR, 'ct_pharmacies.csv')
+    PRACTITIONER_FILENAMES = File.join(DATA_DIR, 'sample-nppes-practitioner_20181204-data.csv')
+    NETWORK_FILENAMES = File.join(DATA_DIR, 'sample-nppes-network_20181204-data.csv')
 
     class << self
       def load
@@ -15,6 +16,7 @@ module PDEX
         load_networks
         load_organizations
         load_practitioners
+        load_pharmacies
       end
 
       private
@@ -58,6 +60,12 @@ module PDEX
       def load_practitioners
         CSV.foreach(PRACTITIONER_FILENAMES, headers: true) do |row|
           NPPESDataRepo.practitioners << PDEX::NPPESPractitioner.new(row)
+        end
+      end
+
+      def load_pharmacies
+        CSV.foreach(PHARMACY_FILENAMES, headers: true) do |row|
+          NPPESDataRepo.pharmacies << PDEX::PharmacyData.new(row)
         end
       end
     end

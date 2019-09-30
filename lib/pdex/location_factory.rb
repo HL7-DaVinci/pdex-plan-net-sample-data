@@ -9,10 +9,11 @@ module PDEX
     include Telecom
     include Formatting
 
-    attr_reader :source_data
+    attr_reader :source_data, :pharmacy
 
-    def initialize(nppes_data)
+    def initialize(nppes_data, pharmacy: false)
       @source_data = nppes_data
+      @pharmacy = pharmacy
     end
 
     def build
@@ -29,6 +30,7 @@ module PDEX
           status: 'active',
           name: name,
           description: description,
+          type: type,
           telecom: telecom,
           address: address,
           position: position,
@@ -108,6 +110,21 @@ module PDEX
 
     def description
       "Main campus of #{name}"
+    end
+
+    def type
+      return unless pharmacy
+      [
+        {
+          coding: [
+            {
+              system: 'http://terminology.hl7.org/CodeSystem/v3-RoleCode',
+              code: 'OUTPHARM'
+            }
+          ],
+          text: 'Outpatient pharmacy'
+        }
+      ]
     end
 
     def telecom

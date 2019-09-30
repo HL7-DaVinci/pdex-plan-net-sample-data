@@ -29,6 +29,10 @@ module PDEX
         @organization_networks ||= {}
       end
 
+      def pharmacies
+        @pharmacies ||= []
+      end
+
       # Use MA data if state has no data
       DEFAULT_STATE = 'MA'
 

@@ -9,14 +9,15 @@ module PDEX
     include Address
     include Telecom
 
-    attr_reader :source_data, :resource_type, :profile, :payer, :managing_org
+    attr_reader :source_data, :resource_type, :profile, :payer, :managing_org, :pharmacy
 
-    def initialize(nppes_organization, payer: false, managing_org: false)
+    def initialize(nppes_organization, payer: false, managing_org: false, pharmacy: false)
       @source_data = nppes_organization
       @resource_type = 'organization'
       @profile = ORGANIZATION_PROFILE_URL
       @payer = payer
       @managing_org = managing_org
+      @pharmacy = pharmacy
     end
 
     def build
@@ -53,23 +54,31 @@ module PDEX
     end
 
     def identifier
+      return pharmacy_identifier if pharmacy
+      {
+        use: 'official',
+        system: 'http://hl7.org/fhir/sid/us-npi',
+        value: source_data.npi,
+        assigner: {
+          display: 'Centers for Medicare and Medicaid Services'
+        }
+      }
+    end
+
+    def pharmacy_identifier
       {
         use: 'official',
         type: {
           coding: [
             {
-              system: 'http://terminology.hl7.org/CodeSystem/v2-0203',
-              code: 'NPI',
-              display: 'Provider number',
-              userSelected: true
+              display: 'Pharmacy License',
             }
           ],
-          text: 'NPI'
+          text: 'Pharmacy License'
         },
-        system: 'http://hl7.org/fhir/sid/us-npi',
         value: source_data.npi,
         assigner: {
-          display: 'Centers for Medicare and Medicaid Services'
+          display: 'Connecticut Department of Consumer Protection'
         }
       }
     end
