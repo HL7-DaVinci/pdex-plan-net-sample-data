@@ -144,5 +144,14 @@ RSpec.describe PDEX::LocationFactory do
     it 'includes availability exceptions' do
       expect(resource.availabilityExceptions).to be_present
     end
+
+    it "doesn't include a type for non-pharmacies" do
+      expect(resource.type).to be_blank
+    end
+
+    it 'includes type for pharmacies' do
+      pharmacy = described_class.new(nppes_data, pharmacy: true).build
+      expect(pharmacy.type.first.coding.first.code).to eq('OUTPHARM')
+    end
   end
 end

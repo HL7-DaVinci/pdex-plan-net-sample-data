@@ -6,7 +6,7 @@ module PDEX
     end
 
     def format_zip(zip)
-      return zip if zip.length == 5 || zip.length == 9
+      return zip if zip.length == 5 || zip.length == 9 || zip.length == 10
       return zip.rjust(5, '0') if zip.length < 5
       zip[0..-5].rjust(5, '0') + zip[0..-4]
     end

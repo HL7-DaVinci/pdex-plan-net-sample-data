@@ -57,6 +57,17 @@ module PDEX
       return pharmacy_identifier if pharmacy
       {
         use: 'official',
+        type: {
+          coding: [
+            {
+              system: 'http://terminology.hl7.org/CodeSystem/v2-0203',
+              code: 'NPI',
+              display: 'Provider number',
+              userSelected: true
+            }
+          ],
+          text: 'NPI'
+        },
         system: 'http://hl7.org/fhir/sid/us-npi',
         value: source_data.npi,
         assigner: {

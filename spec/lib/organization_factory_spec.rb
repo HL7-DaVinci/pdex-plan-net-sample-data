@@ -104,5 +104,10 @@ RSpec.describe PDEX::OrganizationFactory do
       payer = described_class.new(organization, payer: true).build
       expect(payer.contact).to be_blank
     end
+
+    it 'includes a pharmacy identifier for pharmacies' do
+      pharmacy = described_class.new(organization, pharmacy: true).build
+      expect(pharmacy.identifier.first.type.text).to eq('Pharmacy License')
+    end
   end
 end
