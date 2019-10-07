@@ -1,6 +1,6 @@
 require 'httparty'
 require 'pry'
-
+require 'digest'
 require_relative 'lib/pdex'
 require_relative 'lib/pdex/nppes_network'
 require_relative 'lib/pdex/nppes_organization'
@@ -25,16 +25,19 @@ end
 
 def short_name(name)
 #   short_name = name.split(" ")[0].camelize
-    short_name = name.partition("#")[0]
-    short_name = short_name.partition("STORE")[0]
-    short_name = short_name.partition("SUPERMARKET")[0]
-    short_name = short_name.partition("OF")[0]
-    short_name = short_name.partition("PHARMACY")[0]
-   short_name_strip = short_name.rstrip
+    name.gsub(/[,\/]/," ")
+    .gsub("  "," ")
+    .split('#').first
+    .split(/STORE|SUPERMARKET|OF|PHARMACY/).first
+    .rstrip
+end
+def org_id_from_name(name)
+    Digest::SHA2.hexdigest(name)
 end
 def pharm_org_out(name, pharms, id)
     {
         id: id,
+        digest: org_id_from_name(name),
         name: name,
         pharms: pharms 
     }
@@ -62,6 +65,6 @@ pharms.each do |name, pharms|
     file.puts pharm_org_out(name, pharms, count[name])
 end
 
-file = File.open('lib/pdex/utils/pharms_to_pharmmorgs.rb', 'w') 
-file.puts "PHARMS_TO_PHARMORGS = "
-file.puts locations_to_orgs 
+#file = File.open('lib/pdex/utils/pharms_to_pharmmorgs.rb', 'w') 
+#file.puts "PHARMS_TO_PHARMORGS = "
+#file.puts locations_to_orgs 
