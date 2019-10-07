@@ -8,6 +8,7 @@ module PDEX
     include Address
     include Telecom
     include Formatting
+    include ShortName
 
     attr_reader :source_data, :pharmacy
 
@@ -28,7 +29,7 @@ module PDEX
           ],
           identifier: identifier,
           status: 'active',
-          name: name,
+          name: location_name,
           description: description,
           type: type,
           telecom: telecom,
@@ -47,7 +48,11 @@ module PDEX
       "plannet-location-#{source_data.npi}"
     end
 
+    def pharmacy_organization_id
+      "plannet-organization-#{digest_name(location_name)}"
+    end
     def organization_id
+      return pharmacy_organization_id if @pharmacy
       "plannet-organization-#{source_data.npi}"
     end
 
@@ -58,6 +63,7 @@ module PDEX
     end
 
     def accessibility_extension
+      return if @pharmacy
       {
         url: ACCESSIBILITY_EXTENSION_URL,
         valueCodeableConcept: {
@@ -74,19 +80,21 @@ module PDEX
     end
 
     def new_patients_extension
-      {
+      return if @pharmacy
+           {
         url: NEW_PATIENTS_EXTENSION_URL,
         extension: [
           {
             url: 'acceptingPatients',
-            valueBoolean: name.length.odd?
+            valueBoolean: location_name.length.odd?
           }
         ]
       }
     end
 
     def new_patient_profile_extension
-      {
+      return if @pharmacy
+           {
         url: NEW_PATIENT_PROFILE_EXTENSION_URL,
         valueString: 'This location accepts all types of patients'
       }
@@ -95,21 +103,28 @@ module PDEX
     def identifier
       {
         use: 'secondary',
-        system: "https://#{format_for_url(source_data.name)}.com",
+        system: "https://#{format_for_url(location_name)}.com",
         value: 'main campus',
         assigner: {
           reference: "Organization/#{organization_id}",
-          display: source_data.name
+          display: organization_name
         }
       }
     end
 
-    def name
+    def location_name
+      source_data.name
+    end
+    def pharmacy_org_name
+      short_name(source_data.name)
+    end
+    def organization_name
+      return pharmacy_org_name if @pharmacy 
       source_data.name
     end
 
     def description
-      "Main campus of #{name}"
+      "Main campus of #{location_name}"
     end
 
     def type
@@ -150,7 +165,7 @@ module PDEX
     def managing_organization
       {
         reference: "Organization/#{organization_id}",
-        display: name
+        display: organization_name
       }
     end
 

@@ -31,6 +31,7 @@ module PDEX
         generate_endpoints
         generate_practitioners
         generate_pharmacies
+        generate_pharmacy_orgs
       end
 
       private
@@ -106,14 +107,24 @@ module PDEX
       end
 
       def generate_pharmacies
-        generate_resources(PDEX::NPPESDataRepo.pharmacies) do |nppes_data|
-          PDEX::OrganizationFactory.new(nppes_data, pharmacy: true).build
-        end
+   #     generate_resources(PDEX::NPPESDataRepo.pharmacies) do |nppes_data|
+   #       PDEX::OrganizationFactory.new(nppes_data, pharmacy: true).build
+   #     end
 
         generate_resources(PDEX::NPPESDataRepo.pharmacies) do |nppes_data|
           PDEX::LocationFactory.new(nppes_data, pharmacy: true).build
         end
       end
+
+      def generate_pharmacy_orgs
+        #     generate_resources(PDEX::NPPESDataRepo.pharmacies) do |nppes_data|
+        #       PDEX::OrganizationFactory.new(nppes_data, pharmacy: true).build
+        #     end
+     
+             generate_resources(PDEX::NPPESDataRepo.pharmacy_orgs) do |nppes_data|
+              PDEX::OrganizationFactory.new(nppes_data, pharmacy: true).build
+             end
+           end
     end
   end
 end

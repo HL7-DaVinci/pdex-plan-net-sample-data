@@ -8,19 +8,20 @@ module PDEX
     include Formatting
     include Fakes
     include Position
+    include ShortName
 
-    attr_reader :raw_data
+    attr_reader :name
 
-    def initialize(raw_data)
-      @raw_data = raw_data.freeze
+    def initialize(name)
+      @name = name 
     end
 
     def npi
-      # return the id
+      digest_short_name(@name)
     end
 
     def name
-      # return the name
+      @name 
     end
 
     def phone_numbers

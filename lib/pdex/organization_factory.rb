@@ -54,7 +54,7 @@ module PDEX
     end
 
     def identifier
-      return pharmacy_identifier if pharmacy
+      return  if @pharmacy
       {
         use: 'official',
         type: {
@@ -76,24 +76,7 @@ module PDEX
       }
     end
 
-    def pharmacy_identifier
-      {
-        use: 'official',
-        type: {
-          coding: [
-            {
-              display: 'Pharmacy License',
-            }
-          ],
-          text: 'Pharmacy License'
-        },
-        value: source_data.npi,
-        assigner: {
-          display: 'Connecticut Department of Consumer Protection'
-        }
-      }
-    end
-
+   
     def type
       [
         {
