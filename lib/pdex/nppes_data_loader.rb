@@ -67,6 +67,10 @@ module PDEX
         CSV.foreach(PHARMACY_FILENAMES, headers: true) do |row|
           NPPESDataRepo.pharmacies << PDEX::PharmacyData.new(row)
         end
+
+        # - iterate through NPPESDataRepo.pharmacies and generate PharmacyOrg
+        #   objects to hold the data
+        # - add the pharmacy orgs to NPPESDataRepo.pharmacy_orgs
       end
     end
   end
