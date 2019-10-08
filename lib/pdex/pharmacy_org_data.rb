@@ -20,10 +20,6 @@ module PDEX
       digest_short_name(@name)
     end
 
-    def name
-      @name 
-    end
-
     def phone_numbers
       @phone_numbers ||= [fake_phone_number]
     end

@@ -63,7 +63,7 @@ module PDEX
     end
 
     def accessibility_extension
-      return if @pharmacy
+      return if pharmacy
       {
         url: ACCESSIBILITY_EXTENSION_URL,
         valueCodeableConcept: {
@@ -80,7 +80,7 @@ module PDEX
     end
 
     def new_patients_extension
-      return if @pharmacy
+      return if pharmacy
            {
         url: NEW_PATIENTS_EXTENSION_URL,
         extension: [
@@ -93,7 +93,7 @@ module PDEX
     end
 
     def new_patient_profile_extension
-      return if @pharmacy
+      return if pharmacy
            {
         url: NEW_PATIENT_PROFILE_EXTENSION_URL,
         valueString: 'This location accepts all types of patients'
@@ -119,7 +119,7 @@ module PDEX
       short_name(source_data.name)
     end
     def organization_name
-      return pharmacy_org_name if @pharmacy 
+      return pharmacy_org_name if pharmacy 
       source_data.name
     end
 
