@@ -23,7 +23,7 @@ RSpec.describe PDEX::PharmacyData do
 
   describe '#npi' do
     it 'returns the pharmacy credential' do
-      expect(organization.npi).to eq('PCY_0007322')
+      expect(organization.npi).to eq('PCY-0007322')
     end
   end
 
