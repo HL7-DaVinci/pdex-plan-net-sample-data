@@ -33,6 +33,10 @@ module PDEX
         @pharmacies ||= []
       end
 
+      def pharmacy_orgs
+        @pharmacy_orgs ||= []
+      end
+
       # Use MA data if state has no data
       DEFAULT_STATE = 'MA'
 

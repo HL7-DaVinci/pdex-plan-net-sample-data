@@ -4,23 +4,20 @@ require_relative 'utils/lat_long'
 require_relative 'utils/position'
 
 module PDEX
-  class PharmacyData
+  class PharmacyOrgData
     include Formatting
     include Fakes
     include Position
+    include ShortName
 
-    attr_reader :raw_data
+    attr_reader :name
 
-    def initialize(raw_data)
-      @raw_data = raw_data.freeze
+    def initialize(name)
+      @name = name 
     end
 
     def npi
-      @credential ||= fake_pharmacy_credential(raw_data['Credential'].gsub(".","_"))
-    end
-
-    def name
-      raw_data['Pharmacy-Name']
+      digest_short_name(@name)
     end
 
     def phone_numbers
@@ -32,14 +29,14 @@ module PDEX
     end
 
     def address
+      # return a fake address, or don't if we don't need an address for the orgs
       OpenStruct.new(
         {
           lines: [
-            raw_data['Address']
           ],
-          city: raw_data['City'],
-          state: raw_data['State'],
-          zip: format_zip(raw_data['Zip'])
+          city: '',
+          state: '',
+          zip: format_zip('')
         }
       )
     end

@@ -70,7 +70,7 @@ module PDEX
     def extensions
       network_data.map do |network|
         {
-          url: NETWORK_EXTENSION_URL,
+          url: PARTICIPATING_NETWORK_EXTENSION_URL,
           valueReference: {
             reference: "Organization/plannet-network-#{network.npi}",
             display: network.name
