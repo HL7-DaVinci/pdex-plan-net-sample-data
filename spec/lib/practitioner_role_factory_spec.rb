@@ -90,7 +90,7 @@ RSpec.describe PDEX::PractitionerRoleFactory do
     end
 
     it 'includes a network extension' do
-      expect(resource.extension.first.url).to eq(PDEX::NETWORK_EXTENSION_URL)
+      expect(resource.extension.first.url).to eq(PDEX::PARTICIPATING_NETWORK_EXTENSION_URL)
     end
 
     it 'includes an organization reference' do
