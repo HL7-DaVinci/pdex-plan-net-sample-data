@@ -16,7 +16,7 @@ module PDEX
     end
 
     def npi
-      @credential ||= fake_pharmacy_credential(raw_data['Credential'].gsub(".","_"))
+      @credential ||= fake_pharmacy_credential(raw_data['Credential'].gsub(".","-"))
     end
 
     def name

@@ -51,6 +51,7 @@ module PDEX
     def pharmacy_organization_id
       "plannet-organization-#{digest_name(location_name)}"
     end
+
     def organization_id
       return pharmacy_organization_id if @pharmacy
       "plannet-organization-#{source_data.npi}"
@@ -115,11 +116,13 @@ module PDEX
     def location_name
       source_data.name
     end
+
     def pharmacy_org_name
       short_name(source_data.name)
     end
+
     def organization_name
-      return pharmacy_org_name if pharmacy 
+      return pharmacy_org_name if pharmacy
       source_data.name
     end
 
