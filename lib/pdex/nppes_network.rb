@@ -63,7 +63,7 @@ module PDEX
     end
 
     def part_of_name
-      raw_data['partof_display']
+      raw_data['partof_display'].split(' of').first
     end
   end
 end
