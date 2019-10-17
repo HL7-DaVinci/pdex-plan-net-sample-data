@@ -179,7 +179,7 @@ module PDEX
     end
 
     def availability_exceptions
-      'visiting hours from 6:00 am - 10:00 pm'
+      'visiting hours from 6:00 am - 10:00 pm' if !pharmacy 
     end
 
     def position
