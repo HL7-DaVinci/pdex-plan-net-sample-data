@@ -55,7 +55,7 @@ module PDEX
     end
 
     def contact_last_name
-      @contact_first_name ||= fake_family_name
+      @contact_last_name ||= fake_family_name
     end
 
     def part_of_id
