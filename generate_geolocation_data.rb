@@ -44,25 +44,44 @@ CSV.foreach(pharmacy_filenames, headers: true) do |row|
   data << PDEX::PharmacyData.new(row)
 end
 
+# # Geolocation from US census
+# def get_coords(address)
+#   address_line = "#{address.lines.first}, #{address.city}, #{address.state} #{address.zip}"
+#   # https://geocoding.geo.census.gov/geocoder/Geocoding_Services_API.html
+#   response = HTTParty.get(
+#     'https://geocoding.geo.census.gov/geocoder/locations/onelineaddress',
+#     query: {
+#       address: address_line,
+#       benchmark: 'Public_AR_Current',
+#       format: 'json'
+#     }
+#   )
+#   response.deep_symbolize_keys&.dig(:result, :addressMatches)&.first&.dig(:coordinates)
+# end
+
+# Geolocation from MapQuest
 def get_coords(address)
   address_line = "#{address.lines.first}, #{address.city}, #{address.state} #{address.zip}"
-  # https://geocoding.geo.census.gov/geocoder/Geocoding_Services_API.html
   response = HTTParty.get(
-    'https://geocoding.geo.census.gov/geocoder/locations/onelineaddress',
+    'http://open.mapquestapi.com/geocoding/v1/address',
     query: {
-      address: address_line,
-      benchmark: 'Public_AR_Current',
-      format: 'json'
+      key: 'A4F1XOyCcaGmSpgy2bLfQVD5MdJezF0S',
+      location: address_line,
+      thumbMaps: false,
     }
   )
-  response.deep_symbolize_keys&.dig(:result, :addressMatches)&.first&.dig(:coordinates)
+  coords = response.deep_symbolize_keys&.dig(:results)&.first&.dig(:locations).first&.dig(:latLng)
+  {
+    x: coords[:lng],
+    y: coords[:lat]
+  }
 end
 
 lat_long = data.map(&:address).each_with_object({}) do |address, addresses|
   key = address.lines.first
   if COORDINATES.key? address.lines.first
     addresses[key] = COORDINATES[key]
-    print '.'
+    print '-'
     next
   end
   coords = get_coords(address)
