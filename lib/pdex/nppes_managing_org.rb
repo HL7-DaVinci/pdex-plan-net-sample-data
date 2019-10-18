@@ -44,7 +44,7 @@ module PDEX
     end
 
     def name
-      managing_org ? raw_data['name'] : raw_data['plan_name']
+      managing_org || payer ? raw_data['name'] : raw_data['plan_name']
     end
 
     def alias
@@ -52,19 +52,19 @@ module PDEX
     end
 
     def owner_id
-      fake_npi(raw_data['id'])
+      fake_npi(raw_data['partof_id'])
     end
 
     def owner_name
-      raw_data['name']
+      raw_data['name'].split(' of').first
     end
 
     def administrator_id
-      fake_npi(raw_data['plan_manager_id'])
+      owner_id
     end
 
     def administrator_name
-      raw_data['plan_manager']
+      owner_name
     end
 
     def coverage

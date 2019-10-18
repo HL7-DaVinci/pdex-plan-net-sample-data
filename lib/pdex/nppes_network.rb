@@ -55,7 +55,7 @@ module PDEX
     end
 
     def contact_last_name
-      @contact_first_name ||= fake_family_name
+      @contact_last_name ||= fake_family_name
     end
 
     def part_of_id
@@ -63,7 +63,7 @@ module PDEX
     end
 
     def part_of_name
-      raw_data['partof_display']
+      raw_data['partof_display'].split(' of').first
     end
   end
 end
