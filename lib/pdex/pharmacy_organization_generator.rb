@@ -31,8 +31,5 @@ module PDEX
     def organization_services
       @organization_services ||= [ PDEX::HealthcareServiceFactory.new(nppes_data, "pharmacy").build ]
     end
-
-  
-    
   end
 end
