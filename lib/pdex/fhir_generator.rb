@@ -4,6 +4,7 @@ require_relative './network_factory'
 require_relative './location_factory'
 require_relative './endpoint_factory'
 require_relative './organization_generator'
+require_relative './pharmacy_organization_generator'
 require_relative './practitioner_generator'
 
 module PDEX
@@ -113,10 +114,13 @@ module PDEX
       end
 
       def generate_pharmacy_orgs
-          generate_resources(PDEX::NPPESDataRepo.pharmacy_orgs) do |nppes_data|
-              PDEX::OrganizationFactory.new(nppes_data, pharmacy: true).build
+        # Pharmacy_orgs is a PharmacyOrgData, not an NPPES data... 
+        PDEX::NPPESDataRepo.pharmacy_orgs.each do |nppes_data|
+          PDEX::PharmacyOrganizationGenerator.new(nppes_data).generate.each do |resource|
+            write_resource(resource)
           end
-      end
+        end
+       end
     end
   end
 end

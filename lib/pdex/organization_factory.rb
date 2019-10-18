@@ -18,6 +18,7 @@ module PDEX
       @payer = payer
       @managing_org = managing_org
       @pharmacy = pharmacy
+      @npi = source_data.npi 
     end
 
     def build
@@ -69,14 +70,17 @@ module PDEX
           text: 'NPI'
         },
         system: 'http://hl7.org/fhir/sid/us-npi',
-        value: source_data.npi,
+        value: @npi,
         assigner: {
           display: 'Centers for Medicare and Medicaid Services'
         }
       }
     end
 
-   
+    def npi
+      @npi
+    end
+    
     def type
       [
         {
