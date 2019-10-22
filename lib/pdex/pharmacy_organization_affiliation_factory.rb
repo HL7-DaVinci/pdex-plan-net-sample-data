@@ -30,10 +30,6 @@ module PDEX
 
     private
 
-    def id
-      "plannet-organizationaffiliation-#{source_data.npi}"
-    end
-
     def organization
         {
           reference: "Organization/plannet-organization-#{source_data.npi}",

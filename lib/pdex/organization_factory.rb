@@ -9,7 +9,7 @@ module PDEX
     include Address
     include Telecom
 
-    attr_reader :source_data, :resource_type, :profile, :payer, :managing_org, :pharmacy
+    attr_reader :source_data, :resource_type, :profile, :payer, :managing_org, :pharmacy, :npi 
 
     def initialize(nppes_organization, payer: false, managing_org: false, pharmacy: false)
       @source_data = nppes_organization
@@ -77,10 +77,6 @@ module PDEX
       }
     end
 
-    def npi
-      @npi
-    end
-    
     def type
       [
         {
