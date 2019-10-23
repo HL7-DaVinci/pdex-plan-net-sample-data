@@ -9,7 +9,7 @@ module PDEX
     include Address
     include Telecom
 
-    attr_reader :source_data, :resource_type, :profile, :payer, :managing_org, :pharmacy
+    attr_reader :source_data, :resource_type, :profile, :payer, :managing_org, :pharmacy, :npi 
 
     def initialize(nppes_organization, payer: false, managing_org: false, pharmacy: false)
       @source_data = nppes_organization
@@ -18,6 +18,7 @@ module PDEX
       @payer = payer
       @managing_org = managing_org
       @pharmacy = pharmacy
+      @npi = source_data.npi 
     end
 
     def build
@@ -69,14 +70,13 @@ module PDEX
           text: 'NPI'
         },
         system: 'http://hl7.org/fhir/sid/us-npi',
-        value: source_data.npi,
+        value: @npi,
         assigner: {
           display: 'Centers for Medicare and Medicaid Services'
         }
       }
     end
 
-   
     def type
       [
         {
