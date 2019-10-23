@@ -1,8 +1,6 @@
 module PDEX
   module Address
     def address
-      return if source_data.address.blank?
-
       lines = source_data.address.lines
       city = source_data.address.city
       state = source_data.address.state
@@ -21,10 +19,7 @@ module PDEX
     end
 
     def address_with_geolocation
-      return if source_data.address.blank?
-
       return address if source_data.position.blank?
-
       address.merge(
         extension: [
           {
