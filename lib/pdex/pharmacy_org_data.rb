@@ -13,7 +13,7 @@ module PDEX
     attr_reader :name
 
     def initialize(name)
-      @name = name
+      @name = name 
     end
 
     def npi
@@ -29,7 +29,16 @@ module PDEX
     end
 
     def address
-      nil
+      # return a fake address, or don't if we don't need an address for the orgs
+      OpenStruct.new(
+        {
+          lines: [
+          ],
+          city: '',
+          state: '',
+          zip: format_zip('')
+        }
+      )
     end
 
     def contact_first_name
