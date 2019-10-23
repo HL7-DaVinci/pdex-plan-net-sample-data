@@ -3,9 +3,7 @@ require_relative 'nppes_data_repo'
 require_relative 'shortname'
 
 module PDEX
-
   class NPPESDataLoader
-
     DATA_DIR = File.join(__dir__, '..', '..', '/sample-data')
     MANAGING_ORG_FILENAMES = File.join(DATA_DIR, 'managing_orgs_data.csv')
     ORGANIZATION_FILENAMES = File.join(DATA_DIR, 'sample-nppes-organization-data.csv')
@@ -14,8 +12,8 @@ module PDEX
     NETWORK_FILENAMES = File.join(DATA_DIR, 'sample-nppes-network_20181204-data.csv')
 
     class << self
-    include ShortName
-    def load
+      include ShortName
+      def load
         load_managing_organizations
         load_networks
         load_organizations
@@ -73,15 +71,12 @@ module PDEX
           NPPESDataRepo.pharmacies << PDEX::PharmacyData.new(row)
         end
       end
-      def load_pharmacy_orgs
-        # - iterate through NPPESDataRepo.pharmacies and generate PharmacyOrg
-        #   objects to hold the data
-        # - add the pharmacy orgs to NPPESDataRepo.pharmacy_orgs
 
-        unique_org_names = NPPESDataRepo.pharmacies.map{ |pharmacy| short_name(pharmacy.name)}.uniq.sort 
-         unique_org_names.each {|name| 
+      def load_pharmacy_orgs
+        unique_org_names = NPPESDataRepo.pharmacies.map{ |pharmacy| short_name(pharmacy.name)}.uniq.sort
+        unique_org_names.each do |name|
           NPPESDataRepo.pharmacy_orgs << PDEX::PharmacyOrgData.new(name)
-        }
+        end
       end
     end
   end
