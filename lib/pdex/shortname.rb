@@ -17,13 +17,13 @@ module PDEX
     # Pharmacy orgs have unique hash index, so pharmacies can figure out their
     # managing Org by calling digest_name
     def digest_name(name)
-      Digest::SHA2.hexdigest(short_name(name))[0..32]
+      Digest::SHA2.hexdigest(short_name(name))[0..24]
     end
 
     # Pharmacy orgs can figure out their unique name by calling
     # digest_short_name
     def digest_short_name(name)
-      Digest::SHA2.hexdigest(name)[0..32]
+      Digest::SHA2.hexdigest(name)[0..24]
     end
   end
 end
