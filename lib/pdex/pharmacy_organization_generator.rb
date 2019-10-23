@@ -13,6 +13,11 @@ module PDEX
 
     private
 
+    # Currently we only hav pharmacy data for CT
+    def state
+      'CT'
+    end
+
     # call with pharmacy flag, or call pharmacy_org_data with appropriate arguments
     def organization
       PDEX::OrganizationFactory.new(nppes_data).build
