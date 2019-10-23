@@ -86,7 +86,7 @@ RSpec.describe PDEX::NPPESNetwork do
 
   describe '#part_of_name' do
     it 'returns the name' do
-      expect(network.part_of_name).to eq('Acme Insurance Co of Massachusetts')
+      expect(network.part_of_name).to eq('Acme Insurance Co')
     end
   end
 

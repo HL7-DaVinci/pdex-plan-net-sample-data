@@ -58,25 +58,25 @@ RSpec.describe PDEX::NPPESManagingOrg do
 
   describe '#owner_id' do
     it 'returns the owner_id' do
-      expect(plan.owner_id).to eq('1230120000')
+      expect(plan.owner_id).to eq('1230210000')
     end
   end
 
   describe '#owner_name' do
     it 'returns the owner_name' do
-      expect(plan.owner_name).to eq('Acme Insurance Co of Massachusetts')
+      expect(plan.owner_name).to eq('Acme Insurance Co')
     end
   end
 
   describe '#administrator_id' do
     it 'returns the administrator_id' do
-      expect(plan.administrator_id).to eq('1230120000')
+      expect(plan.administrator_id).to eq('1230210000')
     end
   end
 
   describe '#administrator_name' do
     it 'returns the administrator_name' do
-      expect(plan.administrator_name).to eq('Acme Insurance Co of Massachusetts')
+      expect(plan.administrator_name).to eq('Acme Insurance Co')
     end
   end
 
