@@ -8,8 +8,9 @@ module PDEX
   class OrganizationGenerator
     attr_reader :nppes_data
 
-    def initialize(nppes_data)
+    def initialize(nppes_data, parent_organization: parent = nil )
       @nppes_data = nppes_data
+      @parent = parent
     end
 
     def generate
@@ -27,7 +28,8 @@ module PDEX
         nppes_data,
         networks: networks,
         managing_org: managing_org,
-        services: organization_services
+        services: organization_services,
+        locations: nil 
       ).build
     end
 
@@ -56,7 +58,9 @@ module PDEX
     end
 
     def managing_org
+ 
       state_managing_orgs[nppes_data.name.length % state_managing_orgs.length]
+
     end
   end
 end
