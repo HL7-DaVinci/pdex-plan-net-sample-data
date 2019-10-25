@@ -17,7 +17,7 @@ module PDEX
 
     # call with pharmacy flag, or call pharmacy_org_data with appropriate arguments
     def organization
-      PDEX::OrganizationFactory.new(nppes_data).build
+      PDEX::OrganizationFactory.new(nppes_data, pharmacy:true).build
     end
 
     def organization_affiliation

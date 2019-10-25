@@ -76,8 +76,17 @@ module PDEX
         }
       }
     end
-
     def type
+      if payer
+        payertype
+      elsif  managing_org || pharmacy
+        othertype
+      else
+        provtype
+      end
+    end
+
+    def provtype
       [
         {
           coding: [
@@ -88,6 +97,34 @@ module PDEX
             }
           ],
           text: 'Healthcare Provider'
+        }
+      ]
+    end
+    def payertype
+      [
+        {
+          coding: [
+            {
+              system: 'http://terminology.hl7.org/CodeSystem/organization-type',
+              code: 'pay',
+              display: 'Payer'
+            }
+          ],
+          text: 'Payer'
+        }
+      ]
+    end
+    def othertype
+      [
+        {
+          coding: [
+            {
+              system: 'http://terminology.hl7.org/CodeSystem/organization-type',
+              code: 'other',
+              display: 'Other'
+            }
+          ],
+          text: 'Other'
         }
       ]
     end
