@@ -12,13 +12,14 @@ module PDEX
     include Telecom
     include Formatting
 
-    attr_reader :source_data, :networks, :managing_org, :services
+    attr_reader :source_data, :networks, :managing_org, :services, :locations
 
-    def initialize(nppes_organization, networks:, managing_org:, services:)
+    def initialize(nppes_organization, networks:, managing_org:, services:, locations: nil)
       @source_data = nppes_organization
       @networks = networks
       @managing_org = managing_org
       @services = services
+      @locations = locations 
     end
 
     def build

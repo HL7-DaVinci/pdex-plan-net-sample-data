@@ -42,10 +42,13 @@ module PDEX
   PARTICIPATING_NETWORK_EXTENSION_URL = 'http://hl7.org/fhir/us/davinci-pdex-plan-net/StructureDefinition/plannet-ParticipatingNetwork-extension'
   NEW_PATIENTS_EXTENSION_URL = 'http://hl7.org/fhir/us/davinci-pdex-plan-net/StructureDefinition/plannet-NewPatients-extension'
   NEW_PATIENT_PROFILE_EXTENSION_URL = 'http://hl7.org/fhir/uv/vhdir/StructureDefinition/newpatientprofile'
+  ACCEPTING_NEW_PATIENTS_EXTENSION_URL='http://hl7.org/fhir/us/davinci-pdex-plan-net/StructureDefinition/plannet-AcceptingPatients-extension'
   PRACTITIONER_QUALIFICATION_EXTENSION_URL = 'http://hl7.org/fhir/uv/vhdir/StructureDefinition/practitioner-qualification'
 
   ACCESSIBILITY_CODE_SYSTEM_URL = 'http://hl7.org/fhir/uv/vhdir/CodeSystem/accessibility'
   COMMUNICATION_PROFICIENCY_SYSTEM_URL = 'http://hl7.org/fhir/uv/vhdir/CodeSystem/languageproficiency'
   ENDPOINT_USE_CASE_SYSTEM_URL = 'http://hl7.org/fhir/uv/vhdir/CodeSystem/usecase'
   PAYER_CHARACTERISTICS_CODE_SYSTEM_URL = 'http://hl7.org/fhir/uv/vhdir/CodeSystem/payercharacteristics'
+  INSURANCE_PLAN_TYPE_CODE_SYSTEM_URL = 'http://hl7.org/fhir/ValueSet/insuranceplan-type'
+  
 end

@@ -23,13 +23,23 @@ module PDEX
           network: network,
           code: code,
           organization: organization,
-          healthcareService: healthcareService
+          healthcareService: healthcareService,
+          location: pharmacy_locations 
         }
       )
     end
 
     private
 
+    def pharmacy_locations
+      locations.map do |pharm_data|
+        {
+          reference: "Location/plannet-location-#{pharm_data.npi}",  
+          display: pharm_data.name
+        }
+      end
+  
+    end
     def organization
         {
           reference: "Organization/plannet-organization-#{source_data.npi}",

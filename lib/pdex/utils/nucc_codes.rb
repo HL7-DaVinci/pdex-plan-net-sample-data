@@ -35,8 +35,10 @@ module PDEX
 
       specialization = SERVICE_DISPLAY[code][2]
       definition = SERVICE_DISPLAY[code][3]
-      if specialization.present? && definition.present?
-        "#{specialization}/#{definition}"
+      #if specialization.present? && definition.present?
+      if  definition.present?
+      #  "#{specialization}/#{definition}"
+         "#{definition}"
       elsif specialization.present?
         specialization
       else

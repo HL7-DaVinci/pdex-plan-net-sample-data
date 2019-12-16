@@ -190,7 +190,7 @@ module PDEX
         url: NEW_PATIENTS_EXTENSION_URL,
         extension: [
           {
-            url: 'acceptingPatients',
+            url: ACCEPTING_NEW_PATIENTS_EXTENSION_URL,
             valueBoolean: name.length.odd?
           }
         ]

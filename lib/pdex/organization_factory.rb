@@ -3,11 +3,13 @@ require_relative 'address'
 require_relative 'telecom'
 require_relative 'utils/states'
 require_relative 'utils/nucc_codes'
+require_relative 'utils/fakes'
 
 module PDEX
   class OrganizationFactory
     include Address
     include Telecom
+    include Fakes
 
     attr_reader :source_data, :resource_type, :profile, :payer, :managing_org, :pharmacy, :npi 
 
@@ -54,8 +56,17 @@ module PDEX
       }
     end
 
+    def pharmacy_org_identifier
+      {
+        use: 'official',
+        system: 'http://i.made/this/up',
+        value: fake_license_number,
+      }
+   
+    end
+
     def identifier
-      return  if @pharmacy
+      return  pharmacy_org_identifier if @pharmacy
       {
         use: 'official',
         type: {
@@ -76,8 +87,17 @@ module PDEX
         }
       }
     end
-
     def type
+      if payer
+        payertype
+      elsif  managing_org || pharmacy
+        othertype
+      else
+        provtype
+      end
+    end
+
+    def provtype
       [
         {
           coding: [
@@ -88,6 +108,34 @@ module PDEX
             }
           ],
           text: 'Healthcare Provider'
+        }
+      ]
+    end
+    def payertype
+      [
+        {
+          coding: [
+            {
+              system: 'http://terminology.hl7.org/CodeSystem/organization-type',
+              code: 'pay',
+              display: 'Payer'
+            }
+          ],
+          text: 'Payer'
+        }
+      ]
+    end
+    def othertype
+      [
+        {
+          coding: [
+            {
+              system: 'http://terminology.hl7.org/CodeSystem/organization-type',
+              code: 'other',
+              display: 'Other'
+            }
+          ],
+          text: 'Other'
         }
       ]
     end

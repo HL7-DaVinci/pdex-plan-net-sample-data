@@ -8,7 +8,7 @@ module PDEX
   class OrganizationGenerator
     attr_reader :nppes_data
 
-    def initialize(nppes_data)
+   def initialize(nppes_data)
       @nppes_data = nppes_data
     end
 
@@ -56,7 +56,9 @@ module PDEX
     end
 
     def managing_org
+ 
       state_managing_orgs[nppes_data.name.length % state_managing_orgs.length]
+
     end
   end
 end
