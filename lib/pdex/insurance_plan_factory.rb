@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'fhir_models'
 require_relative 'utils/formatting'
 
@@ -15,18 +17,17 @@ module PDEX
 
     def build
       FHIR::InsurancePlan.new(
-        {
-          id: id,
-          meta: meta,
-          identifier: identifier,
-          status: 'active',
-          type: type,
-          name: name,
-          alias: plan_alias,
-          ownedBy: owned_by,
-          administeredBy: administered_by,
-          coverage: coverage
-        }
+        id: id,
+        meta: meta,
+        identifier: identifier,
+        status: 'active',
+        type: type,
+        name: name,
+        alias: plan_alias,
+        ownedBy: owned_by,
+        administeredBy: administered_by,
+        network: network
+        # coverage: coverage,    ** Coverage is 0..0 in plan-net
       )
     end
 
@@ -61,12 +62,12 @@ module PDEX
         {
           coding: [
             {
-              system: PAYER_CHARACTERISTICS_CODE_SYSTEM_URL,
-              code: source_data.type,
-              display: source_data.type_display
+              system: INSURANCE_PLAN_TYPE_CODE_SYSTEM_URL,
+              code: "medical",
+              display: "Medical"
             }
           ],
-          text: source_data.type_display
+          text: "Medical"
         }
       ]
     end
@@ -86,6 +87,16 @@ module PDEX
       }
     end
 
+    def network
+      [
+        {
+          reference: "Organization/plannet-network-#{source_data.network_id}",
+          display: source_data.network_name
+
+        }
+      ]
+    end
+
     def owned_by
       {
         reference: "Organization/plannet-organization-#{source_data.owner_id}",
@@ -100,88 +111,89 @@ module PDEX
       }
     end
 
-    def coverage
-      {
-        coverage: [
-          {
-            type: {
-              coding: [
-                {
-                  code: 'medical',
-                  display: 'Medical'
-                }
-              ],
-              text: 'Coverage related to medical inpatient, outpatient, diagnostic, and preventive care'
-            },
-            network: [
-              {
-                reference: "Organization/plannet-organization-#{source_data.network_id}",
-                display: source_data.network_name
-              }
-            ],
-            benefit: [
-              {
-                type: {
-                  coding: [
-                    {
-                      code: 'prev',
-                      system: PAYER_CHARACTERISTICS_CODE_SYSTEM_URL,
-                      display: 'Preventive Care/Screening/Immunization',
-                    }
-                  ],
-                  text: 'Routine healthcare services to prevent health related problems eligible benefits.'
-                },
-                requirement: 'N/A',
-                limit: [
-                  {
-                    value: {
-                      value: 1,
-                      unit: 'visit/year',
-                    },
-                    code: {
-                      coding: [
-                        {
-                          code: 'visitsperyr',
-                          system: PAYER_CHARACTERISTICS_CODE_SYSTEM_URL,
-                          display: 'Visits per year'
-                        }
-                      ],
-                      text: 'Measure of service covered by the plan benefit expressed in a definite number of visits covered per year.'
-                    }
-                  }
-                ]
-              },
-              {
-                type: {
-                  coding: [
-                    {
-                      code: 'pcpov',
-                      system: PAYER_CHARACTERISTICS_CODE_SYSTEM_URL,
-                      display: 'Primary care visit to treat an injury or illness'
-                    }
-                  ]
-                },
-                requirement: 'N/A',
-                limit: [
-                  {
-                    value: {
-                    },
-                    code: {
-                      coding: [
-                        {
-                          code: 'visit',
-                          display: 'Visits',
-                        }
-                      ],
-                      text: 'Measure of service covered by the plan benefit expressed in a definite number of visits.'
-                    }
-                  }
-                ]
-              }
-            ]
-          }
-        ]
-      }
-    end
+    # coverage is 0..0 in plan-net
+    #   def coverage
+    #     {
+    #       coverage: [
+    #         {
+    #           type: {
+    #             coding: [
+    #               {
+    #                 code: 'medical',
+    #                 display: 'Medical'
+    #               }
+    #             ],
+    #             text: 'Coverage related to medical inpatient, outpatient, diagnostic, and preventive care'
+    #           },
+    #           network: [
+    #             {
+    #               reference: "Organization/plannet-organization-#{source_data.network_id}",
+    #               display: source_data.network_name
+    #             }
+    #           ],
+    #           benefit: [
+    #             {
+    #               type: {
+    #                 coding: [
+    #                   {
+    #                     code: 'prev',
+    #                     system: PAYER_CHARACTERISTICS_CODE_SYSTEM_URL,
+    #                     display: 'Preventive Care/Screening/Immunization',
+    #                   }
+    #                 ],
+    #                 text: 'Routine healthcare services to prevent health related problems eligible benefits.'
+    #               },
+    #               requirement: 'N/A',
+    #               limit: [
+    #                 {
+    #                   value: {
+    #                     value: 1,
+    #                     unit: 'visit/year',
+    #                   },
+    #                   code: {
+    #                     coding: [
+    #                       {
+    #                         code: 'visitsperyr',
+    #                         system: PAYER_CHARACTERISTICS_CODE_SYSTEM_URL,
+    #                         display: 'Visits per year'
+    #                       }
+    #                     ],
+    #                     text: 'Measure of service covered by the plan benefit expressed in a definite number of visits covered per year.'
+    #                   }
+    #                 }
+    #               ]
+    #             },
+    #             {
+    #               type: {
+    #                 coding: [
+    #                   {
+    #                     code: 'pcpov',
+    #                     system: PAYER_CHARACTERISTICS_CODE_SYSTEM_URL,
+    #                     display: 'Primary care visit to treat an injury or illness'
+    #                   }
+    #                 ]
+    #               },
+    #               requirement: 'N/A',
+    #               limit: [
+    #                 {
+    #                   value: {
+    #                   },
+    #                   code: {
+    #                     coding: [
+    #                       {
+    #                         code: 'visit',
+    #                         display: 'Visits',
+    #                       }
+    #                     ],
+    #                     text: 'Measure of service covered by the plan benefit expressed in a definite number of visits.'
+    #                   }
+    #                 }
+    #               ]
+    #             }
+    #           ]
+    #         }
+    #       ]
+    #     }
+    #   end
   end
 end

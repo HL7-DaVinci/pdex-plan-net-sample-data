@@ -3,7 +3,7 @@ require_relative 'utils/nucc_codes'
 module PDEX
   module FHIRElements
     def nucc_codeable_concept(qualification)
-      display = NUCCCodes.display(qualification.taxonomy_code)
+      display = NUCCCodes.specialty_display(qualification.taxonomy_code)
       {
         coding: [
           {
