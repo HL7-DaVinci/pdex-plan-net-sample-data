@@ -41,6 +41,7 @@ module PDEX
         RESOURCE_TYPES.each do |resource_type|
           FileUtils.mkdir_p("output/#{resource_type}")
         end
+        FileUtils.mkdir_p("output/pharmacy_orgs")
       end
 
       def write_resource(resource)
@@ -120,7 +121,7 @@ module PDEX
             write_resource(resource)
           end
         end
-       end
+      end
     end
   end
 end

@@ -35,11 +35,9 @@ module PDEX
       @pharmacy_by_organization[organization.name] 
     end
 
-
     def locations
       pharmacies_by_organization(organization)
     end
-
 
    # Add a single service -- pharmacy...
     def organization_services

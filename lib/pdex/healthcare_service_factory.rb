@@ -6,6 +6,7 @@ module PDEX
   class HealthcareServiceFactory
     include Formatting
     include Telecom
+    include ShortName
 
     attr_reader :source_data, :service_type, :profile
 
@@ -25,7 +26,7 @@ module PDEX
           providedBy: provided_by,
           type: type,
           specialty: specialty,
-          location: location,
+          location: locations,
           name: name,
           comment: comment,
           serviceProvisionCode: service_provision_code,
@@ -104,13 +105,30 @@ module PDEX
       ]
     end
 
-    def location
-      [
-        {
-          reference: "Location/plannet-location-#{source_data.npi}",
-          display: source_data.name
-        }
-      ]
+    def pharmacies_by_organization(organization)
+      @pharmacy_by_organization ||= PDEX::NPPESDataRepo.pharmacies.group_by { |pharm| short_name(pharm.name) }
+      if @pharmacy_by_organization[organization.name].length > 1
+        puts "#{organization.npi}: #{@pharmacy_by_organization[organization.name].length}"
+      end
+      @pharmacy_by_organization[organization.name] 
+    end
+
+    def locations
+      if service_type.eql? "pharmacy"
+        pharmacies_by_organization(source_data).map do |pharm_data|
+          {
+            reference: "Location/plannet-location-#{pharm_data.npi}",  
+            display: pharm_data.name
+          }
+        end
+      else 
+        [
+          {
+            reference: "Location/plannet-location-#{source_data.npi}",
+            display: source_data.name
+          }
+        ]
+      end
     end
 
     def name

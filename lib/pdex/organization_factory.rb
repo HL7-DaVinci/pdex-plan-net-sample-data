@@ -87,6 +87,7 @@ module PDEX
         }
       }
     end
+
     def type
       if payer
         payertype
@@ -111,6 +112,7 @@ module PDEX
         }
       ]
     end
+
     def payertype
       [
         {
@@ -125,6 +127,7 @@ module PDEX
         }
       ]
     end
+
     def othertype
       [
         {

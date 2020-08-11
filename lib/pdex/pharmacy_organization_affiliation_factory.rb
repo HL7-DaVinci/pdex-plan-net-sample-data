@@ -14,7 +14,7 @@ module PDEX
 
     attr_reader :source_data, :networks, :managing_org, :services
 
-      def build
+    def build
       FHIR::OrganizationAffiliation.new(
         {
           id: id,
@@ -22,7 +22,7 @@ module PDEX
           active: true,
           network: network,
           code: code,
-          organization: organization,
+          participatingOrganization: organization,
           healthcareService: healthcareService,
           location: pharmacy_locations 
         }
@@ -38,14 +38,15 @@ module PDEX
           display: pharm_data.name
         }
       end
-  
     end
+
     def organization
         {
           reference: "Organization/plannet-organization-#{source_data.npi}",
           display: source_data.name
         }
     end
+
     def code
         [
           {
