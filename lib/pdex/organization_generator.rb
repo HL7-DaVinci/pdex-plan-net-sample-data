@@ -32,10 +32,11 @@ module PDEX
     end
 
     def organization_services
-      @organization_services ||=
-        PDEX::NUCCConstants::SERVICE_LIST.map do |service|
-          PDEX::HealthcareServiceFactory.new(nppes_data, service).build
-        end
+      @organization_services ||= []
+      # @organization_services ||=
+      #   PDEX::NUCCConstants::SERVICE_LIST.map do |service|
+      #     PDEX::HealthcareServiceFactory.new(nppes_data, service).build
+      #   end
     end
 
     def state
