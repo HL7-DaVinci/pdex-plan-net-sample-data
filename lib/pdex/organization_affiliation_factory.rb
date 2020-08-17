@@ -117,7 +117,7 @@ module PDEX
       services.map do |service|
         {
           reference: "HealthcareService/#{service.id}",
-          display: service.type.first.text
+          display: service.category.first.text
         }
       end
     end

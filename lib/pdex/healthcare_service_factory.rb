@@ -21,16 +21,13 @@ module PDEX
         {
           id: id,
           meta: meta,
-          identifier: identifier,
           active: true,
+          category: category,
           providedBy: provided_by,
-          type: type,
           specialty: specialty,
           location: locations,
           name: name,
           comment: comment,
-          serviceProvisionCode: service_provision_code,
-          referralMethod: referral_method,
           appointmentRequired: true,
           telecom: telecom,
           availableTime: available_time,
@@ -49,34 +46,13 @@ module PDEX
 
     def meta
       {
-        profile: [profile]
+        profile: [profile],
+        lastUpdated: '2020-08-17T10:03:10Z'
       }
     end
 
     def identifier_system
       "http://#{format_for_url(source_data.name)}"
-    end
-
-    def identifier
-      {
-        use: 'secondary',
-        type: {
-          coding: [
-            {
-              system: 'http://terminology.hl7.org/CodeSystem/v2-0203',
-              code: 'PRN',
-              display: 'Provider number',
-            }
-          ],
-          text: 'Healthcare Service Number'
-        },
-        system: identifier_system,
-        value: "#{source_data.npi}-#{service_type}",
-        assigner: {
-          reference: "Organization/plannet-organization-#{source_data.npi}",
-          display: source_data.name
-        }
-      }
     end
 
     def provided_by
@@ -88,21 +64,6 @@ module PDEX
 
     def service_type_display
       service_type.capitalize
-    end
-
-    def type
-      [
-        {
-          coding: [
-            {
-              system: "#{identifier_system}/service-types",
-              code: format_for_url(service_type),
-              display: service_type_display
-            }
-          ],
-          text: service_type_display
-        }
-      ]
     end
 
     def pharmacies_by_organization(organization)
@@ -209,10 +170,35 @@ module PDEX
         extension: [
           {
             url: ACCEPTING_NEW_PATIENTS_EXTENSION_URL,
-            valueBoolean: name.length.odd?
+            valueCodeableConcept: {
+              coding: [
+                {
+                  system: ACCEPTING_PATIENTS_CODE_SYSTEM_URL,
+                  code: name.length.odd? ? "yes" : "no"
+                }
+              ]
+            }
           }
         ]
       }
+    end
+
+    def category
+      if service_type.eql? "pharmacy"
+        code = "Pharmacy"
+      else 
+        code = "Other"
+      end
+
+      {
+        coding: [
+          {
+            system: HEALTHCARE_SERVICE_CATEGORY_CODE_SYSTEM_URL,
+            code: code
+          }
+        ],
+        text: code
+      } 
     end
   end
 end

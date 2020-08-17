@@ -50,5 +50,7 @@ module PDEX
   ENDPOINT_USE_CASE_SYSTEM_URL = 'http://hl7.org/fhir/uv/vhdir/CodeSystem/usecase'
   PAYER_CHARACTERISTICS_CODE_SYSTEM_URL = 'http://hl7.org/fhir/uv/vhdir/CodeSystem/payercharacteristics'
   INSURANCE_PLAN_TYPE_CODE_SYSTEM_URL = 'http://hl7.org/fhir/ValueSet/insuranceplan-type'
+  ACCEPTING_PATIENTS_CODE_SYSTEM_URL = 'http://hl7.org/fhir/us/davinci-pdex-plan-net/CodeSystem/AcceptingPatientsCS'
+  HEALTHCARE_SERVICE_CATEGORY_CODE_SYSTEM_URL = 'http://hl7.org/fhir/us/davinci-pdex-plan-net/CodeSystem/HealthcareServiceCategoryCS'
   
 end
