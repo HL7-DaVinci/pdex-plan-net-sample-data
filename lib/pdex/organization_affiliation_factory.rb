@@ -32,7 +32,6 @@ module PDEX
           organization: organization,
           participatingOrganization: participatingOrganization,
           network: network,
-          code: code,
           healthcareService: healthcareService
         }
       )
@@ -46,7 +45,8 @@ module PDEX
 
     def meta
       {
-        profile: [ORGANIZATION_AFFILIATION_PROFILE_URL]
+        profile: [ORGANIZATION_AFFILIATION_PROFILE_URL],
+        lastUpdated: '2020-08-17T10:03:10Z'
       }
     end
 
@@ -96,21 +96,6 @@ module PDEX
           display: network_data.name
         }
       end
-    end
-
-    def code
-      [
-        {
-          coding: [
-            {
-              system: 'http://hl7.org/fhir/organization-role',
-              code: 'member',
-              display: 'Member'
-            }
-          ],
-          text: 'Hospital Provider Member'
-        }
-      ]
     end
 
     def healthcareService

@@ -11,7 +11,7 @@ module PDEX
     end
 
     def generate
-      [practitioner, practitioner_role]
+      [practitioner, practitioner_role].concat(practioner_services)
     end
 
     private
@@ -21,7 +21,11 @@ module PDEX
     end
 
     def practitioner_role
-      PDEX::PractitionerRoleFactory.new(nppes_data, organization: organization, networks: networks).build
+      PDEX::PractitionerRoleFactory.new(nppes_data, organization: organization, networks: networks, services: services_ref).build
+    end
+
+    def practioner_services
+      @practioner_services ||= [ PDEX::HealthcareServiceFactory.new(nppes_data, [organization], organization_ref, HEALTHCARE_SERVICE_CATEGORY_TYPES[:provider]).build ]
     end
 
     def state
@@ -34,6 +38,22 @@ module PDEX
 
     def organization
       organizations[nppes_data.npi.to_i % organizations.length]
+    end
+
+    def organization_ref
+      {
+        reference: "Organization/plannet-organization-#{organization.npi}",
+        display: organization.name
+      }
+    end
+
+    def services_ref
+      practioner_services.map do |service|
+        {
+          reference: "HealthcareService/#{service.id}",
+          display: service.category.first.text
+        }
+      end
     end
 
     def networks

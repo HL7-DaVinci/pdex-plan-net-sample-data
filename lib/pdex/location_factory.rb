@@ -25,7 +25,6 @@ module PDEX
           extension: [
             accessibility_extension,
             new_patients_extension,
-            new_patient_profile_extension
           ],
           identifier: identifier,
           status: 'active',
@@ -60,6 +59,7 @@ module PDEX
     def meta
       {
         profile: [LOCATION_PROFILE_URL],
+        lastUpdated: '2020-08-17T10:03:10Z'
       }
     end
 
@@ -80,24 +80,36 @@ module PDEX
       }
     end
 
+    def accepting_patients_code 
+      case rand(3)
+      when 0
+        return "yes"
+      when 1 
+        return "no"
+      when 2
+        return "existing"
+      else
+        return "existingplusfamily"
+      end
+    end
+
     def new_patients_extension
       return if pharmacy
-           {
+      {
         url: NEW_PATIENTS_EXTENSION_URL,
         extension: [
           {
             url: ACCEPTING_NEW_PATIENTS_EXTENSION_URL,
-            valueBoolean: location_name.length.odd?
+            valueCodeableConcept: {
+              coding: [
+                {
+                  system: ACCEPTING_PATIENTS_CODE_SYSTEM_URL,
+                  code: accepting_patients_code
+                }
+              ]
+            }
           }
         ]
-      }
-    end
-
-    def new_patient_profile_extension
-      return if pharmacy
-           {
-        url: NEW_PATIENT_PROFILE_EXTENSION_URL,
-        valueString: 'This location accepts all types of patients'
       }
     end
 

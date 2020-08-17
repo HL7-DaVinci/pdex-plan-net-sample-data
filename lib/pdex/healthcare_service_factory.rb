@@ -1,17 +1,21 @@
 require_relative 'telecom'
+require_relative 'fhir_elements'
 require_relative 'utils/formatting'
 require_relative 'utils/nucc_codes'
 
 module PDEX
   class HealthcareServiceFactory
     include Formatting
+    include FHIRElements
     include Telecom
     include ShortName
 
-    attr_reader :source_data, :category_type, :profile
+    attr_reader :source_data, :locations_list, :provided_by, :category_type, :profile
 
-    def initialize(nppes_organization, category_type)
-      @source_data = nppes_organization
+    def initialize(nppes_data, locations, provided_by, category_type)
+      @source_data = nppes_data
+      @locations_list = locations
+      @provided_by = provided_by
       @category_type = category_type
       @profile = HEALTHCARE_SERVICE_PROFILE_URL
     end
@@ -32,7 +36,8 @@ module PDEX
           telecom: telecom,
           availableTime: available_time,
           extension: [
-            new_patients_extension
+            new_patients_extension,
+            delivery_method_extension
           ]
         }
       )
@@ -55,40 +60,16 @@ module PDEX
       "http://#{format_for_url(source_data.name)}"
     end
 
-    def provided_by
-      {
-        reference: "Organization/plannet-organization-#{source_data.npi}",
-        display: source_data.name
-      }
-    end
-
     def category_type_display
       category_type.capitalize
     end
 
-    def pharmacies_by_organization(organization)
-      @pharmacy_by_organization ||= PDEX::NPPESDataRepo.pharmacies.group_by { |pharm| short_name(pharm.name) }
-      if @pharmacy_by_organization[organization.name].length > 1
-        puts "#{organization.npi}: #{@pharmacy_by_organization[organization.name].length}"
-      end
-      @pharmacy_by_organization[organization.name] 
-    end
-
     def locations
-      if category_type.eql? HEALTHCARE_SERVICE_CATEGORY_TYPES[:pharmacy]
-        pharmacies_by_organization(source_data).map do |pharm_data|
-          {
-            reference: "Location/plannet-location-#{pharm_data.npi}",  
-            display: pharm_data.name
-          }
-        end
-      else 
-        [
-          {
-            reference: "Location/plannet-location-#{source_data.npi}",
-            display: source_data.name
-          }
-        ]
+      locations_list.map do |data|
+        {
+          reference: "Location/plannet-location-#{data.npi}",  
+          display: data.name
+        }
       end
     end
 
@@ -145,22 +126,48 @@ module PDEX
     end
 
     def comment
-      NUCCCodes.specialties_display(category_type.downcase).strip
+      if category_type.eql? HEALTHCARE_SERVICE_CATEGORY_TYPES[:pharmacy]
+        NUCCCodes.specialties_display(category_type.downcase).strip
+      elsif category_type.eql? HEALTHCARE_SERVICE_CATEGORY_TYPES[:provider]
+        qualifications = source_data.qualifications.map do |qualification|
+          NUCCCodes.specialty_display(qualification.taxonomy_code).strip
+        end
+        qualifications.join('; ')
+      end
     end
 
     def specialty
-      NUCCCodes.specialty_codes(category_type.downcase).map do |code|
-        display = NUCCCodes.specialty_display(code)
-        {
-          coding: [
-            {
-              code: code,
-              system: 'http://nucc.org/provider-taxonomy',
-              display: display
-            }
-          ],
-          text: display
-        }
+      if category_type.eql? HEALTHCARE_SERVICE_CATEGORY_TYPES[:pharmacy]
+        NUCCCodes.specialty_codes(category_type.downcase).map do |code|
+          display = NUCCCodes.specialty_display(code)
+          {
+            coding: [
+              {
+                code: code,
+                system: 'http://nucc.org/provider-taxonomy',
+                display: display
+              }
+            ],
+            text: display
+          }
+        end
+      elsif category_type.eql? HEALTHCARE_SERVICE_CATEGORY_TYPES[:provider]
+        source_data.qualifications
+          .map { |qualification| nucc_codeable_concept(qualification) }
+          .first
+      end
+    end
+
+    def accepting_patients_code 
+      case rand(3)
+      when 0
+        return "yes"
+      when 1 
+        return "no"
+      when 2
+        return "existing"
+      else
+        return "existingplusfamily"
       end
     end
 
@@ -174,7 +181,27 @@ module PDEX
               coding: [
                 {
                   system: ACCEPTING_PATIENTS_CODE_SYSTEM_URL,
-                  code: name.length.odd? ? "yes" : "no"
+                  code: accepting_patients_code
+                }
+              ]
+            }
+          }
+        ]
+      }
+    end
+
+    def delivery_method_extension
+      {
+        url: DELIVERY_METHOD_EXTENSION_URL,
+        extension: [
+          {
+            url: DELIVERY_METHOD_TYPE_EXTENSION_URL,
+            valueCodeableConcept: {
+              coding: [
+                {
+                  system: DELIVERY_METHOD_CODE_SYSTEM_URL,
+                  code: "physical",
+                  display: "Physical"
                 }
               ]
             }

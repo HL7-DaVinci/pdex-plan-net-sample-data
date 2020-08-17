@@ -10,12 +10,13 @@ module PDEX
     include FHIRElements
     include Telecom
 
-    attr_reader :source_data, :organization_data, :network_data
+    attr_reader :source_data, :organization_data, :network_data, :practioner_services
 
-    def initialize(nppes_data, organization:, networks:)
+    def initialize(nppes_data, organization:, networks:, services:)
       @source_data = nppes_data
       @organization_data = organization
       @network_data = networks
+      @practioner_services = services
     end
 
     def build
@@ -31,6 +32,7 @@ module PDEX
           code: code,
           specialty: specialty,
           location: location,
+          healthcareService: practioner_services,
           telecom: telecom,
           availableTime: available_time
         }
@@ -46,6 +48,7 @@ module PDEX
     def meta
       {
         profile: [PRACTITIONER_ROLE_PROFILE_URL],
+        lastUpdated: '2020-08-17T10:03:10Z'
       }
     end
 
@@ -70,7 +73,7 @@ module PDEX
     def extensions
       network_data.map do |network|
         {
-          url: PARTICIPATING_NETWORK_EXTENSION_URL,
+          url: NETWORK_REFERENCE_EXTENSION_URL,
           valueReference: {
             reference: "Organization/plannet-network-#{network.npi}",
             display: network.name
@@ -94,7 +97,17 @@ module PDEX
     end
 
     def code
-      [nucc_codeable_concept(source_data.qualifications.first)]
+      [
+        {
+          coding: [
+            {
+              system: PRACTITIONER_ROLE_VALUE_SET_URL,
+              code: 'ph',
+              display: 'Physician'
+            }
+          ]
+        }
+      ]
     end
 
     def specialty

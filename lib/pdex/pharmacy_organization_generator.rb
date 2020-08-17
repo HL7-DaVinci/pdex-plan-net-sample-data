@@ -39,9 +39,16 @@ module PDEX
       pharmacies_by_organization(organization)
     end
 
+    def provided_by
+      {
+        reference: "Organization/plannet-organization-#{nppes_data.npi}",
+        display: nppes_data.name
+      }
+    end
+
    # Add a single service -- pharmacy...
     def organization_services
-      @organization_services ||= [ PDEX::HealthcareServiceFactory.new(nppes_data, HEALTHCARE_SERVICE_CATEGORY_TYPES[:pharmacy]).build ]
+      @organization_services ||= [ PDEX::HealthcareServiceFactory.new(nppes_data, locations, provided_by, HEALTHCARE_SERVICE_CATEGORY_TYPES[:pharmacy]).build ]
     end
   end
 end

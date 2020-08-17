@@ -44,7 +44,8 @@ module PDEX
     def meta
       {
         profile: [PRACTITIONER_PROFILE_URL],
-        versionId: '1'
+        versionId: '1',
+        lastUpdated: '2020-08-17T10:03:10Z'
       }
     end
 
@@ -127,18 +128,14 @@ module PDEX
             extension: [
               {
                 url: 'status',
-                valueCoding: {
-	                system: 'http://hl7.org/fhir/resource-status',
-	                code: 'active',
-	                display: 'active'
-                }
+                valueCode: 'active'
               },
               {
                 url: 'whereValid',
                 valueCodeableConcept: {
                   coding: [
                     {
-                      system: 'https://www.usps.com',
+                      system: 'https://www.usps.com/',
                       code: data.state,
                       display: state_display,
                       userSelected: true
@@ -200,7 +197,7 @@ module PDEX
       language = [
         {
           code: 'ht',
-          display: 'Haitian Creole'
+          display: 'Haitian'
         },
         {
           code: 'zh',
