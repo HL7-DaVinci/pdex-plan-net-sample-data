@@ -52,5 +52,12 @@ module PDEX
   INSURANCE_PLAN_TYPE_CODE_SYSTEM_URL = 'http://hl7.org/fhir/ValueSet/insuranceplan-type'
   ACCEPTING_PATIENTS_CODE_SYSTEM_URL = 'http://hl7.org/fhir/us/davinci-pdex-plan-net/CodeSystem/AcceptingPatientsCS'
   HEALTHCARE_SERVICE_CATEGORY_CODE_SYSTEM_URL = 'http://hl7.org/fhir/us/davinci-pdex-plan-net/CodeSystem/HealthcareServiceCategoryCS'
+
+  HEALTHCARE_SERVICE_CATEGORY_TYPES = {
+    pharmacy: "Pharmacy",
+    group: "Group",
+    outpatient: "Outpatient",
+    provider: "Provider"
+  }
   
 end

@@ -8,11 +8,11 @@ module PDEX
     include Telecom
     include ShortName
 
-    attr_reader :source_data, :service_type, :profile
+    attr_reader :source_data, :category_type, :profile
 
-    def initialize(nppes_organization, service_type)
+    def initialize(nppes_organization, category_type)
       @source_data = nppes_organization
-      @service_type = service_type
+      @category_type = category_type
       @profile = HEALTHCARE_SERVICE_PROFILE_URL
     end
 
@@ -41,7 +41,7 @@ module PDEX
     private
 
     def id
-      "#{format_for_url(service_type)[0..30]}-healthcareservice-#{source_data.npi}"
+      "#{format_for_url(category_type)[0..30]}-healthcareservice-#{source_data.npi}"
     end
 
     def meta
@@ -62,8 +62,8 @@ module PDEX
       }
     end
 
-    def service_type_display
-      service_type.capitalize
+    def category_type_display
+      category_type.capitalize
     end
 
     def pharmacies_by_organization(organization)
@@ -75,7 +75,7 @@ module PDEX
     end
 
     def locations
-      if service_type.eql? "pharmacy"
+      if category_type.eql? HEALTHCARE_SERVICE_CATEGORY_TYPES[:pharmacy]
         pharmacies_by_organization(source_data).map do |pharm_data|
           {
             reference: "Location/plannet-location-#{pharm_data.npi}",  
@@ -145,11 +145,11 @@ module PDEX
     end
 
     def comment
-      NUCCCodes.specialties_display(service_type).strip
+      NUCCCodes.specialties_display(category_type.downcase).strip
     end
 
     def specialty
-      NUCCCodes.specialty_codes(service_type).map do |code|
+      NUCCCodes.specialty_codes(category_type.downcase).map do |code|
         display = NUCCCodes.specialty_display(code)
         {
           coding: [
@@ -184,20 +184,15 @@ module PDEX
     end
 
     def category
-      if service_type.eql? "pharmacy"
-        code = "Pharmacy"
-      else 
-        code = "Other"
-      end
-
       {
         coding: [
           {
             system: HEALTHCARE_SERVICE_CATEGORY_CODE_SYSTEM_URL,
-            code: code
+            code: category_type,
+            display: category_type_display
           }
         ],
-        text: code
+        text: category_type
       } 
     end
   end

@@ -41,7 +41,7 @@ module PDEX
 
    # Add a single service -- pharmacy...
     def organization_services
-      @organization_services ||= [ PDEX::HealthcareServiceFactory.new(nppes_data, "pharmacy").build ]
+      @organization_services ||= [ PDEX::HealthcareServiceFactory.new(nppes_data, HEALTHCARE_SERVICE_CATEGORY_TYPES[:pharmacy]).build ]
     end
   end
 end
