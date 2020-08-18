@@ -127,7 +127,11 @@ module PDEX
 
     def comment
       if category_type.eql? HEALTHCARE_SERVICE_CATEGORY_TYPES[:pharmacy]
-        NUCCCodes.specialties_display(category_type.downcase).strip
+        # NUCCCodes.specialties_display(category_type.downcase).strip
+        specialities = pharmacy_codes.map do |code|
+          NUCCCodes.specialty_display(code).strip
+        end
+        specialities.join('; ')
       elsif category_type.eql? HEALTHCARE_SERVICE_CATEGORY_TYPES[:provider]
         qualifications = source_data.qualifications.map do |qualification|
           NUCCCodes.specialty_display(qualification.taxonomy_code).strip
@@ -136,9 +140,14 @@ module PDEX
       end
     end
 
+    def pharmacy_codes
+        indexes = [0,1,2].push(3 + rand(7))
+        @codes ||= NUCCCodes.specialty_codes(category_type.downcase).select.with_index{ |_e, i| indexes.include?(i) }
+    end
+
     def specialty
       if category_type.eql? HEALTHCARE_SERVICE_CATEGORY_TYPES[:pharmacy]
-        NUCCCodes.specialty_codes(category_type.downcase).map do |code|
+        pharmacy_codes.map do |code|
           display = NUCCCodes.specialty_display(code)
           {
             coding: [

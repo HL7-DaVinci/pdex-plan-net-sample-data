@@ -484,7 +484,7 @@ module PDEX
       'otolaryngology' => ['163WX0601X', '207Y00000X', '207YP0228X', '207YS0012X', '207YS0123X', '207YX0007X', '207YX0602X', '207YX0901X', '207YX0905X'],
       'orthopaedic surgery' => ['163WX0800X', '207X00000X', '207XP3100X', '207XS0106X', '207XS0114X', '207XS0117X', '207XX0004X', '207XX0005X', '207XX0801X', '246ZX2200X'],
       'genetics' => ['170'],
-      'pharmacy' => ['183', '208U00000X'],
+      'pharmacy' => ['3336'],
       'sports medicine' => ['204C00000X', '204D00000X'],
       'allergy and immunology' => ['207K00000X', '207KA0200X', '207KI0005X'],
       'anesthesiology' => ['207L00000X', '207LA0401X', '207LC0200X', '207LH0002X', '207LP2900X', '207LP3000X', '208VP0000X', '208VP0014X', '367500000X', '367H00000X'],
