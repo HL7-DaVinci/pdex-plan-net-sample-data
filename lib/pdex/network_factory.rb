@@ -44,12 +44,12 @@ module PDEX
         {
           coding: [
             {
-              system: 'http://terminology.hl7.org/CodeSystem/network-type',
-              code: source_data.type[:code],
-              display: source_data.type[:display]
+              system: ORGANIZATION_TYPE_SYSTEM_URL,
+              code: 'payer',
+              display: 'Payer'
             }
           ],
-          text: source_data.type[:text]
+          text: 'A healthcare payer'
         }
       ]
     end

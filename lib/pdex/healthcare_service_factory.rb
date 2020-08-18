@@ -127,7 +127,6 @@ module PDEX
 
     def comment
       if category_type.eql? HEALTHCARE_SERVICE_CATEGORY_TYPES[:pharmacy]
-        # NUCCCodes.specialties_display(category_type.downcase).strip
         specialities = pharmacy_codes.map do |code|
           NUCCCodes.specialty_display(code).strip
         end
