@@ -3,9 +3,11 @@ require_relative './nppes_data_repo'
 require_relative './organization_factory'
 require_relative './organization_affiliation_factory'
 require_relative './utils/nucc_constants'
+require_relative './utils/randoms'
 
 module PDEX
   class OrganizationGenerator
+    include Randoms
     attr_reader :nppes_data
 
    def initialize(nppes_data)
@@ -19,7 +21,7 @@ module PDEX
     private
 
     def organization
-      PDEX::OrganizationFactory.new(nppes_data).build
+      @organization ||= PDEX::OrganizationFactory.new(nppes_data).build
     end
 
     def organization_affiliation
@@ -32,11 +34,16 @@ module PDEX
     end
 
     def organization_services
-      @organization_services ||= []
-      # @organization_services ||=
-      #   PDEX::NUCCConstants::SERVICE_LIST.map do |service|
-      #     PDEX::HealthcareServiceFactory.new(nppes_data, service).build
-      #   end
+      @organization_services ||= [ PDEX::HealthcareServiceFactory.new(
+        nppes_data, 
+        locations: [nppes_data], 
+        provided_by: provided_by, 
+        category_type: category_type(name)
+      ).build ]
+    end
+
+    def name
+      nppes_data.name
     end
 
     def state
@@ -57,9 +64,14 @@ module PDEX
     end
 
     def managing_org
- 
       state_managing_orgs[nppes_data.name.length % state_managing_orgs.length]
+    end
 
+    def provided_by
+      {
+        reference: "Organization/plannet-organization-#{nppes_data.npi}",
+        display: nppes_data.name
+      }
     end
   end
 end

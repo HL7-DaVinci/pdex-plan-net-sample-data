@@ -61,7 +61,8 @@ module PDEX
     pharmacy: "Pharmacy",
     group: "Group",
     outpatient: "Outpatient",
-    provider: "Provider"
+    provider: "Provider",
+    hospital: "Hospital"
   }
   
 end

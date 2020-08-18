@@ -2,6 +2,7 @@ require 'fhir_models'
 require_relative 'address'
 require_relative 'telecom'
 require_relative 'utils/formatting'
+require_relative 'utils/randoms'
 
 module PDEX
   class LocationFactory
@@ -9,6 +10,7 @@ module PDEX
     include Telecom
     include Formatting
     include ShortName
+    include Randoms
 
     attr_reader :source_data, :pharmacy
 
@@ -80,19 +82,6 @@ module PDEX
       }
     end
 
-    def accepting_patients_code 
-      case rand(3)
-      when 0
-        return "yes"
-      when 1 
-        return "no"
-      when 2
-        return "existing"
-      else
-        return "existingplusfamily"
-      end
-    end
-
     def new_patients_extension
       return if pharmacy
       {
@@ -104,7 +93,7 @@ module PDEX
               coding: [
                 {
                   system: ACCEPTING_PATIENTS_CODE_SYSTEM_URL,
-                  code: accepting_patients_code
+                  code: accepting_patients_code(location_name.length)
                 }
               ]
             }

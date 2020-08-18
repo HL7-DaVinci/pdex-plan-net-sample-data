@@ -2,6 +2,7 @@ require_relative 'telecom'
 require_relative 'fhir_elements'
 require_relative 'utils/formatting'
 require_relative 'utils/nucc_codes'
+require_relative 'utils/randoms'
 
 module PDEX
   class HealthcareServiceFactory
@@ -9,10 +10,11 @@ module PDEX
     include FHIRElements
     include Telecom
     include ShortName
+    include Randoms
 
     attr_reader :source_data, :locations_list, :provided_by, :category_type, :profile
 
-    def initialize(nppes_data, locations, provided_by, category_type)
+    def initialize(nppes_data, locations: , provided_by: , category_type: )
       @source_data = nppes_data
       @locations_list = locations
       @provided_by = provided_by
@@ -140,7 +142,7 @@ module PDEX
     end
 
     def pharmacy_codes
-        indexes = [0,1,2].push(3 + rand(7))
+        indexes = [0,1,2].push(3 + (name.length % 7))
         @codes ||= NUCCCodes.specialty_codes(category_type.downcase).select.with_index{ |_e, i| indexes.include?(i) }
     end
 
@@ -166,19 +168,6 @@ module PDEX
       end
     end
 
-    def accepting_patients_code 
-      case rand(3)
-      when 0
-        return "yes"
-      when 1 
-        return "no"
-      when 2
-        return "existing"
-      else
-        return "existingplusfamily"
-      end
-    end
-
     def new_patients_extension
       {
         url: NEW_PATIENTS_EXTENSION_URL,
@@ -189,7 +178,7 @@ module PDEX
               coding: [
                 {
                   system: ACCEPTING_PATIENTS_CODE_SYSTEM_URL,
-                  code: accepting_patients_code
+                  code: accepting_patients_code(name.length)
                 }
               ]
             }

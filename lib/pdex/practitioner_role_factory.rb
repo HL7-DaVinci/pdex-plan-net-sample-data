@@ -3,20 +3,21 @@ require 'securerandom'
 require_relative 'fhir_elements'
 require_relative 'telecom'
 require_relative 'utils/formatting'
+require_relative 'utils/randoms'
 
 module PDEX
   class PractitionerRoleFactory
     include Formatting
     include FHIRElements
     include Telecom
+    include Randoms
 
-    attr_reader :source_data, :organization_data, :network_data, :practioner_services
+    attr_reader :source_data, :organization_data, :network_data 
 
-    def initialize(nppes_data, organization:, networks:, services:)
+    def initialize(nppes_data, organization:, networks:)
       @source_data = nppes_data
       @organization_data = organization
       @network_data = networks
-      @practioner_services = services
     end
 
     def build
@@ -32,7 +33,7 @@ module PDEX
           code: code,
           specialty: specialty,
           location: location,
-          healthcareService: practioner_services,
+          healthcareService: services,
           telecom: telecom,
           availableTime: available_time
         }
@@ -131,6 +132,15 @@ module PDEX
           daysOfWeek: ['mon', 'tue', 'wed', 'thu'],
           availableStartTime: '09:00:00',
           availableEndTime: '12:00:00'
+        }
+      ]
+    end
+
+    def services
+      [
+        {
+          reference: "#{format_for_url(category_type(organization_data.name))[0..30]}-healthcareservice-#{organization_data.npi}",
+          display: organization_data.name
         }
       ]
     end
