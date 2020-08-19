@@ -139,7 +139,7 @@ module PDEX
     def services
       [
         {
-          reference: "#{format_for_url(category_type(organization_data.name))[0..30]}-healthcareservice-#{organization_data.npi}",
+          reference: "HealthcareService/#{format_for_url(category_type(organization_data.name))[0..30]}-healthcareservice-#{organization_data.npi}",
           display: organization_data.name
         }
       ]

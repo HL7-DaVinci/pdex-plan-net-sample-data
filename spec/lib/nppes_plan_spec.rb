@@ -94,7 +94,7 @@ RSpec.describe PDEX::NPPESManagingOrg do
 
   describe '#network_name' do
     it 'returns the network name' do
-      expect(plan.network_name).to eq('Acme of Massechusetts Preferred Provider Network')
+      expect(plan.network_name).to eq('Acme of Massachusetts Preferred Provider Network')
     end
   end
 
