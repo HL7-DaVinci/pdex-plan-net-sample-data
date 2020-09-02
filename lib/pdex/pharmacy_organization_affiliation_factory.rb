@@ -22,6 +22,7 @@ module PDEX
           active: true,
           network: network,
           code: code,
+          specialty: specialty,
           participatingOrganization: organization,
           healthcareService: healthcareService,
           location: pharmacy_locations 
@@ -53,14 +54,36 @@ module PDEX
             coding: [
               {
                 system: 'http://hl7.org/fhir/organization-role',
-                code: 'member',
-                display: 'Member'
+                code: 'pharmacy',
+                display: 'Pharmacy'
               }
             ],
-            text: 'Pharmacy Provider Member'
+            text: 'Pharmacy'
           }
         ]
       end
   
-    end
+
+    def pharmacy_codes
+      indexes = [0,1,2].push(3 + (source_data.name.length % 7))
+      @codes ||= NUCCCodes.specialty_codes(HEALTHCARE_SERVICE_CATEGORY_TYPES[:pharmacy].downcase).select.with_index{ |_e, i| indexes.include?(i) }
+  end
+
+  def specialty
+      pharmacy_codes.map do |code|
+        display = NUCCCodes.specialty_display(code)
+        {
+          coding: [
+            {
+              code: code,
+              system: 'http://nucc.org/provider-taxonomy',
+              display: display
+            }
+          ],
+          text: display
+        }
+      end
+   end
+
+  end
 end

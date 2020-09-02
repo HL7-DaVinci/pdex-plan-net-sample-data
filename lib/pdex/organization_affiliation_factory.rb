@@ -12,7 +12,7 @@ module PDEX
     include Telecom
     include Formatting
 
-    attr_reader :source_data, :networks, :managing_org, :services, :locations
+    attr_reader :source_data, :networks, :managing_org, :services, :locations, :specialty 
 
     def initialize(nppes_organization, networks:, managing_org:, services:, locations: nil)
       @source_data = nppes_organization
@@ -20,6 +20,7 @@ module PDEX
       @managing_org = managing_org
       @services = services
       @locations = locations 
+      @speciaty = nil 
     end
 
     def build
@@ -32,7 +33,8 @@ module PDEX
           organization: organization,
           participatingOrganization: participatingOrganization,
           network: network,
-          healthcareService: healthcareService
+          healthcareService: healthcareService,
+          specialty: specialty
         }
       )
     end
