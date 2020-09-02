@@ -23,7 +23,6 @@ module PDEX
           managingOrganization: managing_organization,
           contact: contact,
           payloadType: payload_type,
-          payloadMimeType: payload_mime_type,
           address: address,
           extension: [
             use_case_extension
@@ -87,9 +86,7 @@ module PDEX
       ]
     end
 
-    def payload_mime_type
-      ['application/hl7-v3+xml']
-    end
+
 
     def address
       name_slug = format_for_url(source_data.name)
