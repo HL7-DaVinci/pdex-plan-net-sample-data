@@ -19,7 +19,7 @@ module PDEX
             when 2
                 return "existptonly"
             else
-                return "existingptfam"
+                return "existptfam"
             end
         end
     end
