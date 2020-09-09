@@ -147,7 +147,7 @@ module PDEX
     end
 
     def specialty
-      binding.pry if !category_type.eql? HEALTHCARE_SERVICE_CATEGORY_TYPES[:pharmacy]
+
       if category_type.eql? HEALTHCARE_SERVICE_CATEGORY_TYPES[:pharmacy]
         pharmacy_codes.map do |code|
           display = NUCCCodes.specialty_display(code)
