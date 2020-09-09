@@ -12,7 +12,7 @@ module PDEX
     include Telecom
     include Formatting
 
-    attr_reader :source_data, :networks, :managing_org, :services, :locations
+    attr_reader :source_data, :networks, :managing_org, :services, :locations, :specialty 
 
     def initialize(nppes_organization, networks:, managing_org:, services:, locations: nil)
       @source_data = nppes_organization
@@ -20,6 +20,7 @@ module PDEX
       @managing_org = managing_org
       @services = services
       @locations = locations 
+      @speciaty = nil 
     end
 
     def build
@@ -32,8 +33,8 @@ module PDEX
           organization: organization,
           participatingOrganization: participatingOrganization,
           network: network,
-          code: code,
-          healthcareService: healthcareService
+          healthcareService: healthcareService,
+          specialty: specialty
         }
       )
     end
@@ -46,7 +47,8 @@ module PDEX
 
     def meta
       {
-        profile: [ORGANIZATION_AFFILIATION_PROFILE_URL]
+        profile: [ORGANIZATION_AFFILIATION_PROFILE_URL],
+        lastUpdated: '2020-08-17T10:03:10Z'
       }
     end
 
@@ -98,26 +100,11 @@ module PDEX
       end
     end
 
-    def code
-      [
-        {
-          coding: [
-            {
-              system: 'http://hl7.org/fhir/organization-role',
-              code: 'member',
-              display: 'Member'
-            }
-          ],
-          text: 'Hospital Provider Member'
-        }
-      ]
-    end
-
     def healthcareService
       services.map do |service|
         {
           reference: "HealthcareService/#{service.id}",
-          display: service.type.first.text
+          display: service.category.first.text
         }
       end
     end

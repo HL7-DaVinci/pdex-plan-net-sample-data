@@ -20,7 +20,7 @@ module PDEX
       return [specialty_type] if specialty_type == 'miscellaneous'
 
       SERVICE_CODES[specialty_type].flat_map do |code|
-        if code.length != 3
+        if code.length > 4
           code
         else
           CODES.select { |key, _v| key.to_s.start_with? code }

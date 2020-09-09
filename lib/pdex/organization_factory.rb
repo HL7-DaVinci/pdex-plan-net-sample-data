@@ -52,7 +52,8 @@ module PDEX
 
     def meta
       {
-        profile: [profile]
+        profile: [profile],
+        lastUpdated: '2020-08-17T10:03:10Z'
       }
     end
 
@@ -69,17 +70,6 @@ module PDEX
       return  pharmacy_org_identifier if @pharmacy
       {
         use: 'official',
-        type: {
-          coding: [
-            {
-              system: 'http://terminology.hl7.org/CodeSystem/v2-0203',
-              code: 'NPI',
-              display: 'Provider number',
-              userSelected: true
-            }
-          ],
-          text: 'NPI'
-        },
         system: 'http://hl7.org/fhir/sid/us-npi',
         value: @npi,
         assigner: {
@@ -87,37 +77,39 @@ module PDEX
         }
       }
     end
+
     def type
       if payer
         payertype
       elsif  managing_org || pharmacy
-        othertype
+        factype
       else
-        provtype
+        prvgrptype
       end
     end
 
-    def provtype
+    def prvgrptype
       [
         {
           coding: [
             {
-              system: 'http://terminology.hl7.org/CodeSystem/organization-type',
-              code: 'prov',
-              display: 'Healthcare Provider'
+              system: ORGANIZATION_TYPE_SYSTEM_URL,
+              code: 'prvgrp',
+              display: 'Provider Group'
             }
           ],
-          text: 'Healthcare Provider'
+          text: 'A healthcare provider entity'
         }
       ]
     end
+
     def payertype
       [
         {
           coding: [
             {
-              system: 'http://terminology.hl7.org/CodeSystem/organization-type',
-              code: 'pay',
+              system: ORGANIZATION_TYPE_SYSTEM_URL,
+              code: 'payer',
               display: 'Payer'
             }
           ],
@@ -125,17 +117,18 @@ module PDEX
         }
       ]
     end
-    def othertype
+
+    def factype
       [
         {
           coding: [
             {
-              system: 'http://terminology.hl7.org/CodeSystem/organization-type',
-              code: 'other',
-              display: 'Other'
+              system: ORGANIZATION_TYPE_SYSTEM_URL,
+              code: 'fac',
+              display: 'Facility'
             }
           ],
-          text: 'Other'
+          text: 'A physical healthcare facility.'
         }
       ]
     end

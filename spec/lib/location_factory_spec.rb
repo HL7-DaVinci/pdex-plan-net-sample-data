@@ -58,10 +58,6 @@ RSpec.describe PDEX::LocationFactory do
     extensions.select { |extension| extension.url == PDEX::NEW_PATIENTS_EXTENSION_URL }
   end
 
-  let(:new_patient_profile_extensions) do
-    extensions.select { |extension| extension.url == PDEX::NEW_PATIENT_PROFILE_EXTENSION_URL }
-  end
-
   describe '.initialize' do
     it 'creates a LocationFactory instance' do
       expect(factory).to be_a(described_class)
@@ -87,10 +83,6 @@ RSpec.describe PDEX::LocationFactory do
 
     it 'includes new patient extensions' do
       expect(new_patient_extensions).to be_present
-    end
-
-    it 'includes new patient profile extensions' do
-      expect(new_patient_profile_extensions).to be_present
     end
 
     it 'includes an identifier' do

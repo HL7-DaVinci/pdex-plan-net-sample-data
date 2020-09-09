@@ -73,6 +73,7 @@ module PDEX
           NPPESDataRepo.pharmacies << PDEX::PharmacyData.new(row)
         end
       end
+
       def load_pharmacy_orgs
         # - iterate through NPPESDataRepo.pharmacies and generate PharmacyOrg
         #   objects to hold the data

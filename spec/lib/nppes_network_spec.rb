@@ -35,7 +35,7 @@ RSpec.describe PDEX::NPPESNetwork do
 
   describe '#name' do
     it 'returns the name' do
-      expect(network.name).to eq('Acme of Massechusetts Preferred Provider Network')
+      expect(network.name).to eq('Acme of Massachusetts Preferred Provider Network')
     end
   end
 

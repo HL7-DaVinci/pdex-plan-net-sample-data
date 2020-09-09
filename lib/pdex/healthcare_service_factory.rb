@@ -1,17 +1,24 @@
 require_relative 'telecom'
+require_relative 'fhir_elements'
 require_relative 'utils/formatting'
 require_relative 'utils/nucc_codes'
+require_relative 'utils/randoms'
 
 module PDEX
   class HealthcareServiceFactory
     include Formatting
+    include FHIRElements
     include Telecom
+    include ShortName
+    include Randoms
 
-    attr_reader :source_data, :service_type, :profile
+    attr_reader :source_data, :locations_list, :provided_by, :category_type, :profile
 
-    def initialize(nppes_organization, service_type)
-      @source_data = nppes_organization
-      @service_type = service_type
+    def initialize(nppes_data, locations: , provided_by: , category_type: )
+      @source_data = nppes_data
+      @locations_list = locations
+      @provided_by = provided_by
+      @category_type = category_type
       @profile = HEALTHCARE_SERVICE_PROFILE_URL
     end
 
@@ -20,21 +27,19 @@ module PDEX
         {
           id: id,
           meta: meta,
-          identifier: identifier,
           active: true,
+          category: category,
           providedBy: provided_by,
-          type: type,
           specialty: specialty,
-          location: location,
+          location: locations,
           name: name,
           comment: comment,
-          serviceProvisionCode: service_provision_code,
-          referralMethod: referral_method,
           appointmentRequired: true,
           telecom: telecom,
           availableTime: available_time,
           extension: [
-            new_patients_extension
+            new_patients_extension,
+            delivery_method_extension
           ]
         }
       )
@@ -43,12 +48,13 @@ module PDEX
     private
 
     def id
-      "#{format_for_url(service_type)[0..30]}-healthcareservice-#{source_data.npi}"
+      "#{format_for_url(category_type)[0..30]}-healthcareservice-#{source_data.npi}"
     end
 
     def meta
       {
-        profile: [profile]
+        profile: [profile],
+        lastUpdated: '2020-08-17T10:03:10Z'
       }
     end
 
@@ -56,61 +62,17 @@ module PDEX
       "http://#{format_for_url(source_data.name)}"
     end
 
-    def identifier
-      {
-        use: 'secondary',
-        type: {
-          coding: [
-            {
-              system: 'http://terminology.hl7.org/CodeSystem/v2-0203',
-              code: 'PRN',
-              display: 'Provider number',
-            }
-          ],
-          text: 'Healthcare Service Number'
-        },
-        system: identifier_system,
-        value: "#{source_data.npi}-#{service_type}",
-        assigner: {
-          reference: "Organization/plannet-organization-#{source_data.npi}",
-          display: source_data.name
-        }
-      }
+    def category_type_display
+      category_type.capitalize
     end
 
-    def provided_by
-      {
-        reference: "Organization/plannet-organization-#{source_data.npi}",
-        display: source_data.name
-      }
-    end
-
-    def service_type_display
-      service_type.capitalize
-    end
-
-    def type
-      [
+    def locations
+      locations_list.map do |data|
         {
-          coding: [
-            {
-              system: "#{identifier_system}/service-types",
-              code: format_for_url(service_type),
-              display: service_type_display
-            }
-          ],
-          text: service_type_display
+          reference: "Location/plannet-location-#{data.npi}",  
+          display: data.name
         }
-      ]
-    end
-
-    def location
-      [
-        {
-          reference: "Location/plannet-location-#{source_data.npi}",
-          display: source_data.name
-        }
-      ]
+      end
     end
 
     def name
@@ -166,22 +128,43 @@ module PDEX
     end
 
     def comment
-      NUCCCodes.specialties_display(service_type).strip
+      if category_type.eql? HEALTHCARE_SERVICE_CATEGORY_TYPES[:pharmacy]
+        specialities = pharmacy_codes.map do |code|
+          NUCCCodes.specialty_display(code).strip
+        end
+        specialities.join('; ')
+      elsif category_type.eql? HEALTHCARE_SERVICE_CATEGORY_TYPES[:provider]
+        qualifications = source_data.qualifications.map do |qualification|
+          NUCCCodes.specialty_display(qualification.taxonomy_code).strip
+        end
+        qualifications.join('; ')
+      end
+    end
+
+    def pharmacy_codes
+        indexes = [0,1,2].push(3 + (name.length % 7))
+        @codes ||= NUCCCodes.specialty_codes(category_type.downcase).select.with_index{ |_e, i| indexes.include?(i) }
     end
 
     def specialty
-      NUCCCodes.specialty_codes(service_type).map do |code|
-        display = NUCCCodes.specialty_display(code)
-        {
-          coding: [
-            {
-              code: code,
-              system: 'http://nucc.org/provider-taxonomy',
-              display: display
-            }
-          ],
-          text: display
-        }
+      if category_type.eql? HEALTHCARE_SERVICE_CATEGORY_TYPES[:pharmacy]
+        pharmacy_codes.map do |code|
+          display = NUCCCodes.specialty_display(code)
+          {
+            coding: [
+              {
+                code: code,
+                system: 'http://nucc.org/provider-taxonomy',
+                display: display
+              }
+            ],
+            text: display
+          }
+        end
+      elsif category_type.eql? HEALTHCARE_SERVICE_CATEGORY_TYPES[:provider]
+        source_data.qualifications
+          .map { |qualification| nucc_codeable_concept(qualification) }
+          .first
       end
     end
 
@@ -191,10 +174,50 @@ module PDEX
         extension: [
           {
             url: ACCEPTING_NEW_PATIENTS_EXTENSION_URL,
-            valueBoolean: name.length.odd?
+            valueCodeableConcept: {
+              coding: [
+                {
+                  system: ACCEPTING_PATIENTS_CODE_SYSTEM_URL,
+                  code: accepting_patients_code(name.length)
+                }
+              ]
+            }
           }
         ]
       }
+    end
+
+    def delivery_method_extension
+      {
+        url: DELIVERY_METHOD_EXTENSION_URL,
+        extension: [
+          {
+            url: DELIVERY_METHOD_TYPE_EXTENSION_URL,
+            valueCodeableConcept: {
+              coding: [
+                {
+                  system: DELIVERY_METHOD_CODE_SYSTEM_URL,
+                  code: "physical",
+                  display: "Physical"
+                }
+              ]
+            }
+          }
+        ]
+      }
+    end
+
+    def category
+      {
+        coding: [
+          {
+            system: HEALTHCARE_SERVICE_CATEGORY_CODE_SYSTEM_URL,
+            code: category_type,
+            display: category_type_display
+          }
+        ],
+        text: category_type
+      } 
     end
   end
 end

@@ -3,14 +3,16 @@ require 'securerandom'
 require_relative 'fhir_elements'
 require_relative 'telecom'
 require_relative 'utils/formatting'
+require_relative 'utils/randoms'
 
 module PDEX
   class PractitionerRoleFactory
     include Formatting
     include FHIRElements
     include Telecom
+    include Randoms
 
-    attr_reader :source_data, :organization_data, :network_data
+    attr_reader :source_data, :organization_data, :network_data 
 
     def initialize(nppes_data, organization:, networks:)
       @source_data = nppes_data
@@ -31,6 +33,7 @@ module PDEX
           code: code,
           specialty: specialty,
           location: location,
+          healthcareService: services,
           telecom: telecom,
           availableTime: available_time
         }
@@ -46,6 +49,7 @@ module PDEX
     def meta
       {
         profile: [PRACTITIONER_ROLE_PROFILE_URL],
+        lastUpdated: '2020-08-17T10:03:10Z'
       }
     end
 
@@ -70,7 +74,7 @@ module PDEX
     def extensions
       network_data.map do |network|
         {
-          url: PARTICIPATING_NETWORK_EXTENSION_URL,
+          url: NETWORK_REFERENCE_EXTENSION_URL,
           valueReference: {
             reference: "Organization/plannet-network-#{network.npi}",
             display: network.name
@@ -94,7 +98,17 @@ module PDEX
     end
 
     def code
-      [nucc_codeable_concept(source_data.qualifications.first)]
+      [
+        {
+          coding: [
+            {
+              system: PRACTITIONER_ROLE_VALUE_SET_URL,
+              code: 'ph',
+              display: 'Physician'
+            }
+          ]
+        }
+      ]
     end
 
     def specialty
@@ -118,6 +132,15 @@ module PDEX
           daysOfWeek: ['mon', 'tue', 'wed', 'thu'],
           availableStartTime: '09:00:00',
           availableEndTime: '12:00:00'
+        }
+      ]
+    end
+
+    def services
+      [
+        {
+          reference: "HealthcareService/#{format_for_url(category_type(organization_data.name))[0..30]}-healthcareservice-#{organization_data.npi}",
+          display: organization_data.name
         }
       ]
     end

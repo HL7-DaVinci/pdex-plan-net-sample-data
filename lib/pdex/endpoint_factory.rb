@@ -23,7 +23,6 @@ module PDEX
           managingOrganization: managing_organization,
           contact: contact,
           payloadType: payload_type,
-          payloadMimeType: payload_mime_type,
           address: address,
           extension: [
             use_case_extension
@@ -40,7 +39,8 @@ module PDEX
 
     def meta
       {
-        profile: [profile]
+        profile: [profile],
+        lastUpdated: '2020-08-17T10:03:10Z'
       }
     end
 
@@ -77,18 +77,16 @@ module PDEX
         {
           coding: [
             {
-              system: 'urn:oid:1.3.6.1.4.1.19376.1.2.3',
-              code: 'urn:ihe:pcc:xphr:2007',
-              display: 'HL7 CCD Document'
+              system: ENDPOINT_PAYLOAD_TYPE_SYSTEM_URL,
+              code: 'NA',
+              display: 'Not Applicable'
             }
           ]
         }
       ]
     end
 
-    def payload_mime_type
-      ['application/hl7-v3+xml']
-    end
+
 
     def address
       name_slug = format_for_url(source_data.name)
@@ -100,19 +98,19 @@ module PDEX
         url: ENDPOINT_USE_CASE_EXTENSION_URL,
         extension: [
           {
-            url: 'type',
+            url: 'Type',
             valueCodeableConcept: {
               coding: [
                 {
                   system: ENDPOINT_USE_CASE_SYSTEM_URL,
-                  code: 'treatment',
+                  code: 'TREAT',
                   display: 'treatment'
                 }
               ]
             }
           },
           {
-            url: 'standard',
+            url: 'Standard',
             valueUri: 'http://wiki.directproject.org/File:2011-03-09_PDF_-_XDR_and_XDM_for_Direct_Messaging_Specification_FINAL.pdf'
           }
         ]

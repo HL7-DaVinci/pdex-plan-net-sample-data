@@ -36,6 +36,13 @@ module PDEX
       organizations[nppes_data.npi.to_i % organizations.length]
     end
 
+    def organization_ref
+      {
+        reference: "Organization/plannet-organization-#{organization.npi}",
+        display: organization.name
+      }
+    end
+
     def networks
       PDEX::NPPESDataRepo.organization_networks[organization.npi]
     end

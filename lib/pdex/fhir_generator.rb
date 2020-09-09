@@ -120,7 +120,7 @@ module PDEX
             write_resource(resource)
           end
         end
-       end
+      end
     end
   end
 end

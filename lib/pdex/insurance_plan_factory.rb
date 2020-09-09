@@ -27,7 +27,7 @@ module PDEX
         ownedBy: owned_by,
         administeredBy: administered_by,
         network: network
-        # coverage: coverage,    ** Coverage is 0..0 in plan-net
+        # coverage: coverage,    ** Coverage is 0..* in plan-net
       )
     end
 
@@ -39,7 +39,8 @@ module PDEX
 
     def meta
       {
-        profile: [profile]
+        profile: [profile],
+        lastUpdated: '2020-08-17T10:03:10Z'
       }
     end
 
@@ -63,11 +64,11 @@ module PDEX
           coding: [
             {
               system: INSURANCE_PLAN_TYPE_CODE_SYSTEM_URL,
-              code: "medical",
-              display: "Medical"
+              code: "CommercialPPO",
+              display: "Commercial PPO"
             }
           ],
-          text: "Medical"
+          text: "Health insurance provided through a Preferred Provider Organization (PPO)"
         }
       ]
     end
