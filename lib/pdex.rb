@@ -58,11 +58,11 @@ module PDEX
   ORGANIZATION_TYPE_SYSTEM_URL = 'http://hl7.org/fhir/us/davinci-pdex-plan-net/CodeSystem/OrgTypeCS'
 
   HEALTHCARE_SERVICE_CATEGORY_TYPES = {
-    pharmacy: "Pharmacy",
-    group: "Group",
-    outpatient: "Outpatient",
-    provider: "Provider",
-    hospital: "Hospital"
+    pharmacy: "pharm",
+    group: "group",
+    outpatient: "outpat",
+    provider: "prov",
+    hospital: "hosp"
   }
   
 end

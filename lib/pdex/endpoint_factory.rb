@@ -98,7 +98,7 @@ module PDEX
         url: ENDPOINT_USE_CASE_EXTENSION_URL,
         extension: [
           {
-            url: 'Type',
+            url: 'type',
             valueCodeableConcept: {
               coding: [
                 {
@@ -110,7 +110,7 @@ module PDEX
             }
           },
           {
-            url: 'Standard',
+            url: 'standard',
             valueUri: 'http://wiki.directproject.org/File:2011-03-09_PDF_-_XDR_and_XDM_for_Direct_Messaging_Specification_FINAL.pdf'
           }
         ]

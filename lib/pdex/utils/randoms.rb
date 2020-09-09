@@ -11,15 +11,15 @@ module PDEX
         end
 
         def accepting_patients_code(n)
-            case n % 3
+            case n % 4
             when 0
-                return "yes"
+                return "newpt"
             when 1 
-                return "no"
+                return "nopt"
             when 2
-                return "existing"
+                return "existptonly"
             else
-                return "existingplusfamily"
+                return "existingptfam"
             end
         end
     end

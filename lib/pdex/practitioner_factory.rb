@@ -234,10 +234,6 @@ module PDEX
 
     PROFICIENCIES = [
       {
-        code: '06',
-        display: 'Memorized proficiency'
-      },
-      {
         code: '10',
         display: 'Elementary proficiency'
       },
