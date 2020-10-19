@@ -45,11 +45,11 @@ module PDEX
           coding: [
             {
               system: ORGANIZATION_TYPE_SYSTEM_URL,
-              code: 'payer',
-              display: 'Payer'
+              code: 'ntwk',
+              display: 'Network'
             }
           ],
-          text: 'A healthcare payer'
+          text: 'A healthcare provider insurance network'
         }
       ]
     end
