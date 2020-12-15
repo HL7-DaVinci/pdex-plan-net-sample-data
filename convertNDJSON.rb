@@ -1,15 +1,15 @@
 require 'json'
 require 'pry'
 
-# FHIR_SERVER_BASE = "http://localhost:8080/plan-net/"
-FHIR_SERVER_BASE = "http://davinci-plan-net-ri.logicahealth.org/plan-net/"
+# FHIR_SERVER_BASE = "http://localhost:8080/plan-net"
+FHIR_SERVER_BASE = "http://davinci-plan-net-ri.logicahealth.org/plan-net"
     
 ndouts = []
 FileUtils.mkdir_p("export/")
 Dir.glob("output/*") do |typedir|
     puts "working on input directory: #{typedir}..."
     resourceType = File.basename(typedir)
-    url = "#{resourceType}.ndjson"
+    url = "#{FHIR_SERVER_BASE}/resources/#{resourceType}.ndjson"
     ndouts << {
         "type" => resourceType,
         "url" => url
