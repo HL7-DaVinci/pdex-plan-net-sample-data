@@ -16,9 +16,25 @@ def create_bundle
         resourceType = File.basename(typedir)
         outfile = "#{resourceType}-bundle.json"
         puts "writing to #{outfile}"
+        section = 0
+        count = 0
+        sectionsize = 250
         o = File.open(outfile,"w")
         bundle = create_bundle
         Dir.glob("#{typedir}/*.json") do |jsonfile|
+            count = count % sectionsize
+            if count == 0
+                if section > 0
+                    puts "Closing  #{outfile}"
+                    o.write(JSON.pretty_generate(bundle))
+                    o.close
+                end
+                section = section + 1
+                outfile = "#{resourceType}-bundle-#{section}.json"
+                puts "Opening  #{outfile}"
+                o = File.open(outfile,"w")
+            end
+            count = count + 1
             puts "working on: #{jsonfile}..."
             s = File.read(jsonfile)
             resource = JSON.parse(s)
@@ -31,8 +47,10 @@ def create_bundle
             }
             bundle["entry"] << entry
         end
-        o.write(JSON.pretty_generate(bundle))
-        o.close
+        if count > 0
+            o.write(JSON.pretty_generate(bundle))
+            o.close
+        end
     end
 
     
