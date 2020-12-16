@@ -27,7 +27,7 @@ Dir.glob("output/*") do |typedir|
 end
 output = {
     "transactionTime" => Time.now.strftime("%d/%m/%Y %H:%M"),
-    "request" => "#{FHIR_SERVER_BASE}/$export",
+    "request" => "#{FHIR_SERVER_BASE}/fhir/$export",
     "requiresAccessToken" => false,
     "output" => ndouts,
     "error" => { "type" => "OperationOutcome",
