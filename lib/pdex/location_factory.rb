@@ -37,8 +37,10 @@ module PDEX
           address: address,
           position: position,
           managingOrganization: managing_organization,
+          partOf: part_of,
           hoursOfOperation: hours_of_operation,
-          availabilityExceptions: availability_exceptions
+          availabilityExceptions: availability_exceptions,
+          endpoint: endpoints
         }
       )
     end
@@ -173,6 +175,12 @@ module PDEX
       }
     end
 
+    def part_of
+      return {
+          reference: "Location/#{source_data.part_of}",
+        } if pharmacy and source_data.part_of
+    end
+
     def hours_of_operation
       [
         {
@@ -189,5 +197,15 @@ module PDEX
     def position
       source_data.position
     end
+
+    def endpoints
+      return [
+        {
+          reference: "Endpoint/plannet-organization-#{source_data.npi}-direct",
+          display: "#{source_data.name} Direct Address"
+        }
+      ] if not pharmacy
+    end
+
   end
 end

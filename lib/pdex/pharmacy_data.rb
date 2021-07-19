@@ -44,6 +44,15 @@ module PDEX
       )
     end
 
+    def part_of
+      if raw_data['PartOf'] != nil and raw_data['PartOf'] != ''
+        part_of_str = String.new(raw_data['PartOf'])
+        part_of_npi = part_of_str.gsub(".","-")
+        #puts "PharmacyData: part_of: return plannet-location-#{part_of_npi}"
+        return "plannet-location-#{part_of_npi}"
+      end
+    end
+
     def contact_first_name
       @contact_first_name ||= fake_first_name
     end
