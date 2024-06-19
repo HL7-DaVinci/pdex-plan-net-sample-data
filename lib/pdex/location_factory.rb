@@ -20,27 +20,47 @@ module PDEX
     end
 
     def build
-      FHIR::Location.new(
-        {
-          id: id,
-          meta: meta,
-          extension: [
-            accessibility_extension,
-            new_patients_extension,
-          ],
-          identifier: identifier,
-          status: 'active',
-          name: location_name,
-          description: description,
-          type: type,
-          telecom: telecom,
-          address: address,
-          position: position,
-          managingOrganization: managing_organization,
-          hoursOfOperation: hours_of_operation,
-          availabilityExceptions: availability_exceptions
-        }
-      )
+      if pharmacy
+        FHIR::Location.new(
+          {
+            id: id,
+            meta: meta,
+            identifier: identifier,
+            status: 'active',
+            name: location_name,
+            description: description,
+            type: type,
+            telecom: telecom,
+            address: address,
+            position: position,
+            managingOrganization: managing_organization,
+            hoursOfOperation: hours_of_operation,
+            availabilityExceptions: availability_exceptions
+          }
+        )
+        else
+          FHIR::Location.new(
+            {
+              id: id,
+              meta: meta,
+              extension: [
+                accessibility_extension,
+                new_patients_extension,
+              ],
+              identifier: identifier,
+              status: 'active',
+              name: location_name,
+              description: description,
+              type: type,
+              telecom: telecom,
+              address: address,
+              position: position,
+              managingOrganization: managing_organization,
+              hoursOfOperation: hours_of_operation,
+              availabilityExceptions: availability_exceptions
+            }
+          )
+        end
     end
 
     private

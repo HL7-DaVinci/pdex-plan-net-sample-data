@@ -23,7 +23,7 @@ module PDEX
     end
 
     def fake_license_number
-      Faker::Number.number(6)
+      Faker::Number.number(digits: 6)
     end
 
     def fake_pharmacy_credential(credential)

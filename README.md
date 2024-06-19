@@ -39,6 +39,27 @@ Additionally, `nppes_data_loader` and `nppes_data_repo` are responsible for
 loading the NPPES data into memory and making the data accessible to the
 factories and generators.
 
+
+### Upload Sample Data to a Server
+
+Run the `upload.rb` script to upload the sample data to a server.
+
+```
+bundle exec ruby upload.rb
+```
+By default, the FHIR server base URL to upload the data is set to `http://localhost:8080/fhir`. 
+
+Command-line arguments may be provided to specify the server base URL:
+
+```
+bundle exec ruby upload.rb -f http://exampleserver.com
+```
+
+Full usage info can be printed by passing the -h (help) option.
+```
+bundle exec ruby upload.rb -h
+```
+
 ## Acknowledgement
 
 This Ruby package was inspired by the Python [VhDir sample generation code](https://github.com/HL7/VhDir/tree/master/notes_and_tools/example-generation) package developed by Eric Haas et al, an uses the same [NPPES extract](https://github.com/HL7/VhDir/tree/master/notes_and_tools/example-generation/sample-nppes-data) as source data.

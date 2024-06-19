@@ -3,6 +3,7 @@ require 'pry'
 
 # FHIR_SERVER_BASE = "http://localhost:8080/plan-net"
 FHIR_SERVER_BASE = "http://davinci-plan-net-ri.logicahealth.org/plan-net"
+#FHIR_SERVER_BASE = "https://plan-net-ri.davinci.hl7.org"
     
 ndouts = []
 FileUtils.mkdir_p("export/")
