@@ -3,6 +3,9 @@
 This project uses freely available NPPES data to create FHIR resources based on the proposed
 Da Vinci Plan Network IG.
 
+# Foundry
+Explore it yourself with [HL7 FHIR Foundry](https://foundry.hl7.org/products/7795f8a6-da7f-49cc-86f0-85d91ef594f1).
+
 ## Generating resources
 
 Run the following commands to generate the sample resources:
