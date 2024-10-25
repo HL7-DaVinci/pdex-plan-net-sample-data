@@ -35,14 +35,17 @@ module PDEX
       return code.capitalize if code == 'miscellaneous'
       return 'general practice' unless SERVICE_DISPLAY.key? code
 
-      specialization = SERVICE_DISPLAY[code][2]
-      definition = SERVICE_DISPLAY[code][3]
+      display = SERVICE_DISPLAY[code][6]
+      # specialization = SERVICE_DISPLAY[code][2]
+      # definition = SERVICE_DISPLAY[code][3]
       #if specialization.present? && definition.present?
-      if  definition.present?
+      # if  definition.present?
       #  "#{specialization}/#{definition}"
-         "#{definition}"
-      elsif specialization.present?
-        specialization
+      #    "#{definition}"
+      # elsif specialization.present?
+      #   specialization
+      if display.present?
+        "#{display}"
       else
         'general practice'
       end

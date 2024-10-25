@@ -53,7 +53,7 @@ module PDEX
           {
             coding: [
               {
-                system: 'http://hl7.org/fhir/organization-role',
+                system: 'http://hl7.org/fhir/us/davinci-pdex-plan-net/CodeSystem/OrganizationAffiliationRoleCS',
                 code: 'pharmacy',
                 display: 'Pharmacy'
               }

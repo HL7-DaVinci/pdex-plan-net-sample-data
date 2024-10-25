@@ -48,6 +48,13 @@ module PDEX
       {
         use: 'official',
         type: {
+          coding: [
+            {
+              system: "http://terminology.hl7.org/CodeSystem/v2-0203",
+              code: "NIIP",
+              display: "National Insurance Payor Identifier (Payor)"
+            }
+          ],
           text: 'HIOS product ID'
         },
         system: 'http://www.cms.gov/CCIIO',
@@ -64,7 +71,7 @@ module PDEX
           coding: [
             {
               system: INSURANCE_PLAN_TYPE_CODE_SYSTEM_URL,
-              code: "CommercialPPO",
+              code: "commppo",
               display: "Commercial PPO"
             }
           ],

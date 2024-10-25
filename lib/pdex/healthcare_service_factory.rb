@@ -63,7 +63,41 @@ module PDEX
     end
 
     def category_type_display
-      category_type.capitalize
+      case category_type
+      when 'behav'
+        'Behavioral Health'
+      when 'dent'
+        'Dental'
+      when 'dme'
+        'DME/Medical Supplies'
+      when 'emerg'
+        'Emergency care'
+      when 'group'
+        'Medical Group'
+      when 'home'
+        'Home Health'
+      when 'hosp'
+        'Hospital'
+      when 'lab'
+        'Laboratory'
+      when 'other'
+        'Other'
+      when 'outpat'
+        'Clinic or Outpatient Facility'
+      when 'prov'
+        'Medical Provider'
+      when 'pharm'
+        'Pharmacy'
+      when 'trans'
+        'Transportation'
+      when 'urg'
+        'Urgent Care'
+      when 'vis'
+        'Vision'
+      else
+        category_type.capitalize
+      end
+
     end
 
     def locations

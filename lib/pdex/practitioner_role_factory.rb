@@ -72,7 +72,7 @@ module PDEX
     end
 
     def extensions
-      network_data.map do |network|
+      network_data.first(1).map do |network|
         {
           url: NETWORK_REFERENCE_EXTENSION_URL,
           valueReference: {
